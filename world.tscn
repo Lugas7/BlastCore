@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ses781sho4c5"]
 
-[ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://player.tscn" id="1_8iqh3"]
+[ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://player/player.tscn" id="1_8iqh3"]
 [ext_resource type="PackedScene" uid="uid://ou7iicbe68hh" path="res://red_tank_enemy.tscn" id="2_ui01w"]
 
 [node name="Node2D" type="Node2D"]
