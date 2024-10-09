@@ -6,6 +6,9 @@ const JUMP_VELOCITY = -400.0
 const dashTime = 0.3
 const DASHSPEED = 900
 
+@onready
+var gun = get_node("Gun")
+
 var isDashing = false
 var xinput = 0
 var yinput = 0
@@ -13,6 +16,8 @@ var xdir = 0
 var ydir = 0
 func _physics_process(_delta: float) -> void:
 	updateMovement()
+	if Input.is_action_just_pressed("shoot"):
+		gun.shoot()
 	if Input.is_action_pressed("ui_dash"):
 		beginDash()
 	if !isDashing:
@@ -40,3 +45,20 @@ func beginDash():
 	velocity.y = DASHSPEED * ydir
 	await get_tree().create_timer(dashTime).timeout
 	isDashing = false
+
+#var bulletScene = preload("res://bullet.tscn")
+#
+#func shoot():
+	#print("shooting")
+	## Instance the bullet
+	#var bullet = bulletScene.instantiate()
+	##add_child(bullet)
+#
+	## Set the position of the bullet to the player's position
+	#bullet.position = position + Vector2()
+	#
+	## Calculate the velocity based on the shooting direction and bullet speed
+	#bullet.linear_velocity = Vector2(100, 0)
+	#
+	## Add the bulet to the scene (usually as a child of the current scene)
+	#get_parent().add_child(bullet)
