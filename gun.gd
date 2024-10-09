@@ -17,7 +17,6 @@ func _process(delta: float) -> void:
 var bulletScene = preload("res://bullet.tscn")
 
 func shoot():
-	print("shooting")
 	# Instance the bullet
 	var bullet = bulletScene.instantiate()
 	# Set the position of the bullet to the player's position
