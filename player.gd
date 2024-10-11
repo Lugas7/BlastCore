@@ -33,6 +33,7 @@ func updateMovement():
 			xdir = xinput
 			ydir = yinput
 		
+	
 
 func beginDash():
 	isDashing = true

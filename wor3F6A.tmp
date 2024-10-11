@@ -12,6 +12,3 @@ position = Vector2(552, 344)
 
 [node name="red_tank_enemy" parent="." instance=ExtResource("2_ui01w")]
 position = Vector2(1022, 445)
-
-[node name="TileMap" type="TileMap" parent="."]
-format = 2
