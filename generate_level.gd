@@ -83,7 +83,6 @@ func generateLevel(length: int):
 	
 	for r in rooms:
 		print(r.X, ", ", r.Y, ": ", r.Type)
-	
 
 
 func generateLayout(length: int) -> Room:
@@ -93,7 +92,6 @@ func generateLayout(length: int) -> Room:
 	
 	emptyRow.resize(size)
 	freeTiles.resize(size)
-	
 	emptyRow.fill(true)
 	for i in range(size):
 		freeTiles[i] = emptyRow.duplicate()
@@ -105,14 +103,23 @@ func generateLayout(length: int) -> Room:
 	var parentRoom = Room.create("Start", size/2, size/2)
 	freeTiles[size/2][size/2] = false
 	
-	# There can be one special room (loot or shop) per level
-	var placedSpecialRoom = false
-	
 	# Create the room layout
 	for r in range(length):
 		
+		# List of all attempted directions
+		var triedDirections = []
+		
 		while true:
+			# Try again if there is a dead end
+			if len(triedDirections) == 4:
+				return generateLayout(size)
+			
 			var dir = rng.randi_range(0, 3)
+			
+			if dir not in triedDirections:
+				triedDirections.append(dir)
+			else:
+				continue
 			
 			var addX = 0
 			var addY = 0
@@ -166,16 +173,22 @@ func generateLayout(length: int) -> Room:
 						
 					# Create the side room
 					if newX < size && newX >= 0 && newY < size && newY >= 0 && freeTiles[newY][newX]:
-						type = "Normal"
-						if !placedSpecialRoom && rng.randi_range(0, 1)==1:
-							type = "Special"
-							placedSpecialRoom = true
-							
-						newRoom.newRoom(dir, newX, newY, type)
+						newRoom.newRoom(dir, newX, newY, "Side")
 							
 						# Mark as occupied
 						freeTiles[newY][newX] = false
 				
 				break
-				
+	
+	var rooms = parentRoom.allRooms()
+	
+	# Turn about half of the side rooms into special rooms (shops, loot etc.)
+	var sideRooms = rooms.filter(func(r): return r.Type == "Side")
+	if len(sideRooms) >= 1:
+		sideRooms.shuffle()
+		var specialRoomCount: int = len(sideRooms)/2 + randi_range(0, 1)
+		for i in range(specialRoomCount):
+			sideRooms[i].Type = "Special"
+	
+	
 	return parentRoom
