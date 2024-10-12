@@ -1,91 +1,35 @@
-extends Node
+extends Node2D
 
-class Room:
-	var Type: String
-	var X: int
-	var Y: int
-	
-	var Left: Room
-	var Right: Room
-	var Up: Room
-	var Down: Room
-	
-	static func create(type: String, x: int, y: int) -> Room:
-		var room = Room.new()
-		room.Type = type
-		room.X = x
-		room.Y = y
-		
-		return room
-		
-	func allRooms() -> Array[Room]:
-		var visited: Array[Room]
-		var stack = [self]
-		
-		while stack.size() > 0:
-			var currentRoom = stack.pop_back()
-			
-			if currentRoom in visited:
-				continue
-				
-			visited.append(currentRoom)
-				
-			# Check each neighboor room
-			if currentRoom.Right and currentRoom.Right not in visited:
-				stack.append(currentRoom.Right)
-			if currentRoom.Left and currentRoom.Left not in visited:
-				stack.append(currentRoom.Left)
-			if currentRoom.Up and currentRoom.Up not in visited:
-				stack.append(currentRoom.Up)
-			if currentRoom.Down and currentRoom.Down not in visited:
-				stack.append(currentRoom.Down)
-		
-		return visited
-		
-	func newRoom(dir: int, x: int, y: int, type: String) -> Room:
-		var newRoom: Room 
-		match dir:
-			0: # Right
-				Right = Room.create(type, x, y)
-				Right.Left = self
-				newRoom = Right
-			1: # Up
-				Up = Room.create(type, x, y)
-				Up.Down = self
-				newRoom = Up
-			2: # Left
-				Left = Room.create(type, x, y)
-				Left.Right = self
-				newRoom = Left
-			3: # Down
-				Down = Room.create(type, x, y)
-				Down.Up = self
-				newRoom = Down
-		return newRoom
-		
+const Rooms = preload("res://room_class.gd")
 
-
-
+var currentRoom
+var roomInstance
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	generateLevel(5)
-
-
+	var lastRoom = generateLevel(5)
+	
+	var rooms = lastRoom.allRooms()
+	for r in rooms:
+		if r.Type == "Start":
+			currentRoom = r
+			loadRoom(r, 0)
+			break
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 
-func generateLevel(length: int):
+func generateLevel(length: int) -> Rooms.Room:
 	var lastRoom = generateLayout(length)
-	var rooms = lastRoom.allRooms()
 	
-	for r in rooms:
-		print(r.X, ", ", r.Y, ": ", r.Type)
+	var allRooms = lastRoom.allRooms()
+	
+	return lastRoom
 
 
-func generateLayout(length: int) -> Room:
+func generateLayout(length: int) -> Rooms.Room:
 	var size = 10
 	var emptyRow: Array[bool]
 	var freeTiles: Array[Array]
@@ -100,7 +44,8 @@ func generateLayout(length: int) -> Room:
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	
-	var parentRoom = Room.create("Start", size/2, size/2)
+	var parentRoom = Rooms.Room.create("Start", size/2, size/2)
+	parentRoom.Cleared = true
 	freeTiles[size/2][size/2] = false
 	
 	# Create the room layout
@@ -192,3 +137,54 @@ func generateLayout(length: int) -> Room:
 	
 	
 	return parentRoom
+
+func nextRoom(dir: int):
+	currentRoom = currentRoom.Neighboors[dir]
+	loadRoom(currentRoom, dir)
+
+
+# Load a room
+func loadRoom(room: Rooms.Room, fromDir: int):
+	if roomInstance:
+		roomInstance.queue_free()
+	
+	# Load the room
+	var roomFile = "start_room1.tscn"
+	match room.Type:
+		"Start":
+			roomFile = "start_room1.tscn"
+			
+		"Normal":
+			roomFile = "normal_room1.tscn"
+		
+		"Boss":
+			roomFile = "boss_room1.tscn"
+			
+		"Side":
+			roomFile = "side_room1.tscn"
+			
+		"Special":
+			roomFile = "special_room1.tscn"
+	
+	
+	var path = "res://rooms/" + roomFile
+	var roomScene = load(path)
+	
+	roomInstance = roomScene.instantiate()
+	self.add_child(roomInstance)
+
+	var directions = ["Right", "Up", "Left", "Down"]
+	for i in range(4):
+		
+		# Spawn the player at the the door
+		if i == fromDir:
+			var spawnPoint = roomInstance.get_node("DoorSpawn" + directions[i])
+			var player = roomInstance.get_node("Player")
+			player.position = spawnPoint.position
+		
+		# Delete the doors to non-existent rooms, or se
+		var doorName = "Door" + directions[i]
+		var door = roomInstance.get_node(doorName)
+		
+		if !room.Neighboors[i]:
+			door.queue_free()
