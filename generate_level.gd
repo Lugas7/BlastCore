@@ -33,10 +33,11 @@ func generateLevel(length: int) -> Rooms.Room:
 	for r in allRooms:
 		var path = "rooms/1/"+r.Type
 		var dir = DirAccess.open(path)
-		var files = dir.get_files()
-		var rIndex = rng.randi_range(0, len(files)-1)
-		var file = files[rIndex]
-		r.RoomFile = path + "/" + file
+		if dir:
+			var files = dir.get_files()
+			var rIndex = rng.randi_range(0, len(files)-1)
+			var file = files[rIndex]
+			r.RoomFile = path + "/" + file
 	
 	return lastRoom
 

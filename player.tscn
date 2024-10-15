@@ -10,7 +10,6 @@ size = Vector2(129.5, 129)
 [node name="Player 2D" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 motion_mode = 1
-
 script = ExtResource("1_v2mqh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -23,3 +22,5 @@ texture = ExtResource("1_wpn2b")
 
 [node name="Gun" parent="." instance=ExtResource("3_yxuec")]
 position = Vector2(0, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
