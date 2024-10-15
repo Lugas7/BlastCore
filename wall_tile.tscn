@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b84wtosq7g4bt"]
+
+[ext_resource type="Texture2D" uid="uid://bdnlxssm1f0ji" path="res://assets/Tiles/wall.jpg" id="1_63qcr"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aw6ae"]
+texture = ExtResource("1_63qcr")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+
+[sub_resource type="TileSet" id="TileSet_lifqf"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 2
+sources/0 = SubResource("TileSetAtlasSource_aw6ae")
+
+[node name="TileMapLayer" type="TileMapLayer"]
+tile_set = SubResource("TileSet_lifqf")

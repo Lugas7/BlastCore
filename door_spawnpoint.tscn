@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://byu1c7v7yrjiy"]
+
+[ext_resource type="Script" path="res://door_spawnpoint.gd" id="1_0tvpw"]
+[ext_resource type="Texture2D" uid="uid://cag4kanacl80t" path="res://assets/door_spawn_point.png" id="1_3mec1"]
+
+[node name="DoorSpawn" type="Node2D"]
+script = ExtResource("1_0tvpw")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_3mec1")

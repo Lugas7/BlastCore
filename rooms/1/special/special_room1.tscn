@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=4 uid="uid://hcjg25wgipex"]
+
+[ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://player.tscn" id="1_b2h8v"]
+[ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_jjb8t"]
+[ext_resource type="PackedScene" uid="uid://bsy8olbd3lkvw" path="res://door.tscn" id="3_txa8a"]
+[ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_r4iqs"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_b2h8v")]
+position = Vector2(320, 256)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(0.8, 0.8)
+limit_left = 0
+limit_top = 0
+limit_right = 1536
+limit_bottom = 1024
+
+[node name="TileMapLayer" parent="." instance=ExtResource("2_jjb8t")]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAADAAcAAAAAAAAAAAACAAcAAAAAAAAAAAABAAcAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAALAAEAAAAAAAAAAAALAAIAAAAAAAAAAAALAAMAAAAAAAAAAAALAAQAAAAAAAAAAAALAAUAAAAAAAAAAAALAAYAAAAAAAAAAAALAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAABAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAAKAAEAAAAAAAAAAAABAAEAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAQAAAAAAAAAAAAFAAQAAAAAAAAAAAA=")
+
+[node name="DoorUp" parent="." instance=ExtResource("3_txa8a")]
+position = Vector2(832, 256)
+
+[node name="DoorRight" parent="." instance=ExtResource("3_txa8a")]
+position = Vector2(1280, 576)
+rotation = 1.5708
+
+[node name="DoorDown" parent="." instance=ExtResource("3_txa8a")]
+position = Vector2(704, 768)
+rotation = 3.14159
+
+[node name="DoorLeft" parent="." instance=ExtResource("3_txa8a")]
+position = Vector2(256, 448)
+rotation = 4.71239
+
+[node name="DoorSpawnRight" parent="." instance=ExtResource("4_r4iqs")]
+position = Vector2(256, 512)
+
+[node name="DoorSpawnDown" parent="." instance=ExtResource("4_r4iqs")]
+position = Vector2(768, 256)
+
+[node name="DoorSpawnLeft" parent="." instance=ExtResource("4_r4iqs")]
+position = Vector2(1280, 512)
+
+[node name="DoorSpawnUp" parent="." instance=ExtResource("4_r4iqs")]
+position = Vector2(768, 768)
