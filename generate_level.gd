@@ -11,7 +11,7 @@ func _ready() -> void:
 	
 	var rooms = lastRoom.allRooms()
 	for r in rooms:
-		if r.Type == "Start":
+		if r.Type == "start":
 			currentRoom = r
 			loadRoom(r, 0)
 			break
@@ -24,7 +24,19 @@ func _process(delta: float) -> void:
 func generateLevel(length: int) -> Rooms.Room:
 	var lastRoom = generateLayout(length)
 	
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
 	var allRooms = lastRoom.allRooms()
+	
+	# Assign a file for each room
+	for r in allRooms:
+		var path = "rooms/1/"+r.Type
+		var dir = DirAccess.open(path)
+		var files = dir.get_files()
+		var rIndex = rng.randi_range(0, len(files)-1)
+		var file = files[rIndex]
+		r.RoomFile = path + "/" + file
 	
 	return lastRoom
 
@@ -44,7 +56,7 @@ func generateLayout(length: int) -> Rooms.Room:
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	
-	var parentRoom = Rooms.Room.create("Start", size/2, size/2)
+	var parentRoom = Rooms.Room.create("start", size/2, size/2)
 	parentRoom.Cleared = true
 	freeTiles[size/2][size/2] = false
 	
@@ -86,9 +98,9 @@ func generateLayout(length: int) -> Rooms.Room:
 			
 			# Create a new room if it is free and in bounds
 			if freeTiles[newY][newX] && newX < size && newX >= 0 && newY < size && newY >= 0:
-				var type = "Normal"
+				var type = "normal"
 				if r == length-1:
-					type = "Boss"
+					type = "boss"
 				
 				newRoom = parentRoom.newRoom(dir, newX, newY, type)
 				parentRoom = newRoom
@@ -128,12 +140,12 @@ func generateLayout(length: int) -> Rooms.Room:
 	var rooms = parentRoom.allRooms()
 	
 	# Turn about half of the side rooms into special rooms (shops, loot etc.)
-	var sideRooms = rooms.filter(func(r): return r.Type == "Side")
+	var sideRooms = rooms.filter(func(r): return r.Type == "side")
 	if len(sideRooms) >= 1:
 		sideRooms.shuffle()
 		var specialRoomCount: int = len(sideRooms)/2 + randi_range(0, 1)
 		for i in range(specialRoomCount):
-			sideRooms[i].Type = "Special"
+			sideRooms[i].Type = "special"
 	
 	
 	return parentRoom
@@ -148,27 +160,7 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 	if roomInstance:
 		roomInstance.queue_free()
 	
-	# Load the room
-	var roomFile = "start_room1.tscn"
-	match room.Type:
-		"Start":
-			roomFile = "start_room1.tscn"
-			
-		"Normal":
-			roomFile = "normal_room1.tscn"
-		
-		"Boss":
-			roomFile = "boss_room1.tscn"
-			
-		"Side":
-			roomFile = "side_room1.tscn"
-			
-		"Special":
-			roomFile = "special_room1.tscn"
-	
-	
-	var path = "res://rooms/" + roomFile
-	var roomScene = load(path)
+	var roomScene = load(room.RoomFile)
 	
 	roomInstance = roomScene.instantiate()
 	self.add_child(roomInstance)

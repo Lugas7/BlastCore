@@ -4,12 +4,12 @@ extends Node
 # A graph based representation of the rooms
 class Room:
 	var Type: String
+	var RoomFile: String
 	var X: int
 	var Y: int
 	
 	# Neighbooring rooms
 	var Neighboors: Array
-	
 	var Cleared: bool
 	
 	static func create(type: String, x: int, y: int) -> Room:
@@ -49,7 +49,6 @@ class Room:
 		
 		Neighboors[dir] = Room.create(type, x, y)
 		var oppositeDir = (dir + 2) % 4
-		print(dir, ", ", oppositeDir)
 		Neighboors[dir].Neighboors[oppositeDir] = self
 
 		return Neighboors[dir]
