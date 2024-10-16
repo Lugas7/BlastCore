@@ -1,9 +1,11 @@
-[gd_scene load_steps=32 format=3 uid="uid://bovpx8y6luw05"]
+[gd_scene load_steps=35 format=3 uid="uid://bovpx8y6luw05"]
 
 [ext_resource type="Script" path="res://characters/enemies/basic_enemy/red_tank_enemy.gd" id="1_cming"]
 [ext_resource type="Texture2D" uid="uid://bvqnam4bgjrmo" path="res://assets/Tank_byBatuhanK/redtank/left_move_Red-Sheet.png" id="2_py65h"]
 [ext_resource type="Texture2D" uid="uid://dunbp7qf10oid" path="res://assets/Tank_byBatuhanK/redtank/left_explode_red-Sheet.png" id="3_x4n71"]
 [ext_resource type="Texture2D" uid="uid://crgho2u3ntbvi" path="res://assets/Tank_byBatuhanK/redtank/left_fire_red-Sheet.png" id="4_3o21i"]
+[ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/Components/HealthComponent.tscn" id="5_fk2y5"]
+[ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/Components/HurtboxComponent.tscn" id="6_54djn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xgyh2"]
 atlas = ExtResource("2_py65h")
@@ -197,6 +199,9 @@ size = Vector2(37, 23)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rv6hl"]
 size = Vector2(37, 7)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2wxyn"]
+radius = 49.0102
+
 [node name="dashing_enemy" type="CharacterBody2D"]
 script = ExtResource("1_cming")
 
@@ -211,3 +216,17 @@ shape = SubResource("RectangleShape2D_j56pf")
 [node name="flag" type="CollisionShape2D" parent="."]
 position = Vector2(3.5, -9.5)
 shape = SubResource("RectangleShape2D_rv6hl")
+
+[node name="health_component" parent="." instance=ExtResource("5_fk2y5")]
+light_mask = 0
+visibility_layer = 0
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_54djn")]
+collision_layer = 5
+collision_mask = 5
+health_component = NodePath("../health_component")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+light_mask = 4
+visibility_layer = 2
+shape = SubResource("CircleShape2D_2wxyn")

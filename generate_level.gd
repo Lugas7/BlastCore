@@ -174,6 +174,8 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 			var spawnPoint = roomInstance.get_node("DoorSpawn" + directions[i])
 			var player = roomInstance.get_node("Player")
 			player.position = spawnPoint.position
+			# player.set_collision_layer(1)
+		
 		
 		# Delete the doors to non-existent rooms, or se
 		var doorName = "Door" + directions[i]
