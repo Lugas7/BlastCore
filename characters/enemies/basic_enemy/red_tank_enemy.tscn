@@ -1,9 +1,11 @@
-[gd_scene load_steps=33 format=3 uid="uid://ou7iicbe68hh"]
+[gd_scene load_steps=35 format=3 uid="uid://ou7iicbe68hh"]
 
-[ext_resource type="Script" path="res://red_tank_enemy.gd" id="1_0rvtk"]
+[ext_resource type="Script" path="res://characters/enemies/basic_enemy/red_tank_enemy.gd" id="1_0rvtk"]
 [ext_resource type="Texture2D" uid="uid://bvqnam4bgjrmo" path="res://assets/Tank_byBatuhanK/redtank/left_move_Red-Sheet.png" id="1_jt7nm"]
 [ext_resource type="Texture2D" uid="uid://dunbp7qf10oid" path="res://assets/Tank_byBatuhanK/redtank/left_explode_red-Sheet.png" id="2_kp0ho"]
 [ext_resource type="Texture2D" uid="uid://crgho2u3ntbvi" path="res://assets/Tank_byBatuhanK/redtank/left_fire_red-Sheet.png" id="3_8eobi"]
+[ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/Components/health_component.tscn" id="5_l5fva"]
+[ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/Components/hitbox_component.tscn" id="6_ej61g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xgyh2"]
 atlas = ExtResource("1_jt7nm")
@@ -220,6 +222,10 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_0271l")
+
+[node name="health_component" parent="." instance=ExtResource("5_l5fva")]
+
+[node name="HitboxComponent" parent="." instance=ExtResource("6_ej61g")]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
