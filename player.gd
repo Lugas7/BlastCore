@@ -16,6 +16,8 @@ var yinput = 0
 var xdir = 0
 var ydir = 0
 func _physics_process(_delta: float) -> void:
+	# print("layer " + str(get_collision_layer()))
+	# print("mask "+ str(get_collision_mask()))
 	updateMovement()
 	if Input.is_action_pressed("ui_dash"):
 		beginDash()

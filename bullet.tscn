@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4rq83k85o10w"]
+[gd_scene load_steps=5 format=3 uid="uid://cyxcyr4dxcmye"]
 
 [ext_resource type="Texture2D" uid="uid://dggl55k60evxt" path="res://assets/Bullet/Bullet.png" id="1_6tgqr"]
+[ext_resource type="Script" path="res://area_2d.gd" id="2_me601"]
 
 [sub_resource type="GDScript" id="GDScript_f0njd"]
 script/source = "extends CharacterBody2D
@@ -10,10 +11,21 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 "
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_lvbgf"]
+radius = 67.7422
+
 [node name="Bullet" type="CharacterBody2D"]
 position = Vector2(64, 312)
+collision_layer = 4
 script = SubResource("GDScript_f0njd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.37, 0.37)
 texture = ExtResource("1_6tgqr")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 5
+script = ExtResource("2_me601")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_lvbgf")
