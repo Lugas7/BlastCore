@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ou7iicbe68hh"]
+[gd_scene load_steps=33 format=3 uid="uid://ou7iicbe68hh"]
 
 [ext_resource type="Script" path="res://characters/enemies/basic_enemy/red_tank_enemy.gd" id="1_0rvtk"]
 [ext_resource type="Texture2D" uid="uid://bvqnam4bgjrmo" path="res://assets/Tank_byBatuhanK/redtank/left_move_Red-Sheet.png" id="1_jt7nm"]
