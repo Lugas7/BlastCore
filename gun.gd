@@ -28,12 +28,10 @@ func shoot():
 		
 		# Calculate the velocity based on the shooting direction and bullet speed
 		bullet.velocity = Vector2(cos(rotation)*BulletSpeed, sin(rotation)*BulletSpeed) + get_parent().velocity/2
-		#bullet.move_and_slide()
-		bullet.set_collision_layer(3)
-		bullet.set_collision_mask(1)
 		
 		# Add the bulet to the scene (usually as a child of the current scene)
 		get_parent().get_parent().add_child(bullet)
+
 		
 		await get_tree().create_timer(reloadTime).timeout
 		isShooting = false

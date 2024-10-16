@@ -6,15 +6,23 @@ var player_chase = false
 var player_left = true
 
 func _ready() -> void:
+	if get_node("health_component"):
+		print("HealthComponent, layer: " + str(get_node("health_component").get_collision_layer()) 
+		+ ", mask value: " + str(get_node("health_component").get_collision_mask()))
 	pass
 
+
 func _physics_process(_delta: float) -> void:
+
 	if player_chase:
 		var direction = (player.position - position).normalized()
 		player_left = direction.x < 0
 		position += direction * speed * _delta
 		$AnimatedSprite2D.play("left movement")
 		$AnimatedSprite2D.flip_h = !player_left
+
+@onready
+var hc = get_node("health_component")
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	player = body

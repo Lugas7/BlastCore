@@ -2,5 +2,6 @@
 
 [ext_resource type="Script" path="res://characters/Components/HealthComponent.gd" id="1_nfrjs"]
 
-[node name="health_component" type="Node2D"]
+[node name="health_component" type="Area2D"]
+collision_layer = 64
 script = ExtResource("1_nfrjs")
