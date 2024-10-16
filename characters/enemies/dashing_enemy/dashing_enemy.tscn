@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bovpx8y6luw05"]
+[gd_scene load_steps=33 format=3 uid="uid://bovpx8y6luw05"]
 
 [ext_resource type="Script" path="res://characters/enemies/basic_enemy/red_tank_enemy.gd" id="1_cming"]
 [ext_resource type="Texture2D" uid="uid://bvqnam4bgjrmo" path="res://assets/Tank_byBatuhanK/redtank/left_move_Red-Sheet.png" id="2_py65h"]
@@ -199,10 +199,9 @@ size = Vector2(37, 23)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rv6hl"]
 size = Vector2(37, 7)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2wxyn"]
-radius = 49.0102
-
 [node name="dashing_enemy" type="CharacterBody2D"]
+collision_layer = 64
+collision_mask = 64
 script = ExtResource("1_cming")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -223,7 +222,6 @@ visibility_layer = 0
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("6_54djn")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
-light_mask = 4
-visibility_layer = 2
-shape = SubResource("CircleShape2D_2wxyn")
+[node name="body" type="CollisionShape2D" parent="health_component"]
+position = Vector2(3.5, 5.5)
+shape = SubResource("RectangleShape2D_j56pf")
