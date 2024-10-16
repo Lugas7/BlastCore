@@ -10,7 +10,7 @@
 [node name="Player" parent="." instance=ExtResource("1_xqsep")]
 position = Vector2(512, 384)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D2" type="Camera2D" parent="Player"]
 zoom = Vector2(0.4, 0.4)
 limit_left = 0
 limit_top = 0
