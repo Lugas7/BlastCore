@@ -1,9 +1,11 @@
-[gd_scene load_steps=33 format=3 uid="uid://ou7iicbe68hh"]
+[gd_scene load_steps=35 format=3 uid="uid://ou7iicbe68hh"]
 
 [ext_resource type="Script" path="res://characters/enemies/basic_enemy/red_tank_enemy.gd" id="1_0rvtk"]
 [ext_resource type="Texture2D" uid="uid://bvqnam4bgjrmo" path="res://assets/Tank_byBatuhanK/redtank/left_move_Red-Sheet.png" id="1_jt7nm"]
 [ext_resource type="Texture2D" uid="uid://dunbp7qf10oid" path="res://assets/Tank_byBatuhanK/redtank/left_explode_red-Sheet.png" id="2_kp0ho"]
 [ext_resource type="Texture2D" uid="uid://crgho2u3ntbvi" path="res://assets/Tank_byBatuhanK/redtank/left_fire_red-Sheet.png" id="3_8eobi"]
+[ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="5_qyi1k"]
+[ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="6_2h3dg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xgyh2"]
 atlas = ExtResource("1_jt7nm")
@@ -191,37 +193,48 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_0271l"]
+radius = 154.548
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j56pf"]
 size = Vector2(37, 23)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rv6hl"]
 size = Vector2(37, 7)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_0271l"]
-radius = 154.548
-
 [node name="red_tank_enemy" type="CharacterBody2D"]
 script = ExtResource("1_0rvtk")
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_qyi1k")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_c65fi")
 animation = &"left movement"
 
-[node name="body" type="CollisionShape2D" parent="."]
-position = Vector2(3.5, 5.5)
-shape = SubResource("RectangleShape2D_j56pf")
-
-[node name="flag" type="CollisionShape2D" parent="."]
-position = Vector2(3.5, -9.5)
-shape = SubResource("RectangleShape2D_rv6hl")
-
-[node name="Area2D" type="Area2D" parent="."]
+[node name="DetectionArea" type="Area2D" parent="."]
 visible = false
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 visible = false
 shape = SubResource("CircleShape2D_0271l")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[node name="SturdyHitbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("6_2h3dg")]
+health = NodePath("../HealthComponent")
+
+[node name="body" type="CollisionShape2D" parent="SturdyHitbox"]
+position = Vector2(3.5, 5.5)
+shape = SubResource("RectangleShape2D_j56pf")
+
+[node name="CriticalHitbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("6_2h3dg")]
+health = NodePath("../HealthComponent")
+damage_multiplier = 2.0
+
+[node name="flag" type="CollisionShape2D" parent="CriticalHitbox"]
+position = Vector2(3.5, -9.5)
+shape = SubResource("RectangleShape2D_rv6hl")
+
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_area_2d_body_exited"]

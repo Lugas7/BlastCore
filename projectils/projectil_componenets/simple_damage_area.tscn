@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://kvhhtwrqygp5"]
+
+[ext_resource type="Script" path="res://projectils/projectil_componenets/simple_damage_area.gd" id="1_smcej"]
+
+[node name="SimpleDamageArea" type="Area2D"]
+script = ExtResource("1_smcej")

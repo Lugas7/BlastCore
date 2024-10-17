@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=4 uid="uid://hcjg25wgipex"]
 
-[ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://player.tscn" id="1_b2h8v"]
-[ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_jjb8t"]
-[ext_resource type="PackedScene" uid="uid://bsy8olbd3lkvw" path="res://door.tscn" id="3_txa8a"]
-[ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_r4iqs"]
+[ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://characters/player/player.tscn" id="1_b2h8v"]
+[ext_resource type="PackedScene" path="res://wall_tile.tscn" id="2_jjb8t"]
+[ext_resource type="PackedScene" path="res://door.tscn" id="3_txa8a"]
+[ext_resource type="PackedScene" path="res://door_spawnpoint.tscn" id="4_r4iqs"]
 
 [node name="Node2D" type="Node2D"]
 
