@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 	look_at(get_global_mouse_position())
 	pass
 
-var bulletScene = preload("res://bullet.tscn")
+var bulletScene = preload("res://projectils/simple_damage_projectil/bullet.tscn")
 
 func shoot():
 	if !isShooting:

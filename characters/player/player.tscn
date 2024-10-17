@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cdsxn8ypvjpq"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_v2mqh"]
+[ext_resource type="Script" path="res://characters/player/player.gd" id="1_v2mqh"]
 [ext_resource type="Texture2D" uid="uid://8idd6e5hcv8v" path="res://icon.svg" id="1_wpn2b"]
-[ext_resource type="PackedScene" uid="uid://djw0dfrxnpur0" path="res://gun.tscn" id="3_yxuec"]
+[ext_resource type="PackedScene" uid="uid://djw0dfrxnpur0" path="res://wepons/shooting_wepons/gun.tscn" id="3_yxuec"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pev4g"]
 size = Vector2(129.5, 129)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ses781sho4c5"]
 
 [ext_resource type="Script" path="res://generate_level.gd" id="1_7rgc7"]
-[ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://player.tscn" id="1_8iqh3"]
+[ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://characters/player/player.tscn" id="1_8iqh3"]
 [ext_resource type="PackedScene" uid="uid://ou7iicbe68hh" path="res://characters/enemies/basic_enemy/red_tank_enemy.tscn" id="2_ui01w"]
 [ext_resource type="PackedScene" uid="uid://bovpx8y6luw05" path="res://characters/enemies/dashing_enemy/dashing_enemy.tscn" id="4_4u1de"]
 

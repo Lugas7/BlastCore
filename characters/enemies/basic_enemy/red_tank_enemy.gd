@@ -5,6 +5,8 @@ var player = null
 var player_chase = false
 var player_left = true
 
+
+
 func _ready() -> void:
 	pass
 
@@ -24,9 +26,15 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	player = body
 	player_chase = false
 
-func _on_health_changed(current_health: int) -> void:
-	print("Health changed: ", current_health)
 
-func _on_died() -> void:
+
+
+func _on_health_component_died() -> void:
 	print("Enemy died")
 	queue_free()
+
+
+func _on_health_component_health_changed(current_health: int) -> void:
+	print("Health changed: ", current_health)
+	
+	
