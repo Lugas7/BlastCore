@@ -4,6 +4,11 @@ var player = null
 var player_chase = false
 var player_left = true
 
+@export var wait_time: float = 2.0
+@export var dash_time: float = 1.0
+@export var dash_acceleration_multiplyer: float = 5.0
+@export var dash_max_speed_multiplyer: float = 3.0
+
 
 func _physics_process(_delta: float) -> void:
 	var direction = Vector2.ZERO
@@ -11,11 +16,7 @@ func _physics_process(_delta: float) -> void:
 		print("chase")
 		direction = (player.position - position).normalized()
 		
-		# player_left = direction.x < 0
-		# position += direction * speed * _delta
-		# $AnimatedSprite2D.play("left movement")
-		# $AnimatedSprite2D.flip_h = !player_left
-	_velocity(_delta, direction)
+	_velocity(_delta, direction, dash_acceleration_multiplyer, dash_max_speed_multiplyer)
 	move_and_slide()
 
 
@@ -38,5 +39,3 @@ func _on_health_component_died() -> void:
 
 func _on_health_component_health_changed(current_health: int) -> void:
 	print("Health changed: ", current_health)
-	
-	

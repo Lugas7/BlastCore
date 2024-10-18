@@ -11,7 +11,7 @@ class_name MovementCharacterBody2D
 
 
 
-func _velocity(delta: float, direction: Vector2) -> void:
+func _velocity(delta: float, direction: Vector2, acceleration_multiplyer: float = 1.0, max_speed_multiplyer: float = 1.0) -> void:
 	"""
 		Calculates and updates the velocity of the character based on the input direction and delta time.
 
@@ -31,9 +31,14 @@ func _velocity(delta: float, direction: Vector2) -> void:
 		else:
 			velocity = Vector2.ZERO
 	else:
-		velocity += direction * acceleration * delta
-		if velocity.length() > max_speed:
-			velocity = velocity.normalized() * max_speed
+		velocity += direction * acceleration * acceleration_multiplyer * delta
+		if velocity.length() > max_speed * max_speed_multiplyer:
+			velocity = velocity.normalized() * max_speed * max_speed_multiplyer
+
+
+
+
+	
 
 
 # func _velocity(delta: float, direction: Vector2) -> void:
