@@ -7,9 +7,6 @@ var player_left = true
 
 
 
-func _ready() -> void:
-	pass
-
 func _physics_process(_delta: float) -> void:
 	var direction = Vector2.ZERO
 	if player_chase:
@@ -22,6 +19,7 @@ func _physics_process(_delta: float) -> void:
 		# $AnimatedSprite2D.flip_h = !player_left
 	_velocity(_delta, direction)
 	move_and_slide()
+
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	print("Player detected")
