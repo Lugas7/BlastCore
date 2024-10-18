@@ -13,7 +13,7 @@ signal died()
 var current_health: int
 
 # Initialize health values
-func _init():
+func _ready() -> void:
 	self.current_health = max_health
 
 # Method to take damage
