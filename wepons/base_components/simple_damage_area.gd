@@ -1,5 +1,7 @@
 extends Area2D
 
+signal damage_dealt()
+
 @export var damage: int = 10
 
 # Called when the node enters the scene tree for the first time.
@@ -15,4 +17,5 @@ func _process(delta: float) -> void:
 
 
 func get_damage() -> int:
+	emit_signal("damage_dealt")
 	return damage

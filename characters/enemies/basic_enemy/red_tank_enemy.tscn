@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://ou7iicbe68hh"]
+[gd_scene load_steps=35 format=3 uid="uid://ou7iicbe68hh"]
 
 [ext_resource type="Script" path="res://characters/enemies/basic_enemy/red_tank_enemy.gd" id="1_0rvtk"]
 [ext_resource type="Texture2D" uid="uid://bvqnam4bgjrmo" path="res://assets/Tank_byBatuhanK/redtank/left_move_Red-Sheet.png" id="1_jt7nm"]
@@ -194,7 +194,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0271l"]
-radius = 154.548
+radius = 194.165
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j56pf"]
 size = Vector2(37, 23)
@@ -204,30 +204,30 @@ size = Vector2(37, 7)
 
 [node name="red_tank_enemy" type="CharacterBody2D"]
 script = ExtResource("1_0rvtk")
+friction = 1000.0
+max_speed = 200.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("5_qyi1k")]
+max_health = 40
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_c65fi")
 animation = &"left movement"
 
 [node name="DetectionArea" type="Area2D" parent="."]
-visible = false
-collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-visible = false
 shape = SubResource("CircleShape2D_0271l")
 
-[node name="SturdyHitbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("6_2h3dg")]
-health = NodePath("../HealthComponent")
+[node name="SturdyHitbox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_2h3dg")]
+health_component = NodePath("../HealthComponent")
 
 [node name="body" type="CollisionShape2D" parent="SturdyHitbox"]
 position = Vector2(3.5, 5.5)
 shape = SubResource("RectangleShape2D_j56pf")
 
-[node name="CriticalHitbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("6_2h3dg")]
-health = NodePath("../HealthComponent")
+[node name="CriticalHitbox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_2h3dg")]
+health_component = NodePath("../HealthComponent")
 damage_multiplier = 2.0
 
 [node name="flag" type="CollisionShape2D" parent="CriticalHitbox"]

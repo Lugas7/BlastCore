@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends MovementCharacterBody2D
 
 var speed = 150
 var player = null
@@ -11,14 +11,20 @@ func _ready() -> void:
 	pass
 
 func _physics_process(_delta: float) -> void:
+	var direction = Vector2.ZERO
 	if player_chase:
-		var direction = (player.position - position).normalized()
-		player_left = direction.x < 0
-		position += direction * speed * _delta
-		$AnimatedSprite2D.play("left movement")
-		$AnimatedSprite2D.flip_h = !player_left
+		print("chase")
+		direction = (player.position - position).normalized()
+		
+		# player_left = direction.x < 0
+		# position += direction * speed * _delta
+		# $AnimatedSprite2D.play("left movement")
+		# $AnimatedSprite2D.flip_h = !player_left
+	_velocity(_delta, direction)
+	move_and_slide()
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	print("Player detected")
 	player = body
 	player_chase = true
 

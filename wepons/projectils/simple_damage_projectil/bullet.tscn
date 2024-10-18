@@ -1,27 +1,16 @@
 [gd_scene load_steps=5 format=3 uid="uid://cyxcyr4dxcmye"]
 
 [ext_resource type="Texture2D" uid="uid://dggl55k60evxt" path="res://assets/Bullet/Bullet.png" id="1_6tgqr"]
-[ext_resource type="PackedScene" uid="uid://kvhhtwrqygp5" path="res://projectils/projectil_componenets/simple_damage_area.tscn" id="2_utdjw"]
-
-[sub_resource type="GDScript" id="GDScript_f0njd"]
-script/source = "extends CharacterBody2D
-
-func _ready() -> void:
-	pass
-	#print(\"Bullet H, layer: \" + str(get_node(\"HitboxComponent\").get_collision_layer()) 
-	#+ \", mask value: \" + str(get_node(\"HitboxComponent\").get_collision_mask()))
-
-
-func _physics_process(_delta: float) -> void:
-	move_and_slide()
-"
+[ext_resource type="Script" path="res://wepons/projectils/simple_damage_projectil/bullet.gd" id="1_prf6u"]
+[ext_resource type="PackedScene" uid="uid://kvhhtwrqygp5" path="res://wepons/base_components/simple_damage_area.tscn" id="2_utdjw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lvbgf"]
 radius = 44.0
 
 [node name="Bullet" type="CharacterBody2D"]
 position = Vector2(64, 312)
-script = SubResource("GDScript_f0njd")
+collision_layer = 4
+script = ExtResource("1_prf6u")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.37, 0.37)
@@ -32,3 +21,5 @@ collision_layer = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SimpleDamageArea"]
 shape = SubResource("CircleShape2D_lvbgf")
+
+[connection signal="damage_dealt" from="SimpleDamageArea" to="." method="_on_simple_damage_area_damage_dealt"]
