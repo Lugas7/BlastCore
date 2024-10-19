@@ -7,7 +7,7 @@ var roomInstance
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var lastRoom = generateLevel(5)
+	var lastRoom = generateLevel(8)
 	
 	var rooms = lastRoom.allRooms()
 	for r in rooms:
@@ -43,7 +43,7 @@ func generateLevel(length: int) -> Rooms.Room:
 
 
 func generateLayout(length: int) -> Rooms.Room:
-	var size = 10
+	var size = length * 2
 	var emptyRow: Array[bool]
 	var freeTiles: Array[Array]
 	
@@ -70,7 +70,8 @@ func generateLayout(length: int) -> Rooms.Room:
 		while true:
 			# Try again if there is a dead end
 			if len(triedDirections) == 4:
-				return generateLayout(size)
+				destroyRooms(parentRoom)
+				return generateLayout(length)
 			
 			var dir = rng.randi_range(0, 3)
 			
@@ -131,7 +132,7 @@ func generateLayout(length: int) -> Rooms.Room:
 						
 					# Create the side room
 					if newX < size && newX >= 0 && newY < size && newY >= 0 && freeTiles[newY][newX]:
-						newRoom.newRoom(dir, newX, newY, "Side")
+						newRoom.newRoom(dir, newX, newY, "side")
 							
 						# Mark as occupied
 						freeTiles[newY][newX] = false
@@ -140,16 +141,38 @@ func generateLayout(length: int) -> Rooms.Room:
 	
 	var rooms = parentRoom.allRooms()
 	
-	# Turn about half of the side rooms into special rooms (shops, loot etc.)
+	
+		# Ensure that at least a few side rooms were created. If not, try again
 	var sideRooms = rooms.filter(func(r): return r.Type == "side")
-	if len(sideRooms) >= 1:
-		sideRooms.shuffle()
-		var specialRoomCount: int = len(sideRooms)/2 + randi_range(0, 1)
-		for i in range(specialRoomCount):
-			sideRooms[i].Type = "special"
+	if len(sideRooms) < length/3:
+		destroyRooms(parentRoom)
+		return generateLayout(length)
+	
+	
+	# Turn about half of the side rooms into special rooms (shops, loot etc.)
+	sideRooms.shuffle()
+	var specialRoomCount: int = len(sideRooms)/2
+	for i in range(specialRoomCount):
+		sideRooms[i].Type = "special"
+		
+	print("Side rooms: ", len(sideRooms), ", of which are special rooms: ", specialRoomCount)
+	
+	# Turn the rest into normal rooms
+	sideRooms = rooms.filter(func(r): return r.Type == "side")
+	for r in sideRooms:
+		r.Type = "normal"
 	
 	
 	return parentRoom
+
+
+func destroyRooms(room: Rooms.Room):
+	var allRooms = room.allRooms()
+	
+	for r in allRooms:
+		r.Neighboors = []
+		r = null
+
 
 func nextRoom(dir: int):
 	currentRoom = currentRoom.Neighboors[dir]
