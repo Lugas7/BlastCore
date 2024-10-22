@@ -16,12 +16,15 @@ func _physics_process(_delta: float) -> void:
 		print("chase")
 		direction = (player.position - position).normalized()
 		
-		# player_left = direction.x < 0
+		player_left = direction.x < 0
 		# position += direction * speed * _delta
-		# $AnimatedSprite2D.play("left movement")
-		# $AnimatedSprite2D.flip_h = !player_left
+		$AnimatedSprite2D.play("left movement")
+		$AnimatedSprite2D.flip_h = !player_left
 	_velocity(_delta, direction)
 	move_and_slide()
+
+@onready
+var hc = get_node("health_component")
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	print("Player detected")
