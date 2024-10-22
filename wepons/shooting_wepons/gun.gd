@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 	look_at(get_global_mouse_position())
 	pass
 
-var bulletScene = preload("res://bullet.tscn")
+var bulletScene = preload("res://wepons/projectils/simple_damage_projectil/bullet.tscn")
 
 func shoot():
 	if !isShooting:
@@ -28,10 +28,10 @@ func shoot():
 		
 		# Calculate the velocity based on the shooting direction and bullet speed
 		bullet.velocity = Vector2(cos(rotation)*BulletSpeed, sin(rotation)*BulletSpeed) + get_parent().velocity/2
-		#bullet.move_and_slide()
 		
 		# Add the bulet to the scene (usually as a child of the current scene)
 		get_parent().get_parent().add_child(bullet)
+
 		
 		await get_tree().create_timer(reloadTime).timeout
 		isShooting = false

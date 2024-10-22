@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cq7u3uk02wuv6"]
+[gd_scene load_steps=3 format=3 uid="uid://djw0dfrxnpur0"]
 
-[ext_resource type="Script" path="res://gun.gd" id="1_36lyj"]
+[ext_resource type="Script" path="res://wepons/shooting_wepons/gun.gd" id="1_36lyj"]
 [ext_resource type="Texture2D" uid="uid://dw4udbb6ayl6w" path="res://assets/gun/bullet.png" id="2_ol51x"]
 
 [node name="Gun" type="RigidBody2D"]
