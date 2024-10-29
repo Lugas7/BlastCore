@@ -612,6 +612,7 @@ texture_region_size = Vector2i(128, 128)
 16:6/0 = 0
 17:6/0 = 0
 18:6/0 = 0
+18:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
 22:6/0 = 0
 23:6/0 = 0
 24:6/0 = 0
@@ -637,6 +638,7 @@ texture_region_size = Vector2i(128, 128)
 16:7/0 = 0
 17:7/0 = 0
 18:7/0 = 0
+18:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
 22:7/0 = 0
 23:7/0 = 0
 24:7/0 = 0
@@ -826,10 +828,11 @@ texture_region_size = Vector2i(128, 128)
 7:3/0 = 0
 19:5/size_in_atlas = Vector2i(3, 3)
 19:5/0 = 0
+19:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-171.12, -42.4264, -107.48, -132.936, -16.9706, -173.948, 76.3675, -172.534, 125.865, -115.966, 161.22, -66.468, 159.806, 2.82843, 147.078, 108.894, 83.4386, 108.894, 64, 64, -64, 64, -87.6813, 108.894, -132.936, 107.48, -161.22, 46.669)
 
 [sub_resource type="TileSet" id="TileSet_o0a6k"]
 tile_size = Vector2i(128, 128)
-physics_layer_0/collision_layer = 4
+physics_layer_0/collision_layer = 1
 sources/3 = SubResource("TileSetAtlasSource_7equ8")
 sources/4 = SubResource("TileSetAtlasSource_01bvm")
 
@@ -1041,7 +1044,7 @@ texture_region_size = Vector2i(128, 128)
 26:6/0 = 0
 27:6/0 = 0
 0:7/0 = 0
-0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 6, -64, 7, 64, -64, 64)
+0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
 1:7/0 = 0
 2:7/0 = 0
 2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -64, 64, -64, 64, 64, -9, 64)
@@ -1712,7 +1715,9 @@ limit_right = 3328
 limit_bottom = 3328
 
 [node name="EntranceLayer" type="TileMapLayer" parent="."]
+position = Vector2(0, -8)
 scale = Vector2(0.999997, 0.990877)
+tile_map_data = PackedByteArray("AAAUAAAABAATAAUAAAAAAAUABAATAAUAAGAFABkABAATAAUAADAZABQABAATAAUAAFA=")
 tile_set = SubResource("TileSet_o0a6k")
 
 [node name="BaseMapLayer" type="TileMapLayer" parent="."]
@@ -1725,25 +1730,25 @@ tile_set = SubResource("TileSet_ync1j")
 position = Vector2(2688, 256)
 
 [node name="DoorRight" parent="." instance=ExtResource("3_73pjy")]
-position = Vector2(3072, 2688)
+position = Vector2(3072, 2654)
 rotation = 1.5708
 
 [node name="DoorDown" parent="." instance=ExtResource("3_73pjy")]
-position = Vector2(640, 3072)
+position = Vector2(642, 3034)
 rotation = 3.14159
 
 [node name="DoorLeft" parent="." instance=ExtResource("3_73pjy")]
-position = Vector2(256, 640)
+position = Vector2(257, 626)
 rotation = 4.71239
 
 [node name="DoorSpawnRight" parent="." instance=ExtResource("4_060iv")]
-position = Vector2(256, 704)
+position = Vector2(264, 693)
 
 [node name="DoorSpawnDown" parent="." instance=ExtResource("4_060iv")]
 position = Vector2(2624, 256)
 
 [node name="DoorSpawnLeft" parent="." instance=ExtResource("4_060iv")]
-position = Vector2(3072, 2624)
+position = Vector2(3069, 2591)
 
 [node name="DoorSpawnUp" parent="." instance=ExtResource("4_060iv")]
-position = Vector2(704, 3072)
+position = Vector2(702, 3029)
