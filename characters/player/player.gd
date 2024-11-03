@@ -2,10 +2,6 @@ extends CharacterBody2D
 class_name Player
 
 
-@onready
-var gun = get_node("Gun")
-
-var isDashing = false
 var xinput = 0
 var yinput = 0
 var xdir = 0
@@ -14,8 +10,8 @@ func _physics_process(_delta: float) -> void:
 	# print("layer " + str(get_collision_layer()))
 	# print("mask "+ str(get_collision_mask()))
 		#print("Player Area2D, layer: " + str(get_node("Area2D").get_collision_layer()) + ", layer value: " + str(get_node("Area2D").get_collision_mask()))
-	if Input.is_action_pressed("shoot"):
-		gun.shoot()
+	#if Input.is_action_pressed("shoot"):
+	#	gun.shoot()
 	move_and_slide()
 
 func setSpeed(speed):
@@ -24,17 +20,16 @@ func setSpeed(speed):
 	velocity.y = speed * ydir
 
 func updateDirection():
-	if isDashing == false:
-		xinput = Input.get_axis("ui_left", "ui_right")
-		yinput = Input.get_axis("ui_up", "ui_down")
-		
-		if xinput != 0 and yinput != 0:
-			var dir = atan2(yinput, xinput)
-			xdir = cos(dir)
-			ydir = sin(dir)	
-		else:
-			xdir = xinput
-			ydir = yinput
+	xinput = Input.get_axis("ui_left", "ui_right")
+	yinput = Input.get_axis("ui_up", "ui_down")
+	
+	if xinput != 0 and yinput != 0:
+		var dir = atan2(yinput, xinput)
+		xdir = cos(dir)
+		ydir = sin(dir)	
+	else:
+		xdir = xinput
+		ydir = yinput
 		
 	
 

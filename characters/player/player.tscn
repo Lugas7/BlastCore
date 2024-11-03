@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cdsxn8ypvjpq"]
+[gd_scene load_steps=11 format=3 uid="uid://cdsxn8ypvjpq"]
 
 [ext_resource type="Script" path="res://characters/player/player.gd" id="1_v2mqh"]
 [ext_resource type="Texture2D" uid="uid://bu5fn2xmoysms" path="res://assets/player_model/simple/simple_2.png" id="2_w0esc"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" path="res://states/state_machine.gd" id="4_0sg23"]
 [ext_resource type="Script" path="res://characters/player/dash_state.gd" id="5_shvip"]
 [ext_resource type="Script" path="res://characters/player/walk_state.gd" id="6_iis7t"]
+[ext_resource type="Script" path="res://characters/player/cannon_state.gd" id="7_8v1he"]
+[ext_resource type="PackedScene" uid="uid://bhhwsiq6npkcs" path="res://sword.tscn" id="8_ouqw3"]
+[ext_resource type="Script" path="res://characters/player/sword_state.gd" id="8_wrmgb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pev4g"]
 size = Vector2(129.5, 129)
@@ -27,17 +30,31 @@ position = Vector2(0, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_pev4g")
 
-[node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="Movement State machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_0sg23")
 initial_state = NodePath("WalkState")
 
-[node name="DashState" type="Node" parent="State Machine" node_paths=PackedStringArray("player")]
+[node name="DashState" type="Node" parent="Movement State machine" node_paths=PackedStringArray("player")]
 script = ExtResource("5_shvip")
 player = NodePath("../..")
 
-[node name="WalkState" type="Node" parent="State Machine" node_paths=PackedStringArray("player")]
+[node name="WalkState" type="Node" parent="Movement State machine" node_paths=PackedStringArray("player")]
 script = ExtResource("6_iis7t")
 player = NodePath("../..")
 
-[connection signal="transition" from="State Machine/DashState" to="State Machine" method="_on_state_transition"]
-[connection signal="transition" from="State Machine/WalkState" to="State Machine" method="_on_state_transition"]
+[node name="Attack State machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_0sg23")
+initial_state = NodePath("CannonState")
+
+[node name="CannonState" type="Node" parent="Attack State machine" node_paths=PackedStringArray("gun")]
+script = ExtResource("7_8v1he")
+gun = NodePath("../../Gun")
+
+[node name="SwordState" type="Node" parent="Attack State machine" node_paths=PackedStringArray("sword")]
+script = ExtResource("8_wrmgb")
+sword = NodePath("../../Sword")
+
+[node name="Sword" parent="." instance=ExtResource("8_ouqw3")]
+
+[connection signal="transition" from="Movement State machine/DashState" to="Movement State machine" method="_on_state_transition"]
+[connection signal="transition" from="Movement State machine/WalkState" to="Movement State machine" method="_on_state_transition"]

@@ -3,9 +3,8 @@
 [ext_resource type="Script" path="res://wepons/shooting_wepons/gun.gd" id="1_36lyj"]
 [ext_resource type="Texture2D" uid="uid://dw4udbb6ayl6w" path="res://assets/gun/bullet.png" id="2_ol51x"]
 
-[node name="Gun" type="RigidBody2D"]
+[node name="Gun" type="Node2D"]
 position = Vector2(560, 304)
-gravity_scale = 0.0
 script = ExtResource("1_36lyj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
