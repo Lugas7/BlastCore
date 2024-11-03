@@ -6,10 +6,10 @@ const DashTimeout = 0.5
 var dashTimeLeft
 
 func enter(last_state: State = null) -> void:
-	pass
+	gun.visible = true
 
 func exit() -> void:
-	pass
+	gun.visible = false
 
 func update(delta: float) -> void:
 	if Input.is_action_just_pressed("swap weapon"):

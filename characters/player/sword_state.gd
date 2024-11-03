@@ -11,3 +11,5 @@ func exit() -> void:
 func update(delta: float) -> void:
 	if Input.is_action_pressed("attack"):
 		sword.slash()
+	if Input.is_action_just_pressed("swap weapon"):
+		emit_signal("transition", "CannonState", self)
