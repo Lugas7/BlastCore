@@ -13,7 +13,7 @@ func _ready() -> void:
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	slashCDLeft -= delta
 
 func slash():

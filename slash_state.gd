@@ -3,10 +3,12 @@ class_name SlashState
 
 @export var slashArea: CollisionShape2D
 @export var swordSprite: Sprite2D
-const slashTime = 0.1
+@export var slashTime = 0.2
 var slashTimeLeft
 const slashDistance = PI/2
+var slashSpeed = 0
 
+# the sword abjects taht will slash
 @onready var sword = get_parent().get_parent()
 
 
@@ -21,13 +23,16 @@ func enter(last_state: State = null) -> void:
 	sword.rotate(-slashDistance/2)
 	slashArea.disabled = false
 	swordSprite.visible = true
+	slashSpeed = slashDistance/slashTime
+	print("slash enterd")
 
 func exit() -> void:
 	slashArea.disabled = true
 	swordSprite.visible = false
 
 func update(delta: float) -> void:
-	sword.rotate(delta/slashTime*slashDistance)
+	# change the sword rotation to slash
+	sword.rotate(slashSpeed * delta)
 	slashTimeLeft -= delta
 	if slashTimeLeft <= 0:
 		emit_signal("transition", "NoneState", self)
