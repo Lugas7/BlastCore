@@ -10,7 +10,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	var direction = Vector2.ZERO
 	if player_chase:
-		print("chase")
+		#print("chase")
 		direction = (player.position - position).normalized()
 		
 		player_left = direction.x < 0
