@@ -24,7 +24,6 @@ func enter(last_state: State = null) -> void:
 	slashArea.disabled = false
 	swordSprite.visible = true
 	slashSpeed = slashDistance/slashTime
-	print("slash enterd")
 
 func exit() -> void:
 	slashArea.disabled = true
