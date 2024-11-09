@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://dyy4guo8hgmq1"]
+
+[ext_resource type="Script" path="res://SwirlEnemy.gd" id="1_hhp76"]
+[ext_resource type="Script" path="res://states/state_machine.gd" id="2_i3emv"]
+[ext_resource type="Script" path="res://wandering_state.gd" id="3_5a112"]
+[ext_resource type="Script" path="res://following_state.gd" id="4_xfhvu"]
+[ext_resource type="Texture2D" uid="uid://c2l0ji611pik" path="res://assets/player_model/simple/simple_enemy.png" id="4_yxvb3"]
+[ext_resource type="PackedScene" uid="uid://bhhwsiq6npkcs" path="res://sword.tscn" id="6_uea7x"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3krvi"]
+radius = 480.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6etcr"]
+radius = 64.0
+
+[node name="SwirlEnemy" type="CharacterBody2D"]
+platform_floor_layers = 0
+script = ExtResource("1_hhp76")
+
+[node name="DetectionZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+shape = SubResource("CircleShape2D_3krvi")
+
+[node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_i3emv")
+initial_state = NodePath("WanderingState")
+
+[node name="WanderingState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("swirlEnemy")]
+script = ExtResource("3_5a112")
+swirlEnemy = NodePath("../..")
+
+[node name="FollowingState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("swirlEnemy", "detectionZone", "sword")]
+script = ExtResource("4_xfhvu")
+swirlEnemy = NodePath("../..")
+detectionZone = NodePath("../../DetectionZone")
+sword = NodePath("../../Sword")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-3, 3)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_yxvb3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6etcr")
+
+[node name="Sword" parent="." node_paths=PackedStringArray("swordSprite") instance=ExtResource("6_uea7x")]
+swordSprite = NodePath("EnemySwordSprite")
+
+[node name="EnemySwordSprite" type="Sprite2D" parent="Sword"]
+
+[connection signal="body_entered" from="DetectionZone" to="MovementStateMachine/WanderingState" method="NodeEnteredDetection"]
+[connection signal="body_entered" from="DetectionZone" to="MovementStateMachine/FollowingState" method="NodeEnteredArea"]
+[connection signal="body_exited" from="DetectionZone" to="MovementStateMachine/FollowingState" method="NodeExitedArea"]

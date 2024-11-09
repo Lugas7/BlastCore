@@ -10,11 +10,13 @@
 [ext_resource type="PackedScene" uid="uid://bhhwsiq6npkcs" path="res://sword.tscn" id="8_ouqw3"]
 [ext_resource type="Script" path="res://characters/player/sword_state.gd" id="8_wrmgb"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pev4g"]
-size = Vector2(129.5, 129)
+[sub_resource type="CircleShape2D" id="CircleShape2D_bge51"]
+radius = 64.0
 
 [node name="Player 2D" type="CharacterBody2D" groups=["Player"]]
-collision_layer = 4
+collision_layer = 5
+collision_mask = 5
+collision_priority = 5.0
 motion_mode = 1
 script = ExtResource("1_v2mqh")
 
@@ -28,7 +30,8 @@ texture = ExtResource("2_w0esc")
 position = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_pev4g")
+position = Vector2(8, 0)
+shape = SubResource("CircleShape2D_bge51")
 
 [node name="Movement State machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_0sg23")
@@ -55,6 +58,7 @@ script = ExtResource("8_wrmgb")
 sword = NodePath("../../Sword")
 
 [node name="Sword" parent="." instance=ExtResource("8_ouqw3")]
+position = Vector2(8, 0)
 
 [connection signal="transition" from="Movement State machine/DashState" to="Movement State machine" method="_on_state_transition"]
 [connection signal="transition" from="Movement State machine/WalkState" to="Movement State machine" method="_on_state_transition"]
