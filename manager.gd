@@ -5,8 +5,12 @@ const Rooms = preload("res://room_class.gd")
 var currentRoom
 var roomInstance
 
+var player
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	player = self.get_node("Player")
+	
 	var lastRoom = generateLevel(8)
 	
 	var rooms = lastRoom.allRooms()
@@ -181,13 +185,32 @@ func nextRoom(dir: int):
 
 # Load a room
 func loadRoom(room: Rooms.Room, fromDir: int):
+	
+	# Remove all projectiles from the previous room
+	var playerProjectiles =  get_tree().get_nodes_in_group("Player_projectile")
+	for p in playerProjectiles:
+		p.queue_free()
+	
+	
+	# Remove the previous room
 	if roomInstance:
 		roomInstance.queue_free()
 	
+	# Load the room
 	var roomScene = load(room.RoomFile)
-	
 	roomInstance = roomScene.instantiate()
 	self.add_child(roomInstance)
+	
+	# Remove previous camera
+	var prevCam = player.get_node("Camera2D")
+	if prevCam:
+		player.remove_child(prevCam)
+	
+	# Set the camera to follow the player
+	var camera = roomInstance.get_node("Camera2D")
+	roomInstance.remove_child(camera)
+	player.add_child(camera)
+	camera.enabled = true
 
 	var directions = ["Right", "Up", "Left", "Down"]
 	for i in range(4):
@@ -195,8 +218,9 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 		# Spawn the player at the the door
 		if i == fromDir:
 			var spawnPoint = roomInstance.get_node("DoorSpawn" + directions[i])
-			var player = roomInstance.get_node("Player")
 			player.position = spawnPoint.position
+			camera.global_position = player.position
+			
 			player.set_collision_layer(1)
 			player.set_collision_mask(1)
 		

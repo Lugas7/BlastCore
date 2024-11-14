@@ -1,21 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://bit70cxmmemnf"]
+[gd_scene load_steps=4 format=4 uid="uid://bit70cxmmemnf"]
 
-[ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://characters/player/player.tscn" id="1_cxmjy"]
-[ext_resource type="PackedScene" path="res://wall_tile.tscn" id="2_5w2ws"]
-[ext_resource type="PackedScene" path="res://door.tscn" id="3_4j7mp"]
-[ext_resource type="PackedScene" path="res://door_spawnpoint.tscn" id="4_x0vco"]
+[ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_5w2ws"]
+[ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="3_4j7mp"]
+[ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_x0vco"]
 
 [node name="Node2D" type="Node2D"]
-
-[node name="Player" parent="." instance=ExtResource("1_cxmjy")]
-position = Vector2(768, 512)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(0.8, 0.8)
-limit_left = 0
-limit_top = 0
-limit_right = 1536
-limit_bottom = 1024
 
 [node name="TileMapLayer" parent="." instance=ExtResource("2_5w2ws")]
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAADAAcAAAAAAAAAAAACAAcAAAAAAAAAAAABAAcAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAALAAEAAAAAAAAAAAALAAIAAAAAAAAAAAALAAMAAAAAAAAAAAALAAQAAAAAAAAAAAALAAUAAAAAAAAAAAALAAYAAAAAAAAAAAALAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAA=")
@@ -46,3 +35,11 @@ position = Vector2(1280, 512)
 
 [node name="DoorSpawnUp" parent="." instance=ExtResource("4_x0vco")]
 position = Vector2(768, 768)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(768, 512)
+zoom = Vector2(0.8, 0.8)
+limit_left = 0
+limit_top = 0
+limit_right = 1536
+limit_bottom = 1024
