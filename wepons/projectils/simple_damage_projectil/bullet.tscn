@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://kvhhtwrqygp5" path="res://wepons/base_components/simple_damage_area.tscn" id="2_utdjw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lvbgf"]
-radius = 44.0
+radius = 24.0
 
 [node name="Bullet" type="CharacterBody2D" groups=["Player_projectile"]]
 position = Vector2(64, 312)
@@ -17,7 +17,7 @@ scale = Vector2(0.37, 0.37)
 texture = ExtResource("1_6tgqr")
 
 [node name="SimpleDamageArea" parent="." instance=ExtResource("2_utdjw")]
-collision_layer = 5
+collision_layer = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SimpleDamageArea"]
 shape = SubResource("CircleShape2D_lvbgf")

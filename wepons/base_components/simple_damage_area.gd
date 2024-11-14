@@ -6,9 +6,9 @@ signal damage_dealt()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	pass
 	# set_collision_layer(3)
 	# set_collision_mask(1)
-	print("bullet")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

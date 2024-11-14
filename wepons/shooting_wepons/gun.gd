@@ -1,4 +1,5 @@
-extends RigidBody2D
+extends Node2D
+class_name Gun
 
 const TotalForce = -500
 const BulletSpeed = 750
@@ -14,7 +15,6 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	look_at(get_global_mouse_position())
-	pass
 
 var bulletScene = preload("res://wepons/projectils/simple_damage_projectil/bullet.tscn")
 

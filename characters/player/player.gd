@@ -1,16 +1,7 @@
 extends CharacterBody2D
+class_name Player
 
 
-const SPEED = 500.0
-const JUMP_VELOCITY = -400.0
-const dashTime = 0.3
-const DASHSPEED = 1600
-const DashTimeout = 0.5
-
-@onready
-var gun = get_node("Gun")
-
-var isDashing = false
 var xinput = 0
 var yinput = 0
 var xdir = 0
@@ -22,36 +13,29 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_dash"):
 		#print("Player, layer: " + str(get_collision_layer()) + ", layer value: " + str(get_collision_mask()))
 		#print("Player Area2D, layer: " + str(get_node("Area2D").get_collision_layer()) + ", layer value: " + str(get_node("Area2D").get_collision_mask()))
-		beginDash()
-	if !isDashing:
-		if Input.is_action_pressed("shoot"):
-			gun.shoot()
-		velocity.x = SPEED * xdir
-		velocity.y = SPEED * ydir
+    beginDash()
+	#if Input.is_action_pressed("shoot"):
+	#	gun.shoot()
 	move_and_slide()
 
-func updateMovement():
-	if isDashing == false:
-		xinput = Input.get_axis("ui_left", "ui_right")
-		yinput = Input.get_axis("ui_up", "ui_down")
-		
-		if xinput != 0 and yinput != 0:
-			var dir = atan2(yinput, xinput)
-			xdir = cos(dir)
-			ydir = sin(dir)	
-		else:
-			xdir = xinput
-			ydir = yinput
+func setSpeed(speed):
+	updateDirection()
+	velocity.x = speed * xdir
+	velocity.y = speed * ydir
+
+func updateDirection():
+	xinput = Input.get_axis("ui_left", "ui_right")
+	yinput = Input.get_axis("ui_up", "ui_down")
+	
+	if xinput != 0 and yinput != 0:
+		var dir = atan2(yinput, xinput)
+		xdir = cos(dir)
+		ydir = sin(dir)	
+	else:
+		xdir = xinput
+		ydir = yinput
 		
 	
-
-func beginDash():
-	isDashing = true
-	velocity.x = DASHSPEED * xdir
-	velocity.y = DASHSPEED * ydir
-	await get_tree().create_timer(dashTime).timeout
-	isDashing = false
-	await get_tree().create_timer(DashTimeout).timeout
 
 #var bulletScene = preload("res://bullet.tscn")
 #
