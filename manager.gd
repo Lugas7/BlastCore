@@ -2,10 +2,13 @@ extends Node2D
 
 const Rooms = preload("res://room_class.gd")
 
+
+var player
+
 var currentRoom
 var roomInstance
 
-var player
+var enemies_left = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,27 +19,35 @@ func _ready() -> void:
 	var rooms = lastRoom.allRooms()
 	for r in rooms:
 		if r.Type == "start":
+			r.Cleared = true
 			currentRoom = r
 			loadRoom(r, 0)
-			break
+		elif r.Type == "special":
+			r.Cleared = true
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
+	pass
+
+
+func _on_enemy_died():
+	enemies_left -= 1
+	print("died, enemies left: ", enemies_left)
 	if !currentRoom.Cleared:
-		# Check how many enemies are left
-		var enemies =  get_tree().get_nodes_in_group("Enemy")
-		if(len(enemies)) == 0:
-			print("Cleared")
+		if(enemies_left) == 0:
 			currentRoom.Cleared = true
-			
-			# Unlock the doors
-			var doors = get_tree().get_nodes_in_group("Door")
-			for d in doors:
-				d.locked = false
-				var doorSprite = d.get_node("Sprite2D")
-				doorSprite.texture = load("res://assets/door.png")
-			
+			unlockDoors()
+
+
+func unlockDoors():
+	if currentRoom.Cleared:
+		# Unlock the doors
+		var doors = get_tree().get_nodes_in_group("Door")
+		for d in doors:
+			d.locked = false
+			var doorSprite = d.get_node("Sprite2D")
+			doorSprite.texture = load("res://assets/door.png")
+
 
 func generateLevel(length: int) -> Rooms.Room:
 	var lastRoom = generateLayout(length)
@@ -213,6 +224,24 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 	roomInstance = roomScene.instantiate()
 	self.add_child(roomInstance)
 	
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	var enemy_count = len(enemies)
+	
+	# If there are no enemies it means it is a special room
+	if enemy_count == 0:
+		room.Cleared = true
+	
+	if !room.Cleared:
+		# If the room is not cleared, listen to enemy death signal
+		enemies_left = enemy_count
+		for enemy in enemies:
+			enemy.connect("enemy_died", _on_enemy_died)
+	else:
+		# If the room is cleared, remove all enemies and unlock the doors
+		for enemy in enemies:
+			enemy.queue_free()
+		unlockDoors()
+	
 	# Remove previous camera
 	var prevCam = player.get_node("Camera2D")
 	if prevCam:
@@ -243,3 +272,5 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 		
 		if !room.Neighboors[i]:
 			door.queue_free()
+			
+	

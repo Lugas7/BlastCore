@@ -4,8 +4,6 @@ var player = null
 var player_chase = false
 var player_left = true
 
-signal died
-
 func _ready() -> void:
 	add_to_group("Enemy")
 	pass
@@ -13,7 +11,6 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	var direction = Vector2.ZERO
 	if player_chase:
-		print("chase")
 		direction = (player.position - position).normalized()
 		
 		player_left = direction.x < 0
@@ -38,9 +35,9 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 
 
 
+signal enemy_died
 func _on_health_component_died() -> void:
-	print("Enemy died")
-	emit_signal("died")
+	emit_signal("enemy_died")
 	queue_free()
 
 

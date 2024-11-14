@@ -31,9 +31,9 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 
 
 
-
+signal enemy_died
 func _on_health_component_died() -> void:
-	print("Enemy died")
+	emit_signal("enemy_died")
 	queue_free()
 
 
