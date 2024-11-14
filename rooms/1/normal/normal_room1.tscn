@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=4 uid="uid://dfkths6p5cdxb"]
+[gd_scene load_steps=5 format=4 uid="uid://dfkths6p5cdxb"]
 
 [ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_y2v1o"]
 [ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="3_2b8la"]
+[ext_resource type="PackedScene" uid="uid://ou7iicbe68hh" path="res://characters/enemies/basic_enemy/red_tank_enemy.tscn" id="4_gol6i"]
 [ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_sjqcm"]
 
 [node name="Node2D" type="Node2D"]
@@ -43,3 +44,9 @@ limit_left = 0
 limit_top = 0
 limit_right = 3328
 limit_bottom = 3328
+
+[node name="red_tank_enemy" parent="." groups=["Enemy"] instance=ExtResource("4_gol6i")]
+position = Vector2(598, 1666)
+
+[node name="red_tank_enemy2" parent="." instance=ExtResource("4_gol6i")]
+position = Vector2(2615, 1694)

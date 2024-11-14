@@ -4,7 +4,10 @@ var player = null
 var player_chase = false
 var player_left = true
 
+signal died
+
 func _ready() -> void:
+	add_to_group("Enemy")
 	pass
 
 func _physics_process(_delta: float) -> void:
@@ -37,6 +40,7 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 
 func _on_health_component_died() -> void:
 	print("Enemy died")
+	emit_signal("died")
 	queue_free()
 
 

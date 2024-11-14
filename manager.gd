@@ -22,8 +22,21 @@ func _ready() -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
-
+	
+	if !currentRoom.Cleared:
+		# Check how many enemies are left
+		var enemies =  get_tree().get_nodes_in_group("Enemy")
+		if(len(enemies)) == 0:
+			print("Cleared")
+			currentRoom.Cleared = true
+			
+			# Unlock the doors
+			var doors = get_tree().get_nodes_in_group("Door")
+			for d in doors:
+				d.locked = false
+				var doorSprite = d.get_node("Sprite2D")
+				doorSprite.texture = load("res://assets/door.png")
+			
 
 func generateLevel(length: int) -> Rooms.Room:
 	var lastRoom = generateLayout(length)
@@ -62,7 +75,7 @@ func generateLayout(length: int) -> Rooms.Room:
 	rng.randomize()
 	
 	var parentRoom = Rooms.Room.create("start", size/2, size/2)
-	parentRoom.Cleared = true
+	#parentRoom.Cleared = true
 	freeTiles[size/2][size/2] = false
 	
 	# Create the room layout
@@ -190,7 +203,6 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 	var playerProjectiles =  get_tree().get_nodes_in_group("Player_projectile")
 	for p in playerProjectiles:
 		p.queue_free()
-	
 	
 	# Remove the previous room
 	if roomInstance:

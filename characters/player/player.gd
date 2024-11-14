@@ -31,7 +31,6 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func updateMovement():
-	print(self.position)
 	if isDashing == false:
 		xinput = Input.get_axis("ui_left", "ui_right")
 		yinput = Input.get_axis("ui_up", "ui_down")
