@@ -2,6 +2,7 @@ extends Node2D
 
 const Rooms = preload("res://room_class.gd")
 
+var roomCount = 5
 
 var player
 
@@ -14,7 +15,7 @@ var enemies_left = 0
 func _ready() -> void:
 	player = self.get_node("Player")
 	
-	var lastRoom = generateLevel(8)
+	var lastRoom = generateLevel(roomCount)
 	
 	var rooms = lastRoom.allRooms()
 	for r in rooms:
@@ -32,7 +33,7 @@ func _process(delta: float) -> void:
 
 func _on_enemy_died():
 	enemies_left -= 1
-	print("died, enemies left: ", enemies_left)
+	print("enemy died, enemies left: ", enemies_left)
 	if !currentRoom.Cleared:
 		if(enemies_left) == 0:
 			currentRoom.Cleared = true
@@ -51,7 +52,6 @@ func unlockDoors():
 
 func generateLevel(length: int) -> Rooms.Room:
 	var lastRoom = generateLayout(length)
-	
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	
@@ -71,7 +71,7 @@ func generateLevel(length: int) -> Rooms.Room:
 
 
 func generateLayout(length: int) -> Rooms.Room:
-	var size = length * 2
+	var size = length * 3
 	var emptyRow: Array[bool]
 	var freeTiles: Array[Array]
 	
@@ -139,7 +139,7 @@ func generateLayout(length: int) -> Rooms.Room:
 				freeTiles[newY][newX] = false
 				
 				# Maybe place a side room
-				if (r != 0 && r != size-1) && rng.randi_range(0, 1)==1:
+				if type != "boss" && (r != 0 && r != size-1) && rng.randi_range(0, 1)==1:
 					dir = rng.randi_range(0, 3)
 						
 					addX = 0
@@ -161,7 +161,7 @@ func generateLayout(length: int) -> Rooms.Room:
 					# Create the side room
 					if newX < size && newX >= 0 && newY < size && newY >= 0 && freeTiles[newY][newX]:
 						newRoom.newRoom(dir, newX, newY, "side")
-							
+						
 						# Mark as occupied
 						freeTiles[newY][newX] = false
 				
@@ -170,7 +170,7 @@ func generateLayout(length: int) -> Rooms.Room:
 	var rooms = parentRoom.allRooms()
 	
 	
-		# Ensure that at least a few side rooms were created. If not, try again
+	# Ensure that at least a few side rooms were created. If not, try again
 	var sideRooms = rooms.filter(func(r): return r.Type == "side")
 	if len(sideRooms) < length/3:
 		destroyRooms(parentRoom)
@@ -195,16 +195,21 @@ func generateLayout(length: int) -> Rooms.Room:
 
 
 func destroyRooms(room: Rooms.Room):
-	var allRooms = room.allRooms()
-	
-	for r in allRooms:
+	var rooms = room.allRooms()
+	for r in rooms:
 		r.Neighboors = []
-		r = null
 
 
 func nextRoom(dir: int):
 	currentRoom = currentRoom.Neighboors[dir]
+	
+	player.set_collision_layer(0)
+	player.set_collision_mask(0)
+	
 	loadRoom(currentRoom, dir)
+	
+	#await get_tree().create_timer(1).timeout
+	
 
 
 # Load a room
@@ -215,7 +220,7 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 	for p in playerProjectiles:
 		p.queue_free()
 	
-	# Remove the previous room
+	# Delete the previous room
 	if roomInstance:
 		roomInstance.queue_free()
 	
@@ -252,7 +257,7 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 	roomInstance.remove_child(camera)
 	player.add_child(camera)
 	camera.enabled = true
-
+	
 	var directions = ["Right", "Up", "Left", "Down"]
 	for i in range(4):
 		
@@ -260,7 +265,7 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 		if i == fromDir:
 			var spawnPoint = roomInstance.get_node("DoorSpawn" + directions[i])
 			player.position = spawnPoint.position
-			camera.global_position = player.position
+			camera.global_position = player.global_position
 			
 			player.set_collision_layer(1)
 			player.set_collision_mask(1)
@@ -272,5 +277,6 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 		
 		if !room.Neighboors[i]:
 			door.queue_free()
+		else:
+			door.visible = true
 			
-	

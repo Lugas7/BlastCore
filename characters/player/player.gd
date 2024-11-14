@@ -20,7 +20,7 @@ func _physics_process(_delta: float) -> void:
 	# print("mask "+ str(get_collision_mask()))
 	updateMovement()
 	if Input.is_action_just_pressed("ui_dash"):
-		print("Player, layer: " + str(get_collision_layer()) + ", layer value: " + str(get_collision_mask()))
+		#print("Player, layer: " + str(get_collision_layer()) + ", layer value: " + str(get_collision_mask()))
 		#print("Player Area2D, layer: " + str(get_node("Area2D").get_collision_layer()) + ", layer value: " + str(get_node("Area2D").get_collision_mask()))
 		beginDash()
 	if !isDashing:
