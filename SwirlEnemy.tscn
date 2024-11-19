@@ -16,7 +16,7 @@
 radius = 480.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsw73"]
-size = Vector2(144, 40)
+size = Vector2(160, 40)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6etcr"]
 radius = 81.5843
@@ -51,8 +51,8 @@ detectionZone = NodePath("../../DetectionZone")
 sword = NodePath("../../Sword")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-3, 3)
-scale = Vector2(0.5, 0.5)
+position = Vector2(-3.5, 3)
+scale = Vector2(0.65, 0.652)
 texture = ExtResource("4_yxvb3")
 
 [node name="Sword" parent="." node_paths=PackedStringArray("swordCollisionShape", "sprite") instance=ExtResource("6_uea7x")]
@@ -62,9 +62,10 @@ sprite = NodePath("Sprite2D")
 
 [node name="SimpleDamageArea" parent="Sword" instance=ExtResource("8_w5o1q")]
 collision_layer = 1
+collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SimpleDamageArea"]
-position = Vector2(152, -4)
+position = Vector2(176, 0)
 shape = SubResource("RectangleShape2D_jsw73")
 
 [node name="Sprite2D" type="Sprite2D" parent="Sword"]
@@ -77,7 +78,8 @@ texture = ExtResource("7_cfnuv")
 [node name="HealthComponent" parent="." instance=ExtResource("9_fnvm4")]
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("10_okt2i")]
-collision_mask = 1
+collision_layer = 33
+collision_mask = 32
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
@@ -85,6 +87,7 @@ shape = SubResource("CircleShape2D_6etcr")
 
 [node name="Damage on body" parent="." instance=ExtResource("8_w5o1q")]
 collision_layer = 1
+collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Damage on body"]
 shape = SubResource("CircleShape2D_6etcr")

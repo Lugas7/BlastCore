@@ -20,7 +20,7 @@ radius = 64.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_51lus"]
 radius = 71.44
-height = 675.36
+height = 640.0
 
 [node name="Player 2D" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 5
@@ -39,7 +39,6 @@ texture = ExtResource("2_w0esc")
 position = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(8, 0)
 shape = SubResource("CircleShape2D_bge51")
 
 [node name="Movement State machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
@@ -73,19 +72,19 @@ collision_mask = 1
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxComponent2"]
-position = Vector2(8, 0)
 shape = SubResource("CircleShape2D_bge51")
 
 [node name="Sword" parent="." node_paths=PackedStringArray("swordCollisionShape", "sprite") instance=ExtResource("8_ouqw3")]
-position = Vector2(8, 0)
 swordCollisionShape = NodePath("Slash Damage2/CollisionShape2D")
 sprite = NodePath("Sprite2D")
 
 [node name="Slash Damage2" parent="Sword" instance=ExtResource("10_iab8d")]
-collision_layer = 1
+position = Vector2(8, 0)
+collision_layer = 32
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Slash Damage2"]
-position = Vector2(168, -4.88498e-15)
+position = Vector2(160, 4.88498e-15)
 rotation = 1.57066
 scale = Vector2(0.3, 0.3)
 shape = SubResource("CapsuleShape2D_51lus")
@@ -99,9 +98,9 @@ scale = Vector2(0.6, 0.6)
 texture = ExtResource("11_lkkfv")
 
 [node name="HealthBar" parent="." instance=ExtResource("14_h74gl")]
-offset_left = -88.0
+offset_left = -120.0
 offset_top = 80.0
-offset_right = 152.0
+offset_right = 120.0
 offset_bottom = 88.0
 
 [connection signal="transition" from="Movement State machine/DashState" to="Movement State machine" method="_on_state_transition"]
