@@ -2,7 +2,7 @@ extends Node2D
 class_name Gun
 
 const TotalForce = -500
-const BulletSpeed = 500
+const BulletSpeed = 750
 const Distance = 150
 const reloadTime = 0.3
 var isShooting = false
@@ -27,7 +27,7 @@ func shoot():
 		bullet.position = get_parent().position + Vector2(cos(rotation)*Distance, sin(rotation)*Distance)
 		
 		# Calculate the velocity based on the shooting direction and bullet speed
-		bullet.velocity = Vector2(cos(rotation)*BulletSpeed, sin(rotation)*BulletSpeed) + get_parent().velocity/2
+		bullet.velocity = Vector2(cos(rotation)*BulletSpeed, sin(rotation)*BulletSpeed)
 		
 		# Add the bulet to the scene (usually as a child of the current scene)
 		get_parent().get_parent().add_child(bullet)
