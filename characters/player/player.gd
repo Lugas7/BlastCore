@@ -6,7 +6,20 @@ var xinput = 0
 var yinput = 0
 var xdir = 0
 var ydir = 0
+
+const damageTimeout = 0.5
+var damageTimeoutLeft = 0
+
+@onready var hc: HealthComponent = get_node("HealthComponent")
+
 func _physics_process(_delta: float) -> void:
+	if damageTimeoutLeft > 0:
+		damageTimeoutLeft -= _delta
+		hc.set_invincible(damageTimeoutLeft <= 0)
+	else:
+		hc.set_invincible(false)
+		damageTimeoutLeft = damageTimeout
+		
 	move_and_slide()
 
 func setSpeed(speed):
@@ -28,19 +41,13 @@ func updateDirection():
 		
 	
 
-#var bulletScene = preload("res://bullet.tscn")
-#
-#func shoot():
-	#print("shooting")
-	## Instance the bullet
-	#var bullet = bulletScene.instantiate()
-	##add_child(bullet)
-#
-	## Set the position of the bullet to the player's position
-	#bullet.position = position + Vector2()
-	#
-	## Calculate the velocity based on the shooting direction and bullet speed
-	#bullet.linear_velocity = Vector2(100, 0)
-	#
-	## Add the bulet to the scene (usually as a child of the current scene)
-	#get_parent().add_child(bullet)
+
+func _on_health_component_died() -> void:
+	print("Enemy died")
+	queue_free()
+
+
+func _on_health_component_health_changed(current_health: int) -> void:
+	hc.set_invincible(true)
+	damageTimeoutLeft = damageTimeout
+	print("Health changed For the player!!!!!! HERE!!!!!: ", current_health)

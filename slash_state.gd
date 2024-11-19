@@ -1,7 +1,7 @@
 extends State
 class_name SlashState
 
-@export var slashArea: CollisionShape2D
+#@export var slashArea: CollisionShape2D
 @export var slashTime = 0.2
 @export var sword: Sword
 var slashTimeLeft
@@ -10,8 +10,9 @@ var slashSpeed = 0
 
 # the sword abjects taht will slash
 #@onready var sword: Sword = get_parent().get_parent()
-@onready var swordSprite = sword.swordSprite
+@onready var swordSprite = sword.sprite
 
+@onready var slashArea = sword.swordCollisionShape
 
 
 

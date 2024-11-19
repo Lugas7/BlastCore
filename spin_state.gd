@@ -1,21 +1,22 @@
 extends State
 class_name SpinState
 
-@export var slashArea: CollisionShape2D
+#export var slashArea: CollisionShape2D
 @export var slashTime = 0.2
 @export var sword: Sword
 var slashTimeLeft
-var slashSpeed = 5
+var slashSpeed = 2
 
 # the sword abjects taht will slash
 #@onready var sword: Sword = get_parent().get_parent()
-@onready var swordSprite = sword.swordSprite
-
+@onready var swordSprite = sword.sprite
+@onready var slashArea = sword.swordCollisionShape
 
 
 
 func enter(last_state: State = null) -> void:
-	print(swordSprite)
+	print(slashArea.get_parent().collision_layer)
+	print(slashArea.get_parent().collision_mask)
 	slashArea.disabled = false
 	swordSprite.visible = true
 

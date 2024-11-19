@@ -227,6 +227,7 @@ position = Vector2(3.5, 5.5)
 shape = SubResource("RectangleShape2D_j56pf")
 
 [node name="CriticalHitbox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_2h3dg")]
+collision_mask = 1
 health_component = NodePath("../HealthComponent")
 damage_multiplier = 2.0
 
