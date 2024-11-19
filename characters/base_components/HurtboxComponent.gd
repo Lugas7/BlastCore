@@ -22,3 +22,7 @@ func _on_area_entered(area: Area2D) -> void:
 			health_component.take_damage(damage)
 	else:
 		print("hit area does not have get_damage method")
+
+
+func _on_area_exit(area: Area2D) -> void:
+	pass # Replace with function body.
