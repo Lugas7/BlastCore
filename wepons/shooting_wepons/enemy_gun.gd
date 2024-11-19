@@ -24,6 +24,9 @@ func shoot():
 		
 		bullet.scale = Vector2(0.5, 0.5)  # Adjust scale values as needed (e.g., 0.5 for half size)
 		
+		bullet.get_node("Sprite2D").modulate = Color(1, 0, 0)  # Set to red
+
+		
 		# Calculate the velocity based on the shooting direction and bullet speed
 		bullet.velocity = Vector2(cos(rotation)*BulletSpeed, sin(rotation)*BulletSpeed) + get_parent().velocity/2
 		
