@@ -4,13 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="2_a1mtj"]
 [ext_resource type="Texture2D" uid="uid://fj5yvljqsu3q" path="res://assets/player_model/simple/simple_3.png" id="3_foo30"]
 [ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="4_d1ut1"]
-[ext_resource type="PackedScene" uid="uid://djw0dfrxnpur0" path="res://wepons/shooting_wepons/gun.tscn" id="4_wxa5x"]
+[ext_resource type="PackedScene" uid="uid://c5cdjdajvwv3w" path="res://wepons/shooting_wepons/enemy_gun.tscn" id="4_r2hwc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j7wq0"]
 radius = 21.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wr0a5"]
-radius = 268.186
+radius = 384.012
 
 [node name="shooter_enemy" type="CharacterBody2D"]
 script = ExtResource("1_4e10h")
@@ -23,8 +23,8 @@ position = Vector2(3.8147e-06, 0)
 scale = Vector2(0.183594, 0.18)
 texture = ExtResource("3_foo30")
 
-[node name="Gun" parent="." instance=ExtResource("4_wxa5x")]
-position = Vector2(10, 0)
+[node name="EnemyGun" parent="." instance=ExtResource("4_r2hwc")]
+position = Vector2(1, 0)
 scale = Vector2(0.3, 0.3)
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_d1ut1")]
@@ -37,7 +37,6 @@ shape = SubResource("CircleShape2D_j7wq0")
 [node name="detection" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection"]
-position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_wr0a5")
 
 [connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]

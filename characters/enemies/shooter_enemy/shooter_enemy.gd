@@ -4,24 +4,33 @@ extends CharacterBody2D
 @export var detection_range: float = 500.0  # Shooting range
 @export var bullet_speed: float = 500.0  # Speed of bullets
 @export var gun_offset: Vector2 = Vector2(0, 0)  # Offset for gun position
+@export var chase_speed: float = 50.0  # Slow movement speed for chasing
 
 var player = null
 var can_shoot = true  # Shooting cooldown control
 
 @onready var hc = get_node("health_component")  # Health Component
 @onready var sprite = $Sprite2D  # Reference to the Sprite2D node
-@onready var gun = $Gun  # Reference to the Gun node
+@onready var gun = $EnemyGun  # Reference to the Gun node
 
 func _ready() -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	# Check if player is in range and shoot
-	if player and is_in_range():
-		aim_at_player()
-		if can_shoot:
-			shoot()
+	var direction = Vector2.ZERO
 
+	# Check if the player is in range and aim/shoot
+	if player:
+		if is_in_range():
+			aim_at_player()
+			if can_shoot:
+				shoot()
+
+		# Move slowly toward the player
+		direction = (player.position - position).normalized()
+
+	# Apply slow movement
+	velocity = direction * chase_speed
 	move_and_slide()
 
 func is_in_range() -> bool:
@@ -30,7 +39,6 @@ func is_in_range() -> bool:
 func aim_at_player() -> void:
 	# Rotate the gun to aim at the player
 	if player:
-		var direction = (player.position - (position + gun_offset)).normalized()
 		gun.look_at(player.position)
 
 func shoot() -> void:
