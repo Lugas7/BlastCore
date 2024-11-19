@@ -10,7 +10,34 @@ var ydir = 0
 const damageTimeout = 0.5
 var damageTimeoutLeft = 0
 
-@onready var hc: HealthComponent = get_node("HealthComponent")
+var hc: HealthComponent
+
+var upgradeList = [
+	"fast_shot",
+	"fast_bullets",
+	"bullet_bounce",
+	"big_bullets",
+	
+	"big_sword",
+	"fast_swing",
+	
+	"dash_through",
+	"fast_dash"
+]
+
+var upgrades: Dictionary
+
+#@onready var hc: HealthComponent = get_node("HealthComponent")
+func _ready() -> void:
+	hc = get_node("HealthComponent")
+	
+	for u in upgradeList:
+		upgrades[u] = false
+		
+	#upgrades["fast_bullets"] = true
+	#upgrades["fast_shot"] = true
+	upgrades["big_bullets"] = true
+	upgrades["bullet_bounce"] = true
 
 func _physics_process(_delta: float) -> void:
 	if damageTimeoutLeft > 0:
