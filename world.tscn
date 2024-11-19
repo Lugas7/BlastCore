@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ses781sho4c5"]
+[gd_scene load_steps=4 format=3 uid="uid://ses781sho4c5"]
 
 [ext_resource type="Script" path="res://manager.gd" id="1_7rgc7"]
 [ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://characters/player/player.tscn" id="2_hynhf"]
+[ext_resource type="PackedScene" uid="uid://dyy4guo8hgmq1" path="res://SwirlEnemy.tscn" id="3_dsi0m"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_7rgc7")
@@ -10,3 +11,5 @@ script = ExtResource("1_7rgc7")
 format = 2
 
 [node name="Player" parent="." instance=ExtResource("2_hynhf")]
+
+[node name="SwirlEnemy" parent="." instance=ExtResource("3_dsi0m")]

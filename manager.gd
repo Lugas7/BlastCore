@@ -203,8 +203,8 @@ func destroyRooms(room: Rooms.Room):
 func nextRoom(dir: int):
 	currentRoom = currentRoom.Neighboors[dir]
 	
-	player.set_collision_layer(0)
-	player.set_collision_mask(0)
+	#player.set_collision_layer(0)
+	#player.set_collision_mask(0)
 	
 	loadRoom(currentRoom, dir)
 	
@@ -265,10 +265,9 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 		if i == fromDir:
 			var spawnPoint = roomInstance.get_node("DoorSpawn" + directions[i])
 			player.position = spawnPoint.position
+			#player.set_collision_layer(1)
+			#player.set_collision_mask(1)
 			camera.global_position = player.global_position
-			
-			player.set_collision_layer(1)
-			player.set_collision_mask(1)
 		
 		
 		# Delete the doors to non-existent rooms, or se

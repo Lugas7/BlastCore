@@ -6,16 +6,14 @@ extends Area2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	set_collision_layer(1)
-	set_collision_mask(3)
+	pass
 
 
 func _on_area_entered(area: Area2D) -> void:
+	print("area entered in hurtboxcomponent")
 	if area.has_method("get_damage"):
 		var damage = area.get_damage()
 		damage = int(damage * damage_multiplier)
 		if health_component:
 			print("here")
 			health_component.take_damage(damage)
-	else:
-		pass #print("hit area does not have get_damage method")

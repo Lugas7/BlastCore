@@ -6,7 +6,10 @@ signal damage_dealt()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	print("collision layer then mask for simple damage area:")
+	print(collision_layer)
+	print(collision_mask)
+	print()
 	# set_collision_layer(3)
 	# set_collision_mask(1)
 
