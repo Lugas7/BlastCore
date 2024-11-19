@@ -34,8 +34,8 @@ func _ready() -> void:
 	for u in upgradeList:
 		upgrades[u] = false
 		
-	#upgrades["fast_bullets"] = true
-	#upgrades["fast_shot"] = true
+	upgrades["fast_bullets"] = true
+	upgrades["fast_shot"] = true
 	upgrades["big_bullets"] = true
 	upgrades["bullet_bounce"] = true
 
