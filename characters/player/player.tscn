@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cdsxn8ypvjpq"]
+[gd_scene load_steps=17 format=3 uid="uid://cdsxn8ypvjpq"]
 
 [ext_resource type="Script" path="res://characters/player/player.gd" id="1_v2mqh"]
 [ext_resource type="Texture2D" uid="uid://bu5fn2xmoysms" path="res://assets/player_model/simple/simple_2.png" id="2_w0esc"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="10_khj1d"]
 [ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="11_ckwiq"]
 [ext_resource type="Texture2D" uid="uid://bopba5b5h4j4c" path="res://assets/sword/sword.png" id="11_lkkfv"]
+[ext_resource type="PackedScene" uid="uid://b2bfiyicgwo1f" path="res://health_bar.tscn" id="14_h74gl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bge51"]
 radius = 64.0
@@ -96,6 +97,12 @@ position = Vector2(152, 7.62939e-06)
 rotation = 1.57082
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("11_lkkfv")
+
+[node name="HealthBar" parent="." instance=ExtResource("14_h74gl")]
+offset_left = -88.0
+offset_top = 80.0
+offset_right = 152.0
+offset_bottom = 88.0
 
 [connection signal="transition" from="Movement State machine/DashState" to="Movement State machine" method="_on_state_transition"]
 [connection signal="transition" from="Movement State machine/WalkState" to="Movement State machine" method="_on_state_transition"]
