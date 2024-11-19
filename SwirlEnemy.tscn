@@ -16,7 +16,7 @@
 radius = 480.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsw73"]
-size = Vector2(160, 40)
+size = Vector2(168, 40)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6etcr"]
 radius = 81.5843
@@ -65,7 +65,7 @@ collision_layer = 1
 collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SimpleDamageArea"]
-position = Vector2(176, 0)
+position = Vector2(180, 0)
 shape = SubResource("RectangleShape2D_jsw73")
 
 [node name="Sprite2D" type="Sprite2D" parent="Sword"]
@@ -96,6 +96,10 @@ shape = SubResource("CircleShape2D_6etcr")
 shape = SubResource("CircleShape2D_cewqb")
 
 [node name="HealthBar" parent="." instance=ExtResource("11_jhos0")]
+offset_left = -120.0
+offset_top = 112.0
+offset_right = 120.0
+offset_bottom = 117.0
 
 [connection signal="body_entered" from="DetectionZone" to="MovementStateMachine/WanderingState" method="NodeEnteredDetection"]
 [connection signal="body_entered" from="DetectionZone" to="MovementStateMachine/FollowingState" method="NodeEnteredArea"]
