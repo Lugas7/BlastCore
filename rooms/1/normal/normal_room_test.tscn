@@ -1,41 +1,40 @@
-[gd_scene load_steps=5 format=4 uid="uid://dfkths6p5cdxb"]
+[gd_scene load_steps=4 format=4 uid="uid://cfxgsdvp2n80c"]
 
-[ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_y2v1o"]
-[ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="3_2b8la"]
-[ext_resource type="PackedScene" uid="uid://ou7iicbe68hh" path="res://characters/enemies/basic_enemy/red_tank_enemy.tscn" id="4_gol6i"]
-[ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_sjqcm"]
+[ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="1_m1eqi"]
+[ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="2_m6p8k"]
+[ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="3_bj0j6"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="TileMapLayer" parent="." instance=ExtResource("2_y2v1o")]
+[node name="TileMapLayer" parent="." instance=ExtResource("1_m1eqi")]
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA8AAAAAAAAAAAAAABAAAAAAAAAAAAAAABEAAAAAAAAAAAAAABIAAAAAAAAAAAAAABMAAAAAAAAAAAAAABQAAAAAAAAAAAAAABUAAAAAAAAAAAAAABYAAAAAAAAAAAAAABcAAAAAAAAAAAAAABgAAAAAAAAAAAAAABkAAAAAAAAAAAABABkAAAAAAAAAAAACABkAAAAAAAAAAAADABkAAAAAAAAAAAAEABkAAAAAAAAAAAAFABkAAAAAAAAAAAAGABkAAAAAAAAAAAAHABkAAAAAAAAAAAAIABkAAAAAAAAAAAAJABkAAAAAAAAAAAAKABkAAAAAAAAAAAALABkAAAAAAAAAAAAMABkAAAAAAAAAAAANABkAAAAAAAAAAAAOABkAAAAAAAAAAAAPABkAAAAAAAAAAAAQABkAAAAAAAAAAAARABkAAAAAAAAAAAASABkAAAAAAAAAAAATABkAAAAAAAAAAAAUABkAAAAAAAAAAAAVABkAAAAAAAAAAAAWABkAAAAAAAAAAAAXABkAAAAAAAAAAAAYABkAAAAAAAAAAAAZABkAAAAAAAAAAAAZABgAAAAAAAAAAAAZABcAAAAAAAAAAAAZABYAAAAAAAAAAAAZABUAAAAAAAAAAAAZABQAAAAAAAAAAAAZABMAAAAAAAAAAAAZABIAAAAAAAAAAAAZABEAAAAAAAAAAAAZABAAAAAAAAAAAAAZAA8AAAAAAAAAAAAZAA4AAAAAAAAAAAAZAA0AAAAAAAAAAAAZAAwAAAAAAAAAAAAZAAsAAAAAAAAAAAAZAAoAAAAAAAAAAAAZAAkAAAAAAAAAAAAZAAgAAAAAAAAAAAAZAAcAAAAAAAAAAAAZAAYAAAAAAAAAAAAZAAUAAAAAAAAAAAAZAAQAAAAAAAAAAAAZAAMAAAAAAAAAAAAZAAIAAAAAAAAAAAAZAAEAAAAAAAAAAAAZAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAXAAAAAAAAAAAAAAAWAAAAAAAAAAAAAAAVAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAATAAAAAAAAAAAAAAASAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAMAAwAAAAAAAAAAAAMAA0AAAAAAAAAAAANAA0AAAAAAAAAAAANAAwAAAAAAAAAAAANAAsAAAAAAAAAAAAMAAsAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAANAA4AAAAAAAAAAAAMAA4AAAAAAAAAAAAMAA8AAAAAAAAAAAANAA8AAAAAAAAAAAAOAA0AAAAAAAAAAAAOAAwAAAAAAAAAAAAPAAwAAAAAAAAAAAAPAA0AAAAAAAAAAAAQAAwAAAAAAAAAAAAQAA0AAAAAAAAAAAALAAwAAAAAAAAAAAALAA0AAAAAAAAAAAAKAA0AAAAAAAAAAAAKAAwAAAAAAAAAAAAJAAwAAAAAAAAAAAAJAA0AAAAAAAAAAAAMAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAMABAAAAAAAAAAAAANABAAAAAAAAAAAAARAA0AAAAAAAAAAAASAA0AAAAAAAAAAAASAAwAAAAAAAAAAAARAAwAAAAAAAAAAAANAAcAAAAAAAAAAAANAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAAMAAcAAAAAAAAAAAAIAAwAAAAAAAAAAAAHAAwAAAAAAAAAAAAHAA0AAAAAAAAAAAAIAA0AAAAAAAAAAAAMABEAAAAAAAAAAAAMABIAAAAAAAAAAAANABIAAAAAAAAAAAANABEAAAAAAAAAAAA=")
 
-[node name="DoorUp" parent="." instance=ExtResource("3_2b8la")]
-position = Vector2(2688, 256)
+[node name="DoorUp" parent="." instance=ExtResource("2_m6p8k")]
+position = Vector2(744, 350)
 
-[node name="DoorRight" parent="." instance=ExtResource("3_2b8la")]
-position = Vector2(3072, 2688)
+[node name="DoorRight" parent="." instance=ExtResource("2_m6p8k")]
+position = Vector2(1242, 791)
 rotation = 1.5708
 
-[node name="DoorDown" parent="." instance=ExtResource("3_2b8la")]
-position = Vector2(640, 3072)
+[node name="DoorDown" parent="." instance=ExtResource("2_m6p8k")]
+position = Vector2(633, 1115)
 rotation = 3.14159
 
-[node name="DoorLeft" parent="." instance=ExtResource("3_2b8la")]
+[node name="DoorLeft" parent="." instance=ExtResource("2_m6p8k")]
 position = Vector2(256, 640)
 rotation = 4.71239
 
-[node name="DoorSpawnRight" parent="." instance=ExtResource("4_sjqcm")]
-position = Vector2(256, 704)
+[node name="DoorSpawnRight" parent="." instance=ExtResource("3_bj0j6")]
+position = Vector2(343, 704)
 
-[node name="DoorSpawnDown" parent="." instance=ExtResource("4_sjqcm")]
-position = Vector2(2624, 256)
+[node name="DoorSpawnDown" parent="." instance=ExtResource("3_bj0j6")]
+position = Vector2(674, 505)
 
-[node name="DoorSpawnLeft" parent="." instance=ExtResource("4_sjqcm")]
-position = Vector2(3072, 2624)
+[node name="DoorSpawnLeft" parent="." instance=ExtResource("3_bj0j6")]
+position = Vector2(1054, 727)
 
-[node name="DoorSpawnUp" parent="." instance=ExtResource("4_sjqcm")]
-position = Vector2(704, 3072)
+[node name="DoorSpawnUp" parent="." instance=ExtResource("3_bj0j6")]
+position = Vector2(684, 960)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(512, 384)
@@ -44,9 +43,3 @@ limit_left = 0
 limit_top = 0
 limit_right = 3328
 limit_bottom = 3328
-
-[node name="red_tank_enemy" parent="." groups=["Enemy"] instance=ExtResource("4_gol6i")]
-position = Vector2(598, 1666)
-
-[node name="red_tank_enemy2" parent="." instance=ExtResource("4_gol6i")]
-position = Vector2(2615, 1694)

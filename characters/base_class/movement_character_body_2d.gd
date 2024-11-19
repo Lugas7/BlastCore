@@ -68,7 +68,3 @@ func _velocity(delta: float, direction: Vector2, acceleration_multiplyer: float 
 # 			if velocity.length() > instant_speed:
 # 				velocity = velocity.normalized() * instant_speed
 # 			velocity -= velocity.normalized() * instant_speed * friction * delta
-
-
-
-

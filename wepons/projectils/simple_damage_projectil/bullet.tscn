@@ -7,7 +7,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_lvbgf"]
 radius = 24.0
 
-[node name="Bullet" type="CharacterBody2D"]
+[node name="Bullet" type="CharacterBody2D" groups=["Player_projectile"]]
 position = Vector2(64, 312)
 collision_layer = 4
 script = ExtResource("1_prf6u")

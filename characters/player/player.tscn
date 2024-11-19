@@ -13,7 +13,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pev4g"]
 size = Vector2(129.5, 129)
 
-[node name="Player 2D" type="CharacterBody2D" groups=["Player"]]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 4
 motion_mode = 1
 script = ExtResource("1_v2mqh")

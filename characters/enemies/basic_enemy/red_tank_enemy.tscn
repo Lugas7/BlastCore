@@ -226,9 +226,8 @@ health_component = NodePath("../HealthComponent")
 position = Vector2(3.5, 5.5)
 shape = SubResource("RectangleShape2D_j56pf")
 
-[node name="CriticalHitbox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_2h3dg")]
-health_component = NodePath("../HealthComponent")
-damage_multiplier = 2.0
+[node name="CriticalHitbox" parent="." instance=ExtResource("6_2h3dg")]
+script = null
 
 [node name="flag" type="CollisionShape2D" parent="CriticalHitbox"]
 position = Vector2(3.5, -9.5)

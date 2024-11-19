@@ -18,6 +18,9 @@ config/icon="res://icon.svg"
 [global_group]
 
 Player=""
+Player_projectile=""
+Enemy=""
+Door=""
 
 [input]
 

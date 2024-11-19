@@ -8,9 +8,6 @@ extends Area2D
 func _ready() -> void:
 	set_collision_layer(1)
 	set_collision_mask(3)
-	print(get_collision_layer())
-	print(get_collision_mask())
-	print(str(health_component))
 
 
 func _on_area_entered(area: Area2D) -> void:
@@ -21,4 +18,4 @@ func _on_area_entered(area: Area2D) -> void:
 			print("here")
 			health_component.take_damage(damage)
 	else:
-		print("hit area does not have get_damage method")
+		pass #print("hit area does not have get_damage method")
