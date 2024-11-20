@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhdbkmeyvdk2f"]
+
+[ext_resource type="Script" path="res://characters/enemies/light_dash_enemy/light_dash_enemy.gd" id="1_ic5v7"]
+[ext_resource type="Texture2D" uid="uid://ci4812vhp5gbm" path="res://assets/player_model/simple/simple_1.png" id="1_yl7t2"]
+[ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="2_guihv"]
+[ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="4_i0fqy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xl36w"]
+radius = 279.088
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gkesi"]
+radius = 21.2132
+
+[node name="light_dash_enemy" type="CharacterBody2D"]
+script = ExtResource("1_ic5v7")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_guihv")]
+max_health = 30
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, -1)
+scale = Vector2(0.21125, 0.224375)
+texture = ExtResource("1_yl7t2")
+
+[node name="Detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
+shape = SubResource("CircleShape2D_xl36w")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_i0fqy")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_gkesi")
+
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
+[connection signal="body_entered" from="Detection" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Detection" to="." method="_on_area_2d_body_exited"]

@@ -17,3 +17,4 @@ func _on_area_entered(area: Area2D) -> void:
 		if health_component:
 			print("here")
 			health_component.take_damage(damage)
+
