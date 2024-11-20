@@ -1,10 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ses781sho4c5"]
+[gd_scene load_steps=4 format=3 uid="uid://ses781sho4c5"]
 
-[ext_resource type="Script" path="res://generate_level.gd" id="1_7rgc7"]
-[ext_resource type="PackedScene" uid="uid://ou7iicbe68hh" path="res://characters/enemies/basic_enemy/red_tank_enemy.tscn" id="2_ui01w"]
-[ext_resource type="PackedScene" uid="uid://cmg4bq5rn4gk" path="res://characters/enemies/dashing_enemy/DashingEnemy.tscn" id="4_4u1de"]
-[ext_resource type="PackedScene" uid="uid://dhdbkmeyvdk2f" path="res://characters/enemies/light_dash_enemy/light_dash_enemy.tscn" id="4_fx56u"]
-[ext_resource type="PackedScene" uid="uid://bukrwwxniru1s" path="res://characters/enemies/shooter_enemy/shooter_enemy.tscn" id="5_g8op4"]
+[ext_resource type="Script" path="res://manager.gd" id="1_7rgc7"]
+[ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://characters/player/player.tscn" id="2_hynhf"]
+[ext_resource type="PackedScene" uid="uid://dyy4guo8hgmq1" path="res://SwirlEnemy.tscn" id="3_dsi0m"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_7rgc7")
@@ -12,18 +10,6 @@ script = ExtResource("1_7rgc7")
 [node name="TileMap" type="TileMap" parent="."]
 format = 2
 
-[node name="red_tank_enemy" parent="." instance=ExtResource("2_ui01w")]
-position = Vector2(995, 494)
-disable_mode = 2
+[node name="Player" parent="." instance=ExtResource("2_hynhf")]
 
-[node name="dashing_enemy" parent="." instance=ExtResource("4_4u1de")]
-position = Vector2(995, 123)
-disable_mode = 2
-collision_layer = 5
-collision_mask = 5
-
-[node name="light_dash_enemy" parent="." instance=ExtResource("4_fx56u")]
-position = Vector2(833, 306)
-
-[node name="shooter_enemy" parent="." instance=ExtResource("5_g8op4")]
-position = Vector2(838, 410)
+[node name="SwirlEnemy" parent="." instance=ExtResource("3_dsi0m")]

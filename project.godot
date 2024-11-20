@@ -18,6 +18,9 @@ config/icon="res://icon.svg"
 [global_group]
 
 Player=""
+Player_projectile=""
+Enemy=""
+Door=""
 
 [input]
 
@@ -71,9 +74,5 @@ attack={
 
 [layer_names]
 
-2d_physics/layer_1="player"
-2d_physics/layer_2="enemy"
-2d_physics/layer_3="player_projectil"
-2d_physics/layer_4="enemy_projectil"
-2d_physics/layer_6="hitbox"
-2d_physics/layer_7="healthbox"
+2d_physics/layer_6="Enemy Hitbox"
+2d_physics/layer_7="Player Hitbox"

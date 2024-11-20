@@ -1,46 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhhwsiq6npkcs"]
+[gd_scene load_steps=6 format=3 uid="uid://bhhwsiq6npkcs"]
 
 [ext_resource type="Script" path="res://sword.gd" id="1_wb3n2"]
-[ext_resource type="PackedScene" uid="uid://kvhhtwrqygp5" path="res://wepons/base_components/simple_damage_area.tscn" id="2_206vu"]
 [ext_resource type="Script" path="res://states/state_machine.gd" id="3_e2s51"]
 [ext_resource type="Script" path="res://slash_state.gd" id="4_d7ry8"]
 [ext_resource type="Script" path="res://none_state.gd" id="5_8e1xi"]
-[ext_resource type="Texture2D" uid="uid://bopba5b5h4j4c" path="res://assets/sword/sword.png" id="6_mr0nh"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4xevj"]
-radius = 71.44
-height = 675.36
+[ext_resource type="Script" path="res://spin_state.gd" id="6_o8ggk"]
 
 [node name="Sword" type="Node2D" node_paths=PackedStringArray("stateMachine", "slashState")]
 script = ExtResource("1_wb3n2")
 stateMachine = NodePath("StateMachine")
 slashState = NodePath("StateMachine/SlashState")
 
-[node name="Slash Damage" parent="." instance=ExtResource("2_206vu")]
-collision_layer = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Slash Damage"]
-position = Vector2(144, 1.86265e-09)
-rotation = 1.57066
-scale = Vector2(0.3, 0.3)
-shape = SubResource("CapsuleShape2D_4xevj")
-disabled = true
-
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_e2s51")
 initial_state = NodePath("NoneState")
 
-[node name="SlashState" type="Node" parent="StateMachine" node_paths=PackedStringArray("slashArea", "swordSprite")]
+[node name="SlashState" type="Node" parent="StateMachine" node_paths=PackedStringArray("sword")]
 script = ExtResource("4_d7ry8")
-slashArea = NodePath("../../Slash Damage/CollisionShape2D")
-swordSprite = NodePath("../../SwordSprite")
+sword = NodePath("../..")
 
 [node name="NoneState" type="Node" parent="StateMachine"]
 script = ExtResource("5_8e1xi")
 
-[node name="SwordSprite" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(152, 0)
-rotation = 1.57082
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("6_mr0nh")
+[node name="SpinState" type="Node" parent="StateMachine" node_paths=PackedStringArray("sword")]
+script = ExtResource("6_o8ggk")
+sword = NodePath("../..")
