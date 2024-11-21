@@ -8,6 +8,10 @@ class Room:
 	var X: int
 	var Y: int
 	
+	var Upgrade: String
+	var UpgradePrice: int
+	var UpgradeTaken: bool
+	
 	# Neighbooring rooms
 	var Neighboors: Array
 	var Cleared: bool

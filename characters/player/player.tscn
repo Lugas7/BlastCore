@@ -84,7 +84,7 @@ sprite = NodePath("Sprite2D")
 collision_layer = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Slash Damage2"]
-position = Vector2(168, -4.88498e-15)
+position = Vector2(167, 1)
 rotation = 1.57066
 scale = Vector2(0.3, 0.3)
 shape = SubResource("CapsuleShape2D_51lus")

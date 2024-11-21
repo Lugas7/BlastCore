@@ -39,6 +39,9 @@ func _on_enemy_died():
 			currentRoom.Cleared = true
 			unlockDoors()
 
+func _on_upgrade_bought():
+	print("upgrade bought")
+	currentRoom.UpgradeTaken = true
 
 func unlockDoors():
 	if currentRoom.Cleared:
@@ -57,8 +60,24 @@ func generateLevel(length: int) -> Rooms.Room:
 	
 	var allRooms = lastRoom.allRooms()
 	
+	var availableUpgrades = preload("res://upgradeList.gd").UpgradeList
+	
 	# Assign a file for each room
 	for r in allRooms:
+		# Assign an upgrade if the room is special
+		if r.Type == "special":
+			var len = len(availableUpgrades)
+			var index = rng.randi_range(0, len-1)
+			var upgrade = availableUpgrades[index]
+			r.Upgrade = upgrade
+			r.UpgradeTaken = false
+			r.UpgradePrice = 100
+			availableUpgrades.remove_at(index)
+		else:
+			r.Upgrade = ""
+			r.UpgradeTaken = true
+			r.UpgradePrice = 0
+		
 		var path = "rooms/1/"+r.Type
 		var dir = DirAccess.open(path)
 		if dir:
@@ -202,14 +221,10 @@ func destroyRooms(room: Rooms.Room):
 
 func nextRoom(dir: int):
 	currentRoom = currentRoom.Neighboors[dir]
-	
-	#player.set_collision_layer(0)
-	#player.set_collision_mask(0)
-	
 	loadRoom(currentRoom, dir)
 	
-	#await get_tree().create_timer(1).timeout
-	
+
+
 
 
 # Load a room
@@ -228,6 +243,20 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 	var roomScene = load(room.RoomFile)
 	roomInstance = roomScene.instantiate()
 	self.add_child(roomInstance)
+	
+	# Initialize the powerup if special
+	if room.Type == "special":
+		var upgrade = roomInstance.get_node("Upgrade")
+		upgrade.connect("upgrade_bought", _on_upgrade_bought)
+		if room.UpgradeTaken:
+			print("asdf")
+			upgrade.queue_free()
+		else:
+			upgrade.upgrade = room.Upgrade
+			upgrade.price = room.UpgradePrice
+			var label = upgrade.get_node("Label")
+			label.text = upgrade.upgrade
+		
 	
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	var enemy_count = len(enemies)

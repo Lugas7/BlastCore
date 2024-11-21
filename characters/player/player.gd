@@ -1,6 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
+var gold = 0
 
 var xinput = 0
 var yinput = 0
@@ -12,32 +13,24 @@ var damageTimeoutLeft = 0
 
 var hc: HealthComponent
 
-var upgradeList = [
-	"fast_shot",
-	"fast_bullets",
-	"bullet_bounce",
-	"big_bullets",
-	
-	"big_sword",
-	"fast_swing",
-	
-	"dash_through",
-	"fast_dash"
-]
+const upgradeList = preload("res://upgradeList.gd").UpgradeList
 
 var upgrades: Dictionary
 
 #@onready var hc: HealthComponent = get_node("HealthComponent")
 func _ready() -> void:
+	gold = 110
 	hc = get_node("HealthComponent")
 	
 	for u in upgradeList:
 		upgrades[u] = false
 		
-	upgrades["fast_bullets"] = true
-	upgrades["fast_shot"] = true
-	upgrades["big_bullets"] = true
-	upgrades["bullet_bounce"] = true
+	#upgrades["fast_bullets"] = true
+	#upgrades["fast_shot"] = true
+	#upgrades["big_bullets"] = true
+	#upgrades["bullet_bounce"] = true
+	upgrades["fast_swing"] = true
+	upgrades["big_sword"] = true
 
 func _physics_process(_delta: float) -> void:
 	if damageTimeoutLeft > 0:
