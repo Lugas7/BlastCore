@@ -5,6 +5,7 @@ const Rooms = preload("res://room_class.gd")
 var roomCount = 5
 
 var player
+var camera
 
 var currentRoom
 var roomInstance
@@ -14,6 +15,7 @@ var enemies_left = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = self.get_node("Player")
+	camera = player.get_node("Camera")
 	
 	var lastRoom = generateLevel(roomCount)
 	
@@ -275,16 +277,14 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 			enemy.queue_free()
 		unlockDoors()
 	
-	# Remove previous camera
-	var prevCam = player.get_node("Camera2D")
-	if prevCam:
-		player.remove_child(prevCam)
+	# Prepare the camera
+	var corner1 = roomInstance.get_node("RoomCorner1").position
+	var corner2 = roomInstance.get_node("RoomCorner2").position
+	camera.limit_left = corner1.x
+	camera.limit_right = corner2.x
+	camera.limit_top = corner1.y
+	camera.limit_bottom = corner2.y
 	
-	# Set the camera to follow the player
-	var camera = roomInstance.get_node("Camera2D")
-	roomInstance.remove_child(camera)
-	player.add_child(camera)
-	camera.enabled = true
 	
 	var directions = ["Right", "Up", "Left", "Down"]
 	for i in range(4):
