@@ -31,7 +31,6 @@ func slash():
 		scale = swordScaleUpgraded if upgrades["big_sword"] else swordScale
 		slashCDLeft = slashCDUpgraded if upgrades["fast_swing"] else slashCD
 		
-		#slashCDLeft = slashCD
 		stateMachine._on_state_transition("SlashState", null)
 
 @onready var spinState: SpinState = get_node("StateMachine/SpinState")

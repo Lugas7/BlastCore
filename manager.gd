@@ -191,7 +191,7 @@ func generateLayout(length: int) -> Rooms.Room:
 	
 	# Ensure that at least a few side rooms were created. If not, try again
 	var sideRooms = rooms.filter(func(r): return r.Type == "side")
-	if len(sideRooms) < length/3:
+	if len(sideRooms) < length/2:
 		destroyRooms(parentRoom)
 		return generateLayout(length)
 	
@@ -249,13 +249,12 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 		var upgrade = roomInstance.get_node("Upgrade")
 		upgrade.connect("upgrade_bought", _on_upgrade_bought)
 		if room.UpgradeTaken:
-			print("asdf")
 			upgrade.queue_free()
 		else:
 			upgrade.upgrade = room.Upgrade
 			upgrade.price = room.UpgradePrice
 			var label = upgrade.get_node("Label")
-			label.text = upgrade.upgrade
+			label.text = upgrade.upgrade + "\n " + str(upgrade.price)
 		
 	
 	var enemies = get_tree().get_nodes_in_group("Enemy")

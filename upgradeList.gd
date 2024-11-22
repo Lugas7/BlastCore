@@ -1,14 +1,25 @@
 extends Node
 
+const u_fast_shot = "fast_shot"
+const u_fast_bullets = "fast_bullets"
+const u_bullet_bounce = "bullet_bounce"
+const u_big_bullets = "big_bullets"
+
+const u_big_sword = "big_sword"
+const u_fast_swing = "fast_swing"
+	
+const u_dash_through = "dash_through"
+const u_fast_dash = "fast_dash"
+
 const UpgradeList = [
-	"fast_shot",
-	"fast_bullets",
-	"bullet_bounce",
-	"big_bullets",
+	u_fast_shot,
+	u_fast_bullets,
+	u_bullet_bounce,
+	u_big_bullets,
 	
-	"big_sword",
-	"fast_swing",
+	u_big_sword,
+	u_fast_swing,
 	
-	"dash_through",
-	"fast_dash"
+	u_dash_through,
+	u_fast_dash
 ]

@@ -7,7 +7,7 @@ var isShooting = false
 
 
 const BulletSpeed = 750
-const BulletSpeedUpgraded = 1250
+const BulletSpeedUpgraded = 1500
 
 const ReloadTime = 0.5
 const ReloadTimeUpgraded = 0.3
