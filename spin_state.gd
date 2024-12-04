@@ -17,11 +17,12 @@ var slashSpeed = 2
 func enter(last_state: State = null) -> void:
 	print(slashArea.get_parent().collision_layer)
 	print(slashArea.get_parent().collision_mask)
-	slashArea.disabled = false
+	#slashArea.disabled = false
 	swordSprite.visible = true
 
 func exit() -> void:
-	slashArea.disabled = true
+	#slashArea.disabled = true # for some reason seting the slash area 
+	#to disabled then re enabling it doesn't work so to work around this I am not setting disabled value at all
 	swordSprite.visible = false
 
 func update(delta: float) -> void:

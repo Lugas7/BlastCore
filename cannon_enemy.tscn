@@ -1,0 +1,88 @@
+[gd_scene load_steps=14 format=3 uid="uid://d2i8xel1lj7dv"]
+
+[ext_resource type="Script" path="res://cannon_enemy.gd" id="1_8iiru"]
+[ext_resource type="Script" path="res://states/state_machine.gd" id="2_ewh6d"]
+[ext_resource type="Script" path="res://wandering_state_for_cannon.gd" id="3_iduuo"]
+[ext_resource type="Script" path="res://shooting_state.gd" id="4_eqkxi"]
+[ext_resource type="Texture2D" uid="uid://c2l0ji611pik" path="res://assets/player_model/simple/simple_enemy.png" id="5_jnj4a"]
+[ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="6_l2jb0"]
+[ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="7_lv8rj"]
+[ext_resource type="PackedScene" uid="uid://kvhhtwrqygp5" path="res://wepons/base_components/simple_damage_area.tscn" id="8_q0nur"]
+[ext_resource type="PackedScene" uid="uid://b2bfiyicgwo1f" path="res://health_bar.tscn" id="9_1r76e"]
+[ext_resource type="PackedScene" uid="uid://djw0dfrxnpur0" path="res://wepons/shooting_wepons/gun.tscn" id="10_pdrq7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3krvi"]
+radius = 1448.02
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6etcr"]
+radius = 48.6621
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cewqb"]
+radius = 40.7922
+
+[node name="CannonEnemy" type="CharacterBody2D"]
+platform_floor_layers = 0
+script = ExtResource("1_8iiru")
+
+[node name="DetectionZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+visible = false
+shape = SubResource("CircleShape2D_3krvi")
+
+[node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_ewh6d")
+initial_state = NodePath("WanderingState")
+
+[node name="WanderingState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("3_iduuo")
+enemy = NodePath("../..")
+
+[node name="AttackingState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("enemy", "detectionZone", "gun")]
+script = ExtResource("4_eqkxi")
+enemy = NodePath("../..")
+detectionZone = NodePath("../../DetectionZone")
+gun = NodePath("../../Gun")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-3.5, 3)
+scale = Vector2(0.3, 0.301)
+texture = ExtResource("5_jnj4a")
+
+[node name="HealthComponent" parent="." instance=ExtResource("6_l2jb0")]
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("7_lv8rj")]
+collision_layer = 0
+collision_mask = 32
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_6etcr")
+
+[node name="Damage on body" parent="." instance=ExtResource("8_q0nur")]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Damage on body"]
+shape = SubResource("CircleShape2D_6etcr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cewqb")
+
+[node name="HealthBar" parent="." instance=ExtResource("9_1r76e")]
+offset_left = -120.0
+offset_top = 112.0
+offset_right = 120.0
+offset_bottom = 117.0
+
+[node name="Gun" parent="." instance=ExtResource("10_pdrq7")]
+position = Vector2(0, 0)
+scale = Vector2(0.8, 0.8)
+
+[connection signal="body_entered" from="DetectionZone" to="MovementStateMachine/WanderingState" method="NodeEnteredDetection"]
+[connection signal="body_entered" from="DetectionZone" to="MovementStateMachine/AttackingState" method="NodeEnteredArea"]
+[connection signal="body_exited" from="DetectionZone" to="MovementStateMachine/AttackingState" method="NodeExitedArea"]
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
