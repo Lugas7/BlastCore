@@ -13,7 +13,7 @@ class_name light_dash_enemy
 var player = null
 var is_charging = false
 var is_dashing = false
-var is_wandering = true  # Initially set to wandering
+var is_wandering = true  
 var charge_time_left = 0
 var dash_time_left = 0
 var cooldown_time_left = 0

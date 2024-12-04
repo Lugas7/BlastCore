@@ -1,45 +1,61 @@
-[gd_scene load_steps=8 format=3 uid="uid://bukrwwxniru1s"]
+[gd_scene load_steps=10 format=3 uid="uid://bukrwwxniru1s"]
 
 [ext_resource type="Script" path="res://characters/enemies/shooter_enemy/shooter_enemy.gd" id="1_4e10h"]
 [ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="2_a1mtj"]
-[ext_resource type="Texture2D" uid="uid://fj5yvljqsu3q" path="res://assets/player_model/simple/simple_3.png" id="3_foo30"]
+[ext_resource type="Texture2D" uid="uid://c2l0ji611pik" path="res://assets/player_model/simple/simple_enemy.png" id="3_gv001"]
 [ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="4_d1ut1"]
 [ext_resource type="PackedScene" uid="uid://c5cdjdajvwv3w" path="res://wepons/shooting_wepons/enemy_gun.tscn" id="4_r2hwc"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_j7wq0"]
-radius = 21.0
+[ext_resource type="PackedScene" uid="uid://b2bfiyicgwo1f" path="res://health_bar.tscn" id="6_bqov1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wr0a5"]
-radius = 384.012
+radius = 634.001
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mb7mf"]
+radius = 22.0227
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_11tw0"]
+radius = 21.0238
 
 [node name="shooter_enemy" type="CharacterBody2D"]
 script = ExtResource("1_4e10h")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_a1mtj")]
-max_health = 50
+position = Vector2(4.54747e-13, 0)
+scale = Vector2(1, 1)
+max_health = 30
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(3.8147e-06, 0)
 scale = Vector2(0.183594, 0.18)
-texture = ExtResource("3_foo30")
+texture = ExtResource("3_gv001")
 
 [node name="EnemyGun" parent="." instance=ExtResource("4_r2hwc")]
 position = Vector2(1, 0)
 scale = Vector2(0.3, 0.3)
-
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_d1ut1")]
-health_component = NodePath("../HealthComponent")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-position = Vector2(1, -1)
-shape = SubResource("CircleShape2D_j7wq0")
 
 [node name="detection" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection"]
 shape = SubResource("CircleShape2D_wr0a5")
 
-[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
-[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -1)
+shape = SubResource("CircleShape2D_mb7mf")
+
+[node name="HealthBar" parent="." instance=ExtResource("6_bqov1")]
+offset_left = -26.0
+offset_top = 39.0
+offset_right = 35.0
+offset_bottom = 43.0
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_d1ut1")]
+collision_layer = 33
+collision_mask = 32
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(3, -2)
+shape = SubResource("CircleShape2D_11tw0")
+
 [connection signal="body_entered" from="detection" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="detection" to="." method="_on_area_2d_body_exited"]
