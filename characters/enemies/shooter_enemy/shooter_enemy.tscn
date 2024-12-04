@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="2_a1mtj"]
 [ext_resource type="Texture2D" uid="uid://fj5yvljqsu3q" path="res://assets/player_model/simple/simple_3.png" id="3_foo30"]
 [ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="4_d1ut1"]
-[ext_resource type="PackedScene" uid="uid://c5cdjdajvwv3w" path="res://wepons/shooting_wepons/enemy_gun.tscn" id="4_r2hwc"]
+[ext_resource type="PackedScene" path="res://wepons/shooting_wepons/enemy_gun.tscn" id="4_r2hwc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j7wq0"]
 radius = 21.0

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://b0cpb4hc0wx0t"]
+[gd_scene load_steps=5 format=4 uid="uid://b0cpb4hc0wx0t"]
 
 [ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_jfu0l"]
 [ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="3_or18n"]
 [ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_2ysth"]
+[ext_resource type="PackedScene" uid="uid://cmg4bq5rn4gk" path="res://characters/enemies/dashing_enemy/DashingEnemy.tscn" id="4_giu5y"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -43,3 +44,6 @@ limit_left = 0
 limit_top = 0
 limit_right = 3328
 limit_bottom = 3328
+
+[node name="DashingEnemy" parent="." instance=ExtResource("4_giu5y")]
+position = Vector2(1192, 1152)

@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddpv24bepg74x"]
+
+[ext_resource type="Script" path="res://boss.gd" id="1_7t7vk"]
+[ext_resource type="PackedScene" uid="uid://d2i8xel1lj7dv" path="res://cannon_enemy.tscn" id="1_d6pim"]
+[ext_resource type="PackedScene" uid="uid://dyy4guo8hgmq1" path="res://SwirlEnemy.tscn" id="2_mo51b"]
+
+[node name="Boss" type="Node2D"]
+script = ExtResource("1_7t7vk")
+
+[node name="CannonEnemy" parent="." instance=ExtResource("1_d6pim")]
+
+[node name="SwirlEnemy" parent="CannonEnemy" instance=ExtResource("2_mo51b")]
+position = Vector2(0, -128)
+disableMoving = true
+
+[node name="SwirlEnemy2" parent="CannonEnemy" instance=ExtResource("2_mo51b")]
+position = Vector2(0, 128)
+disableMoving = true
+
+[node name="SwirlEnemy3" parent="CannonEnemy" instance=ExtResource("2_mo51b")]
+position = Vector2(-136, 0)
+disableMoving = true
+
+[node name="SwirlEnemy4" parent="CannonEnemy" instance=ExtResource("2_mo51b")]
+position = Vector2(128, 0)
+disableMoving = true

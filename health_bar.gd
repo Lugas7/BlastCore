@@ -27,6 +27,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if value == 100:
+		visible = false
+		damage_bar.visible = false
+	else:
+		visible = true
+		damage_bar.visible = true
+	
 	if tickingPercentLeft >= 0:
 		var howManyPercentToTickThisFrame = percentTickPerSecond*delta
 		# both values have to be updated

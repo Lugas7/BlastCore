@@ -1,6 +1,6 @@
 extends State
 
-@export var enemy: SwirlEnemy
+@export var enemy: CharacterBody2D
 
 const speed = 100
 const wanderTime = 2
@@ -20,7 +20,7 @@ func update(delta: float) -> void:
 		enemy.velocity = Vector2(speed*cos(currentAngle), speed*sin(currentAngle))
 
 func NodeEnteredDetection(body: Node2D):
-	emit_signal("transition", "FollowingState", self)
+	emit_signal("transition", "AttackingState", self)
 
 var rng = RandomNumberGenerator.new()
 # gets a random angle in radians
