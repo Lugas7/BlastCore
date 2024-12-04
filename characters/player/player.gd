@@ -26,7 +26,7 @@ func _ready() -> void:
 	hc = get_node("HealthComponent")
 	
 	for u in upgradeList:
-		upgrades[u] = true
+		upgrades[u] = false
 		
 	#upgrades["fast_bullets"] = true
 	#upgrades["fast_shot"] = true

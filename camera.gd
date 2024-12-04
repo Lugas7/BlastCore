@@ -1,6 +1,6 @@
 extends Camera2D
 
-const maxCameraExtend = 300.0
+const maxCameraExtend = 200.0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -14,13 +14,8 @@ func _process(delta: float) -> void:
 
 
 func extendCameraTowardsMouse():
-	var mousePos = get_local_mouse_position()/4
-	
-	var left = -maxCameraExtend
-	var right = maxCameraExtend
-	var top = maxCameraExtend
-	var bottom = -maxCameraExtend
+	var mousePos = get_local_mouse_position()/2.5
 	
 	var x = sign(mousePos.x)*min(abs(mousePos.x), maxCameraExtend)
 	var y = sign(mousePos.y)*min(abs(mousePos.y), maxCameraExtend)
-	position = Vector2(clamp(x, left, right), clamp(y, bottom, top))
+	position = Vector2(x, y)
