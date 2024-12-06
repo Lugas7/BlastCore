@@ -1,11 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://ses781sho4c5"]
+[gd_scene load_steps=3 format=3 uid="uid://ses781sho4c5"]
 
 [ext_resource type="Script" path="res://manager.gd" id="1_7rgc7"]
 [ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://characters/player/player.tscn" id="2_hynhf"]
-[ext_resource type="PackedScene" uid="uid://dyy4guo8hgmq1" path="res://SwirlEnemy.tscn" id="3_dsi0m"]
-[ext_resource type="PackedScene" uid="uid://dhdbkmeyvdk2f" path="res://characters/enemies/light_dash_enemy/light_dash_enemy.tscn" id="4_lvmvj"]
-[ext_resource type="PackedScene" uid="uid://bukrwwxniru1s" path="res://characters/enemies/shooter_enemy/shooter_enemy.tscn" id="5_oam2c"]
-[ext_resource type="PackedScene" uid="uid://mtgbh7jeskum" path="res://characters/enemies/aoe_elite_enemy/aoe_elite_enemy.tscn" id="6_tsl7j"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_7rgc7")
@@ -14,14 +10,3 @@ script = ExtResource("1_7rgc7")
 format = 2
 
 [node name="Player" parent="." instance=ExtResource("2_hynhf")]
-
-[node name="SwirlEnemy" parent="." instance=ExtResource("3_dsi0m")]
-
-[node name="light_dash_enemy" parent="." instance=ExtResource("4_lvmvj")]
-position = Vector2(329, 241)
-
-[node name="shooter_enemy" parent="." instance=ExtResource("5_oam2c")]
-position = Vector2(422, 164)
-
-[node name="aoe_elite_enemy" parent="." instance=ExtResource("6_tsl7j")]
-position = Vector2(175, 229)

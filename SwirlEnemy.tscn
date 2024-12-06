@@ -19,10 +19,10 @@ radius = 480.0
 size = Vector2(168, 40)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6etcr"]
-radius = 81.5843
+radius = 48.6621
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cewqb"]
-radius = 64.0
+radius = 40.7922
 
 [node name="SwirlEnemy" type="CharacterBody2D"]
 platform_floor_layers = 0
@@ -40,9 +40,9 @@ shape = SubResource("CircleShape2D_3krvi")
 script = ExtResource("2_i3emv")
 initial_state = NodePath("WanderingState")
 
-[node name="WanderingState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("swirlEnemy")]
+[node name="WanderingState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("enemy")]
 script = ExtResource("3_5a112")
-swirlEnemy = NodePath("../..")
+enemy = NodePath("../..")
 
 [node name="FollowingState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("swirlEnemy", "detectionZone", "sword")]
 script = ExtResource("4_xfhvu")
@@ -61,7 +61,7 @@ swordCollisionShape = NodePath("SimpleDamageArea/CollisionShape2D")
 sprite = NodePath("Sprite2D")
 
 [node name="SimpleDamageArea" parent="Sword" instance=ExtResource("8_w5o1q")]
-collision_layer = 1
+collision_layer = 64
 collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/SimpleDamageArea"]
@@ -78,7 +78,7 @@ texture = ExtResource("7_cfnuv")
 [node name="HealthComponent" parent="." instance=ExtResource("9_fnvm4")]
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("10_okt2i")]
-collision_layer = 33
+collision_layer = 32
 collision_mask = 32
 health_component = NodePath("../HealthComponent")
 
@@ -86,7 +86,7 @@ health_component = NodePath("../HealthComponent")
 shape = SubResource("CircleShape2D_6etcr")
 
 [node name="Damage on body" parent="." instance=ExtResource("8_w5o1q")]
-collision_layer = 1
+collision_layer = 64
 collision_mask = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Damage on body"]
