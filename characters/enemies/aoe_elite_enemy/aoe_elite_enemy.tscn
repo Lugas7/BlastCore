@@ -1,0 +1,113 @@
+[gd_scene load_steps=12 format=3 uid="uid://mtgbh7jeskum"]
+
+[ext_resource type="Script" path="res://characters/enemies/aoe_elite_enemy/aoe_elite_enemy.gd" id="1_tgtum"]
+[ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="2_ln056"]
+[ext_resource type="Texture2D" uid="uid://torytpfuhb3v" path="res://assets/player_model/simple/simple_dash_enemy.png" id="3_hcmyl"]
+[ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="4_t3s0c"]
+[ext_resource type="PackedScene" uid="uid://b2bfiyicgwo1f" path="res://health_bar.tscn" id="5_byswn"]
+[ext_resource type="Script" path="res://characters/enemies/light_dash_enemy/damage_area.gd" id="6_422jl"]
+[ext_resource type="PackedScene" uid="uid://c5cdjdajvwv3w" path="res://wepons/shooting_wepons/enemy_gun.tscn" id="7_2sain"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xl36w"]
+radius = 526.015
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gkesi"]
+radius = 74.0068
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y5se7"]
+radius = 75.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_diaf0"]
+radius = 75.0267
+
+[node name="aoe_elite_enemy" type="CharacterBody2D"]
+script = ExtResource("1_tgtum")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_ln056")]
+max_health = 150
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(3.8147e-06, -1.90735e-06)
+scale = Vector2(0.582656, 0.578672)
+texture = ExtResource("3_hcmyl")
+
+[node name="Detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_xl36w")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_t3s0c")]
+collision_layer = 33
+collision_mask = 32
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(2, -11)
+shape = SubResource("CircleShape2D_gkesi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_y5se7")
+
+[node name="HealthBar" parent="." instance=ExtResource("5_byswn")]
+offset_left = -53.0
+offset_top = 72.0
+offset_right = 50.0
+offset_bottom = 76.0
+
+[node name="DamageArea" type="Area2D" parent="."]
+script = ExtResource("6_422jl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(3, -11)
+shape = SubResource("CircleShape2D_diaf0")
+
+[node name="EnemyGun1" parent="." instance=ExtResource("7_2sain")]
+position = Vector2(27, -2)
+scale = Vector2(0.3, 0.3)
+
+[node name="EnemyGun2" parent="." instance=ExtResource("7_2sain")]
+position = Vector2(17, 17)
+rotation = 0.748746
+scale = Vector2(0.3, 0.3)
+
+[node name="EnemyGun3" parent="." instance=ExtResource("7_2sain")]
+position = Vector2(-3, 18)
+rotation = 1.5708
+scale = Vector2(0.3, 0.3)
+
+[node name="EnemyGun4" parent="." instance=ExtResource("7_2sain")]
+position = Vector2(-23, 11)
+rotation = 2.16944
+scale = Vector2(0.3, 0.3)
+
+[node name="EnemyGun5" parent="." instance=ExtResource("7_2sain")]
+position = Vector2(-28, -3)
+rotation = 3.14159
+scale = Vector2(0.3, 0.3)
+
+[node name="EnemyGun6" parent="." instance=ExtResource("7_2sain")]
+position = Vector2(-20, -26)
+rotation = 3.59014
+scale = Vector2(0.3, 0.3)
+
+[node name="EnemyGun7" parent="." instance=ExtResource("7_2sain")]
+position = Vector2(27, -25)
+rotation = -0.523599
+scale = Vector2(0.3, 0.3)
+
+[node name="EnemyGun8" parent="." instance=ExtResource("7_2sain")]
+position = Vector2(12, -36)
+rotation = -1.1973
+scale = Vector2(0.3, 0.3)
+
+[node name="EnemyGun9" parent="." instance=ExtResource("7_2sain")]
+position = Vector2(-7, -37)
+rotation = 4.31794
+scale = Vector2(0.3, 0.3)
+
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
+[connection signal="body_entered" from="Detection" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Detection" to="." method="_on_area_2d_body_exited"]
