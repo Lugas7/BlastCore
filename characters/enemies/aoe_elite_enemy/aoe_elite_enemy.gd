@@ -1,35 +1,50 @@
 extends CharacterBody2D
-class_name light_dash_enemy
+class_name aoe_elite_enemy
 
+# Dash-related properties
 @export var dash_speed: float = 800
-@export var dash_duration: float = 0.2
-@export var dash_cooldown: float = 1.0
+@export var dash_duration: float = 0.4
+@export var dash_cooldown: float = 1.5
 @export var charge_time: float = 0.5
 @export var melee_range: float = 50.0
-@export var melee_damage: int = 10
-@export var wander_speed: float = 100  
-@export var wander_time: float = 2.0  
+@export var melee_damage: int = 15
+
+# Shooting-related properties
+@export var shoot_interval: float = 1.2
+@export var detection_range: float = 800.0
+@export var Distance: float = 50.0 
+
+# General properties
+@export var wander_speed: float = 100
+@export var wander_time: float = 2.0
 
 var player = null
 var is_charging = false
 var is_dashing = false
-var is_wandering = true  
+var cooldown_time_left = 0
 var charge_time_left = 0
 var dash_time_left = 0
-var cooldown_time_left = 0
 var wander_time_left = 0
 var wander_direction = Vector2.ZERO
+var can_shoot = true
 
 @onready var hc = get_node("HealthComponent")
 @onready var health_bar = $HealthBar
 @onready var sprite = $Sprite2D
 @onready var damage_area = $DamageArea
 
+# Gun nodes
+@onready var gun_nodes = [
+	$EnemyGun1, $EnemyGun2, $EnemyGun3,
+	$EnemyGun4, $EnemyGun5, $EnemyGun6,
+	$EnemyGun7, $EnemyGun8, $EnemyGun9
+]
+
 var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	damage_area.monitoring = false
-	sprite.modulate = Color(1, 1, 1)  # Reset color to normal
+	sprite.modulate = Color(1, 1, 1)
 	set_new_wander_direction()
 
 func _physics_process(delta: float) -> void:
@@ -38,32 +53,31 @@ func _physics_process(delta: float) -> void:
 	else:
 		handle_wandering(delta)
 
-	# Move using the built-in velocity property
 	move_and_slide()
 
 func handle_player_behavior(delta: float) -> void:
 	var direction = (player.position - position).normalized()
 
-	# Handle charging up for a dash
 	if is_charging:
 		charge_time_left -= delta
 		if charge_time_left <= 0:
 			start_dash(direction)
 
-	# Handle dashing
 	elif is_dashing:
 		velocity = direction * dash_speed
 		dash_time_left -= delta
 		if dash_time_left <= 0:
 			end_dash()
 
-	# Handle cooldown after a dash
 	elif cooldown_time_left > 0:
 		cooldown_time_left -= delta
 
-	# Start charging if player is available and no cooldown
 	elif player:
 		start_charge()
+
+	# Shooting behavior
+	if is_in_range() and can_shoot:
+		shoot_from_all_guns()
 
 func handle_wandering(delta: float) -> void:
 	wander_time_left -= delta
@@ -81,14 +95,14 @@ func start_charge() -> void:
 	if cooldown_time_left <= 0 and not is_dashing and not is_charging:
 		is_charging = true
 		charge_time_left = charge_time
-		sprite.modulate = Color(1, 0, 0)  # Turn red during windup
+		sprite.modulate = Color(1, 0, 0)  
 
 func start_dash(direction: Vector2) -> void:
 	is_charging = false
 	is_dashing = true
 	dash_time_left = dash_duration
 	velocity = direction * dash_speed
-	sprite.modulate = Color(1, 1, 1)  # Reset color to normal
+	sprite.modulate = Color(1, 1, 1)  
 	damage_area.monitoring = true
 	sprite.flip_h = direction.x < 0
 
@@ -98,28 +112,43 @@ func end_dash() -> void:
 	damage_area.monitoring = false
 	velocity = Vector2.ZERO
 
-func is_in_melee_range() -> bool:
-	return player and position.distance_to(player.position) <= melee_range
+func is_in_range() -> bool:
+	return position.distance_to(player.position) <= detection_range
 
-func attack_player() -> void:
-	if player and player.has_method("take_damage"):
-		player.take_damage(melee_damage)
-		print("Player took damage!")
+func shoot_from_all_guns() -> void:
+	for gun in gun_nodes:
+		if gun:
+			# Instance the bullet
+			var bullet = gun.bulletScene.instantiate()
+			
+			# Set the bullet's position 
+			bullet.position = gun.global_position + Vector2(cos(gun.global_rotation) * Distance, sin(gun.global_rotation) * Distance)
+			
+			# Set slower velocity
+			bullet.velocity = Vector2(cos(gun.global_rotation), sin(gun.global_rotation)) * 300  # Adjusted slower speed
+			
+			# bullets a bit lbigger 
+			bullet.scale = Vector2(0.7, 0.7)
+			bullet.get_node("Sprite2D").modulate = Color(1, 0, 0)
+			
+			# Add the bullet to the scene
+			get_tree().root.add_child(bullet) 
+			
+	can_shoot = false
+	get_tree().create_timer(shoot_interval).timeout.connect(func():
+		can_shoot = true)
+
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player = body
-		is_wandering = false  # Stop wandering when the player is detected
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body == player:
 		player = null
-		is_wandering = true  # Resume wandering when the player is lost
 
 func _on_health_component_died() -> void:
-	print("Enemy died")
 	queue_free()
 
 func _on_health_component_health_changed(current_health: int) -> void:
-	health_bar.set_value(100 * current_health / hc.max_health)
-	print("Enemy health changed: ", current_health)
+	health_bar.set_value(100 * current_health/ hc.max_health)

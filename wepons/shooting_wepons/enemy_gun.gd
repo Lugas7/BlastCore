@@ -6,7 +6,7 @@ const Distance = 50  # Distance from the gun where the bullet spawns
 const reloadTime = 0.3
 var isShooting = false
 
-@export var bulletScene = preload("res://wepons/projectils/simple_damage_projectil/bullet.tscn")
+@export var bulletScene = preload("res://wepons/projectils/simple_damage_projectil/enemy_bullet.tscn")
 var target_position: Vector2 = Vector2.ZERO  # The position the gun aims at
 
 func aim_at(target: Vector2) -> void:
