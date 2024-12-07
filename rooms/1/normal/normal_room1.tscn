@@ -2,9 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_y2v1o"]
 [ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="3_2b8la"]
-[ext_resource type="PackedScene" uid="uid://dyy4guo8hgmq1" path="res://SwirlEnemy.tscn" id="4_1jxq4"]
 [ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_sjqcm"]
+
 [ext_resource type="PackedScene" uid="uid://bha5era611kv1" path="res://room_corner.tscn" id="5_yqbv7"]
+
+[ext_resource type="PackedScene" uid="uid://ddpv24bepg74x" path="res://boss.tscn" id="6_onbc0"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -46,3 +48,6 @@ position = Vector2(64, 64)
 
 [node name="RoomCorner2" parent="." instance=ExtResource("5_yqbv7")]
 position = Vector2(3264, 3264)
+
+[node name="Boss" parent="." instance=ExtResource("6_onbc0")]
+position = Vector2(968, 680)

@@ -11,8 +11,6 @@ var ydir = 0
 const damageTimeout = 0.5
 var damageTimeoutLeft = 0
 
-var hc: HealthComponent
-
 const upgradeList = preload("res://upgradeList.gd").UpgradeList
 
 var upgrades: Dictionary
@@ -20,11 +18,10 @@ var upgrades: Dictionary
 @onready var movementStateMachine = get_node("Movement State machine")
 @onready var attacktStateMachine = get_node("Attack State machine")
 
-#@onready var hc: HealthComponent = get_node("HealthComponent")
 func _ready() -> void:
 	gold = 110
-	hc = get_node("HealthComponent")
 		
+@onready var healthBar: HealthBar = $HealthBar
 
 func _physics_process(_delta: float) -> void:
 	if damageTimeoutLeft > 0:
@@ -56,12 +53,15 @@ func updateDirection():
 	
 
 
+
+
+
 func _on_health_component_died() -> void:
 	print("Enemy died")
 	queue_free()
 
 
 func _on_health_component_health_changed(current_health: int) -> void:
+	healthBar.setPercent(100*current_health/hc.max_health)
 	hc.set_invincible(true)
 	damageTimeoutLeft = damageTimeout
-	print("Health changed For the player!!!!!! HERE!!!!!: ", current_health)

@@ -1,22 +1,20 @@
 extends CharacterBody2D
-class_name SwirlEnemy
+class_name CannonEnemy
 
-#const SPEED = 300.0
-@export var disableMoving = false
+signal enemy_died
 
-func _ready() -> void:
+func _ready():
 	add_to_group("Enemy")
 
 func _physics_process(delta: float) -> void:
-	if !disableMoving:
-		move_and_slide()
+	move_and_slide()
 
-@onready var hc = get_node("health_component")
+
+@onready var hc = get_node("HealthComponent")
 @onready var healthBar: HealthBar = $HealthBar
-signal enemy_died
 func _on_health_component_died() -> void:
-	emit_signal("enemy_died")
 	print("Canon enemy has died")
+	emit_signal("enemy_died")
 	queue_free()
 
 

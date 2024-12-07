@@ -13,19 +13,27 @@
 [ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="10_khj1d"]
 [ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="11_ckwiq"]
 [ext_resource type="Texture2D" uid="uid://bopba5b5h4j4c" path="res://assets/sword/sword.png" id="11_lkkfv"]
+
 [ext_resource type="PackedScene" uid="uid://jf7q1m6fom5l" path="res://camera.tscn" id="14_wrvj2"]
 [ext_resource type="Script" path="res://characters/player/upgrade_manager.gd" id="15_jaiq0"]
 
+[ext_resource type="PackedScene" uid="uid://b2bfiyicgwo1f" path="res://health_bar.tscn" id="14_h74gl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bge51"]
+radius = 64.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v07hq"]
+radius = 64.4981
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_51lus"]
 radius = 71.44
-height = 675.36
+height = 640.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bge51"]
 radius = 64.0
 
 [node name="Player 2D" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 5
-collision_mask = 5
 collision_priority = 5.0
 motion_mode = 1
 script = ExtResource("1_v2mqh")
@@ -64,6 +72,10 @@ texture = ExtResource("11_lkkfv")
 [node name="UpgradeManager" type="Node" parent="."]
 script = ExtResource("15_jaiq0")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bge51")
+
+
 [node name="Movement State machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_0sg23")
 initial_state = NodePath("WalkState")
@@ -80,9 +92,10 @@ player = NodePath("../..")
 script = ExtResource("4_0sg23")
 initial_state = NodePath("CannonState")
 
-[node name="CannonState" type="Node" parent="Attack State machine" node_paths=PackedStringArray("gun")]
+[node name="CannonState" type="Node" parent="Attack State machine" node_paths=PackedStringArray("gun", "player")]
 script = ExtResource("7_8v1he")
 gun = NodePath("../../Gun")
+player = NodePath("../..")
 
 [node name="SwordState" type="Node" parent="Attack State machine" node_paths=PackedStringArray("sword")]
 script = ExtResource("8_wrmgb")
@@ -91,12 +104,13 @@ sword = NodePath("../../Sword")
 [node name="HealthComponent" parent="." instance=ExtResource("10_khj1d")]
 
 [node name="HitboxComponent2" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("11_ckwiq")]
-collision_mask = 1
+collision_layer = 64
+collision_mask = 64
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxComponent2"]
-position = Vector2(8, 0)
-shape = SubResource("CircleShape2D_bge51")
+shape = SubResource("CircleShape2D_v07hq")
+
 
 [node name="Camera" parent="." instance=ExtResource("14_wrvj2")]
 position_smoothing_enabled = false
@@ -104,6 +118,35 @@ position_smoothing_enabled = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(8, 0)
 shape = SubResource("CircleShape2D_bge51")
+
+[node name="Sword" parent="." node_paths=PackedStringArray("swordCollisionShape", "sprite") instance=ExtResource("8_ouqw3")]
+swordCollisionShape = NodePath("Slash Damage2/CollisionShape2D")
+sprite = NodePath("Sprite2D")
+
+[node name="Slash Damage2" parent="Sword" instance=ExtResource("10_iab8d")]
+position = Vector2(8, 0)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Slash Damage2"]
+position = Vector2(160, 4.88498e-15)
+rotation = 1.57066
+scale = Vector2(0.3, 0.3)
+shape = SubResource("CapsuleShape2D_51lus")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Sword"]
+visible = false
+position = Vector2(152, 7.62939e-06)
+rotation = 1.57082
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("11_lkkfv")
+
+[node name="HealthBar" parent="." instance=ExtResource("14_h74gl")]
+offset_left = -120.0
+offset_top = 80.0
+offset_right = 120.0
+offset_bottom = 88.0
 
 [connection signal="transition" from="Movement State machine/DashState" to="Movement State machine" method="_on_state_transition"]
 [connection signal="transition" from="Movement State machine/WalkState" to="Movement State machine" method="_on_state_transition"]

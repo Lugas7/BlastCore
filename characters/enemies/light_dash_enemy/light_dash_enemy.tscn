@@ -1,0 +1,68 @@
+[gd_scene load_steps=11 format=3 uid="uid://dhdbkmeyvdk2f"]
+
+[ext_resource type="Script" path="res://characters/enemies/light_dash_enemy/light_dash_enemy.gd" id="1_ic5v7"]
+[ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="2_guihv"]
+[ext_resource type="Texture2D" uid="uid://torytpfuhb3v" path="res://assets/player_model/simple/simple_dash_enemy.png" id="3_mqsql"]
+[ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="4_i0fqy"]
+[ext_resource type="PackedScene" uid="uid://b2bfiyicgwo1f" path="res://health_bar.tscn" id="5_d2ssg"]
+[ext_resource type="Script" path="res://characters/enemies/light_dash_enemy/damage_area.gd" id="6_ltsta"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xl36w"]
+radius = 526.015
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gkesi"]
+radius = 74.0068
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y5se7"]
+radius = 75.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_diaf0"]
+radius = 75.0267
+
+[node name="light_dash_enemy" type="CharacterBody2D"]
+script = ExtResource("1_ic5v7")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_guihv")]
+max_health = 30
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+scale = Vector2(0.265625, 0.279687)
+texture = ExtResource("3_mqsql")
+
+[node name="Detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_xl36w")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_i0fqy")]
+collision_layer = 33
+collision_mask = 32
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_gkesi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_y5se7")
+
+[node name="HealthBar" parent="." instance=ExtResource("5_d2ssg")]
+offset_left = -29.0
+offset_top = 35.0
+offset_right = 32.0
+offset_bottom = 39.0
+
+[node name="DamageArea" type="Area2D" parent="."]
+script = ExtResource("6_ltsta")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_diaf0")
+
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
+[connection signal="body_entered" from="Detection" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Detection" to="." method="_on_area_2d_body_exited"]

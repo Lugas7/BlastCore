@@ -6,6 +6,7 @@ const Distance = 150
 var isShooting = false
 
 
+
 const BulletSpeed_d = 750
 const BulletSpeed_u = 1500
 
@@ -26,8 +27,8 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	look_at(get_global_mouse_position())
+#func _process(delta: float) -> void:
+#	look_at(get_global_mouse_position())
 
 var bulletScene = preload("res://wepons/projectils/simple_damage_projectil/bullet.tscn")
 
@@ -49,3 +50,4 @@ func shoot():
 
 		await get_tree().create_timer(ReloadTime).timeout
 		isShooting = false
+
