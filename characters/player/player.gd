@@ -22,6 +22,7 @@ func _ready() -> void:
 	gold = 110
 		
 @onready var healthBar: HealthBar = $HealthBar
+@onready var hc: HealthComponent = $HealthComponent
 
 func _physics_process(_delta: float) -> void:
 	if damageTimeoutLeft > 0:

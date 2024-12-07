@@ -11,7 +11,7 @@ func _physics_process(delta: float) -> void:
 	if !disableMoving:
 		move_and_slide()
 
-@onready var hc = get_node("health_component")
+@onready var hc = get_node("HealthComponent")
 @onready var healthBar: HealthBar = $HealthBar
 signal enemy_died
 func _on_health_component_died() -> void:

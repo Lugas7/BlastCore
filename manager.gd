@@ -84,7 +84,7 @@ func generateLevel(length: int) -> Rooms.Room:
 			r.UpgradeTaken = true
 			r.UpgradePrice = 0
 		
-		var path = "rooms/1/"+r.Type
+		var path = "res://rooms/1/"+r.Type
 		var dir = DirAccess.open(path)
 		if dir:
 			var files = dir.get_files()
@@ -228,9 +228,6 @@ func destroyRooms(room: Rooms.Room):
 func nextRoom(dir: int):
 	currentRoom = currentRoom.Neighboors[dir]
 	loadRoom(currentRoom, dir)
-	
-
-
 
 
 # Load a room
@@ -247,6 +244,7 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 	
 	# Load the room
 	var roomScene = load(room.RoomFile)
+	print(room.RoomFile)
 	roomInstance = roomScene.instantiate()
 	self.add_child(roomInstance)
 	

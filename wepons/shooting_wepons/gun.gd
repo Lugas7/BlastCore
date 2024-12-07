@@ -50,4 +50,3 @@ func shoot():
 
 		await get_tree().create_timer(ReloadTime).timeout
 		isShooting = false
-
