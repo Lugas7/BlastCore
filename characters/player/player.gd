@@ -24,17 +24,7 @@ var upgrades: Dictionary
 func _ready() -> void:
 	gold = 110
 	hc = get_node("HealthComponent")
-	
-	for u in upgradeList:
-		upgrades[u] = false
 		
-	#upgrades["fast_bullets"] = true
-	#upgrades["fast_shot"] = true
-	#upgrades["big_bullets"] = true
-	#upgrades["bullet_bounce"] = true
-	#upgrades["fast_swing"] = true
-	#upgrades["big_sword"] = true
-	#upgrades["fast_dash"] = true
 
 func _physics_process(_delta: float) -> void:
 	if damageTimeoutLeft > 0:

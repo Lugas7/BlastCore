@@ -1,12 +1,14 @@
 extends Node2D
 class_name Sword
 
-const slashCD = 0.7
-const slashCDUpgraded = 0.3
+const slashCD_d = 0.7
+const slashCD_u = 0.3
 
-const swordScale = Vector2(1.0, 1.0)
-const swordScaleUpgraded = Vector2(1.5, 1.5)
+const swordScale_d = 1.0
+const swordScale_u = 1.5
 
+var swordScale = swordScale_d
+var slashCD = slashCD_d
 var slashCDLeft = slashCD
 
 @export var stateMachine: StateMachine
@@ -28,8 +30,8 @@ func slash():
 	if slashCDLeft <= 0:
 		var upgrades = get_parent().upgrades
 		
-		scale = swordScaleUpgraded if upgrades["big_sword"] else swordScale
-		slashCDLeft = slashCDUpgraded if upgrades["fast_swing"] else slashCD
+		scale = Vector2(swordScale, swordScale)
+		slashCDLeft = slashCD
 		
 		stateMachine._on_state_transition("SlashState", null)
 

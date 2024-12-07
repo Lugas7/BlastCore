@@ -6,8 +6,6 @@ class_name StateMachine
 var current_state: State
 var states: Dictionary = {}
 
-var invincibleDash = false
-
 func _ready() -> void:
 	for child in get_children():
 		if child is State:
@@ -28,12 +26,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_state_transition(state_name: String, last_state: State) -> void:
 	if current_state:
-		if current_state.name == "DashState":
-			invincibleDash = false
 		current_state.exit()
 
 	current_state = states[state_name.to_lower()]
 	if current_state:
-		if current_state.name == "DashState" && get_parent().upgrades["dash_through"]:
-			invincibleDash = true
 		current_state.enter(last_state)

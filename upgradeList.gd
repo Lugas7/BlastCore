@@ -7,8 +7,7 @@ const u_big_bullets = "big_bullets"
 
 const u_big_sword = "big_sword"
 const u_fast_swing = "fast_swing"
-	
-const u_dash_through = "dash_through"
+
 const u_fast_dash = "fast_dash"
 
 const UpgradeList = [
@@ -20,6 +19,5 @@ const UpgradeList = [
 	u_big_sword,
 	u_fast_swing,
 	
-	u_dash_through,
 	u_fast_dash
 ]

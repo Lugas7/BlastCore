@@ -18,9 +18,8 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		var player = body
 		
 		if player.gold >= price:
-			player.gold -= price
-			player.upgrades[upgrade] = true
+			# player.gold -= price
 			print(upgrade)
-			emit_signal("upgrade_bought")
+			emit_signal("upgrade_bought", upgrade)
 			queue_free()
 			

@@ -5,6 +5,7 @@ const Rooms = preload("res://room_class.gd")
 var roomCount = 5
 
 var player
+var playerUpgradeManager
 var camera
 
 var currentRoom
@@ -15,6 +16,7 @@ var enemies_left = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = self.get_node("Player")
+	playerUpgradeManager = player.get_node("UpgradeManager")
 	camera = player.get_node("Camera")
 	
 	var lastRoom = generateLevel(roomCount)
@@ -41,8 +43,8 @@ func _on_enemy_died():
 			currentRoom.Cleared = true
 			unlockDoors()
 
-func _on_upgrade_bought():
-	print("upgrade bought")
+func _on_upgrade_bought(upgrade: String):
+	playerUpgradeManager.activate_upgrade(upgrade)
 	currentRoom.UpgradeTaken = true
 
 func unlockDoors():
@@ -62,19 +64,21 @@ func generateLevel(length: int) -> Rooms.Room:
 	
 	var allRooms = lastRoom.allRooms()
 	
-	var availableUpgrades = preload("res://upgradeList.gd").UpgradeList
+	var availableUpgrades = preload("res://upgradeList.gd").UpgradeList.duplicate()
+	print(availableUpgrades)
+	availableUpgrades.shuffle()
+	print(availableUpgrades)
 	
 	# Assign a file for each room
 	for r in allRooms:
 		# Assign an upgrade if the room is special
 		if r.Type == "special":
-			var len = len(availableUpgrades)
-			var index = rng.randi_range(0, len-1)
-			var upgrade = availableUpgrades[index]
+			var upgrade = availableUpgrades[0]
+			availableUpgrades.remove_at(0)
+			
 			r.Upgrade = upgrade
 			r.UpgradeTaken = false
 			r.UpgradePrice = 100
-			availableUpgrades.remove_at(index)
 		else:
 			r.Upgrade = ""
 			r.UpgradeTaken = true
