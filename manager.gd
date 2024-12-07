@@ -5,6 +5,8 @@ const Rooms = preload("res://room_class.gd")
 var roomCount = 5
 
 var player
+var playerUpgradeManager
+var camera
 
 var currentRoom
 var roomInstance
@@ -14,6 +16,8 @@ var enemies_left = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = self.get_node("Player")
+	playerUpgradeManager = player.get_node("UpgradeManager")
+	camera = player.get_node("Camera")
 	
 	var lastRoom = generateLevel(roomCount)
 	
@@ -39,6 +43,9 @@ func _on_enemy_died():
 			currentRoom.Cleared = true
 			unlockDoors()
 
+func _on_upgrade_bought(upgrade: String):
+	playerUpgradeManager.activate_upgrade(upgrade)
+	currentRoom.UpgradeTaken = true
 
 func unlockDoors():
 	if currentRoom.Cleared:
@@ -57,8 +64,26 @@ func generateLevel(length: int) -> Rooms.Room:
 	
 	var allRooms = lastRoom.allRooms()
 	
+	var availableUpgrades = preload("res://upgradeList.gd").UpgradeList.duplicate()
+	print(availableUpgrades)
+	availableUpgrades.shuffle()
+	print(availableUpgrades)
+	
 	# Assign a file for each room
 	for r in allRooms:
+		# Assign an upgrade if the room is special
+		if r.Type == "special":
+			var upgrade = availableUpgrades[0]
+			availableUpgrades.remove_at(0)
+			
+			r.Upgrade = upgrade
+			r.UpgradeTaken = false
+			r.UpgradePrice = 100
+		else:
+			r.Upgrade = ""
+			r.UpgradeTaken = true
+			r.UpgradePrice = 0
+		
 		var path = "rooms/1/"+r.Type
 		var dir = DirAccess.open(path)
 		if dir:
@@ -172,7 +197,7 @@ func generateLayout(length: int) -> Rooms.Room:
 	
 	# Ensure that at least a few side rooms were created. If not, try again
 	var sideRooms = rooms.filter(func(r): return r.Type == "side")
-	if len(sideRooms) < length/3:
+	if len(sideRooms) < length/2:
 		destroyRooms(parentRoom)
 		return generateLayout(length)
 	
@@ -202,14 +227,10 @@ func destroyRooms(room: Rooms.Room):
 
 func nextRoom(dir: int):
 	currentRoom = currentRoom.Neighboors[dir]
-	
-	#player.set_collision_layer(0)
-	#player.set_collision_mask(0)
-	
 	loadRoom(currentRoom, dir)
 	
-	#await get_tree().create_timer(1).timeout
-	
+
+
 
 
 # Load a room
@@ -229,6 +250,19 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 	roomInstance = roomScene.instantiate()
 	self.add_child(roomInstance)
 	
+	# Initialize the powerup if special
+	if room.Type == "special":
+		var upgrade = roomInstance.get_node("Upgrade")
+		upgrade.connect("upgrade_bought", _on_upgrade_bought)
+		if room.UpgradeTaken:
+			upgrade.queue_free()
+		else:
+			upgrade.upgrade = room.Upgrade
+			upgrade.price = room.UpgradePrice
+			var label = upgrade.get_node("Label")
+			label.text = upgrade.upgrade + "\n " + str(upgrade.price)
+		
+	
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	var enemy_count = len(enemies)
 	
@@ -247,16 +281,14 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 			enemy.queue_free()
 		unlockDoors()
 	
-	# Remove previous camera
-	var prevCam = player.get_node("Camera2D")
-	if prevCam:
-		player.remove_child(prevCam)
+	# Prepare the camera
+	var corner1 = roomInstance.get_node("RoomCorner1").position
+	var corner2 = roomInstance.get_node("RoomCorner2").position
+	camera.limit_left = corner1.x
+	camera.limit_right = corner2.x
+	camera.limit_top = corner1.y
+	camera.limit_bottom = corner2.y
 	
-	# Set the camera to follow the player
-	var camera = roomInstance.get_node("Camera2D")
-	roomInstance.remove_child(camera)
-	player.add_child(camera)
-	camera.enabled = true
 	
 	var directions = ["Right", "Up", "Left", "Down"]
 	for i in range(4):

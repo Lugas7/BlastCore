@@ -1,45 +1,44 @@
-[gd_scene load_steps=4 format=4 uid="uid://bit70cxmmemnf"]
+[gd_scene load_steps=5 format=4 uid="uid://bit70cxmmemnf"]
 
 [ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_5w2ws"]
 [ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="3_4j7mp"]
+[ext_resource type="PackedScene" uid="uid://bha5era611kv1" path="res://room_corner.tscn" id="4_co25c"]
 [ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_x0vco"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMapLayer" parent="." instance=ExtResource("2_5w2ws")]
-tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAGAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAADAAcAAAAAAAAAAAACAAcAAAAAAAAAAAABAAcAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAALAAEAAAAAAAAAAAALAAIAAAAAAAAAAAALAAMAAAAAAAAAAAALAAQAAAAAAAAAAAALAAUAAAAAAAAAAAALAAYAAAAAAAAAAAALAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAARAAAAAAAAAAAAAAASAAAAAAAAAAAAAAATAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAsAAAAAAAAAAAATAAsAAAAAAAAAAAASAAsAAAAAAAAAAAARAAsAAAAAAAAAAAAQAAsAAAAAAAAAAAAPAAsAAAAAAAAAAAAOAAsAAAAAAAAAAAANAAsAAAAAAAAAAAAMAAsAAAAAAAAAAAALAAsAAAAAAAAAAAAKAAsAAAAAAAAAAAAJAAsAAAAAAAAAAAAIAAsAAAAAAAAAAAAHAAsAAAAAAAAAAAAGAAsAAAAAAAAAAAAFAAsAAAAAAAAAAAAEAAsAAAAAAAAAAAADAAsAAAAAAAAAAAACAAsAAAAAAAAAAAABAAsAAAAAAAAAAAAUAAsAAAAAAAAAAAAUAAoAAAAAAAAAAAAUAAkAAAAAAAAAAAAUAAgAAAAAAAAAAAAUAAcAAAAAAAAAAAAUAAYAAAAAAAAAAAAUAAUAAAAAAAAAAAAUAAQAAAAAAAAAAAAUAAMAAAAAAAAAAAAUAAIAAAAAAAAAAAAUAAEAAAAAAAAAAAAUAAAAAAAAAAAAAAA=")
 
 [node name="DoorUp" parent="." instance=ExtResource("3_4j7mp")]
-position = Vector2(832, 256)
+position = Vector2(1408, 256)
 
 [node name="DoorRight" parent="." instance=ExtResource("3_4j7mp")]
-position = Vector2(1280, 576)
+position = Vector2(2432, 832)
 rotation = 1.5708
 
 [node name="DoorDown" parent="." instance=ExtResource("3_4j7mp")]
-position = Vector2(704, 768)
+position = Vector2(1280, 1280)
 rotation = 3.14159
 
 [node name="DoorLeft" parent="." instance=ExtResource("3_4j7mp")]
-position = Vector2(256, 448)
+position = Vector2(256, 704)
 rotation = 4.71239
 
 [node name="DoorSpawnRight" parent="." instance=ExtResource("4_x0vco")]
-position = Vector2(256, 512)
+position = Vector2(256, 768)
 
 [node name="DoorSpawnDown" parent="." instance=ExtResource("4_x0vco")]
-position = Vector2(768, 256)
+position = Vector2(1344, 256)
 
 [node name="DoorSpawnLeft" parent="." instance=ExtResource("4_x0vco")]
-position = Vector2(1280, 512)
+position = Vector2(2432, 768)
 
 [node name="DoorSpawnUp" parent="." instance=ExtResource("4_x0vco")]
-position = Vector2(768, 768)
+position = Vector2(1344, 1280)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(768, 512)
-zoom = Vector2(0.8, 0.8)
-limit_left = 0
-limit_top = 0
-limit_right = 1536
-limit_bottom = 1024
+[node name="RoomCorner1" parent="." instance=ExtResource("4_co25c")]
+position = Vector2(64, 64)
+
+[node name="RoomCorner2" parent="." instance=ExtResource("4_co25c")]
+position = Vector2(2624, 1472)

@@ -2,13 +2,26 @@ extends State
 
 @export var player: Player
 
-const DASHSPEED = 1600
-const dashTime = 0.3
-const DashTimeout = 0.5
+# Unupgraded values
+const dashSpeed_d = 1600.0
+const dashTime_d = 0.3
+const dashTimeout_d = 0.5
+
+const dashLength = dashSpeed_d * dashTime_d
+
+# Upgraded values
+const dashSpeed_u = dashSpeed_d * 1.6
+const dashTime_u = dashLength / dashSpeed_u
+const dashTimeout_u = 0.35
+
+var dashSpeed = dashSpeed_d
+var dashTime = dashTime_d
+var dashTimeout = dashTimeout_d
+
 var dashTimeLeft
 
-func enter(last_state: State = null) -> void:
-	player.setSpeed(DASHSPEED)
+func enter(last_state: State = null) -> void:	
+	player.setSpeed(dashSpeed)
 	dashTimeLeft = dashTime
 
 func exit() -> void:

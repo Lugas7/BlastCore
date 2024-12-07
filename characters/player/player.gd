@@ -1,6 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
+var gold = 0
 
 var xinput = 0
 var yinput = 0
@@ -10,7 +11,16 @@ var ydir = 0
 const damageTimeout = 0.5
 var damageTimeoutLeft = 0
 
-@onready var hc: HealthComponent = get_node("HealthComponent")
+const upgradeList = preload("res://upgradeList.gd").UpgradeList
+
+var upgrades: Dictionary
+
+@onready var movementStateMachine = get_node("Movement State machine")
+@onready var attacktStateMachine = get_node("Attack State machine")
+
+func _ready() -> void:
+	gold = 110
+		
 @onready var healthBar: HealthBar = $HealthBar
 
 func _physics_process(_delta: float) -> void:

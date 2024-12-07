@@ -1,7 +1,14 @@
 extends Node2D
 class_name Sword
 
-const slashCD = 0.5
+const slashCD_d = 0.7
+const slashCD_u = 0.3
+
+const swordScale_d = 1.0
+const swordScale_u = 1.5
+
+var swordScale = swordScale_d
+var slashCD = slashCD_d
 var slashCDLeft = slashCD
 
 @export var stateMachine: StateMachine
@@ -21,7 +28,11 @@ func slash():
 	#print(swordCollisionShape.get_parent().collision_layer)
 	#print(swordCollisionShape.get_parent().collision_mask)
 	if slashCDLeft <= 0:
+		var upgrades = get_parent().upgrades
+		
+		scale = Vector2(swordScale, swordScale)
 		slashCDLeft = slashCD
+		
 		stateMachine._on_state_transition("SlashState", null)
 
 @onready var spinState: SpinState = get_node("StateMachine/SpinState")

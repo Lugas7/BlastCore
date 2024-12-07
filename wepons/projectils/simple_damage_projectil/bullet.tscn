@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyxcyr4dxcmye"]
+[gd_scene load_steps=6 format=3 uid="uid://cyxcyr4dxcmye"]
 
 [ext_resource type="Texture2D" uid="uid://dggl55k60evxt" path="res://assets/Bullet/Bullet.png" id="1_6tgqr"]
 [ext_resource type="Script" path="res://wepons/projectils/simple_damage_projectil/bullet.gd" id="1_prf6u"]
@@ -7,10 +7,15 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_lvbgf"]
 radius = 26.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_8m5e3"]
+radius = 24.0
+
 [node name="Bullet" type="CharacterBody2D" groups=["Player_projectile"]]
 position = Vector2(64, 312)
+
 collision_layer = 0
 collision_mask = 0
+
 script = ExtResource("1_prf6u")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -23,5 +28,8 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SimpleDamageArea"]
 shape = SubResource("CircleShape2D_lvbgf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8m5e3")
 
 [connection signal="damage_dealt" from="SimpleDamageArea" to="." method="_on_simple_damage_area_damage_dealt"]

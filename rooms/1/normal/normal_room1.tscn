@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=4 uid="uid://dfkths6p5cdxb"]
+[gd_scene load_steps=6 format=4 uid="uid://dfkths6p5cdxb"]
 
 [ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_y2v1o"]
 [ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="3_2b8la"]
 [ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_sjqcm"]
+
+[ext_resource type="PackedScene" uid="uid://bha5era611kv1" path="res://room_corner.tscn" id="5_yqbv7"]
+
 [ext_resource type="PackedScene" uid="uid://ddpv24bepg74x" path="res://boss.tscn" id="6_onbc0"]
 
 [node name="Node2D" type="Node2D"]
@@ -37,13 +40,14 @@ position = Vector2(3072, 2624)
 [node name="DoorSpawnUp" parent="." instance=ExtResource("4_sjqcm")]
 position = Vector2(704, 3072)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(512, 384)
-zoom = Vector2(0.4, 0.4)
-limit_left = 0
-limit_top = 0
-limit_right = 3328
-limit_bottom = 3328
+[node name="SwirlEnemy" parent="." instance=ExtResource("4_1jxq4")]
+position = Vector2(992, 336)
+
+[node name="RoomCorner1" parent="." instance=ExtResource("5_yqbv7")]
+position = Vector2(64, 64)
+
+[node name="RoomCorner2" parent="." instance=ExtResource("5_yqbv7")]
+position = Vector2(3264, 3264)
 
 [node name="Boss" parent="." instance=ExtResource("6_onbc0")]
 position = Vector2(968, 680)
