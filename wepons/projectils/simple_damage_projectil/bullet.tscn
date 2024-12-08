@@ -12,10 +12,8 @@ radius = 24.0
 
 [node name="Bullet" type="CharacterBody2D" groups=["Player_projectile"]]
 position = Vector2(64, 312)
-
 collision_layer = 0
 collision_mask = 0
-
 script = ExtResource("1_prf6u")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
