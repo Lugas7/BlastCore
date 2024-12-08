@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://bit70cxmmemnf"]
+[gd_scene load_steps=6 format=4 uid="uid://bit70cxmmemnf"]
 
 [ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_5w2ws"]
 [ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="3_4j7mp"]
 [ext_resource type="PackedScene" uid="uid://bha5era611kv1" path="res://room_corner.tscn" id="4_co25c"]
 [ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_x0vco"]
+[ext_resource type="Texture2D" uid="uid://dnfaga5e6ri1n" path="res://rooms/1/start/start_room1_sprite.png" id="5_8cl0m"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -42,3 +43,7 @@ position = Vector2(64, 64)
 
 [node name="RoomCorner2" parent="." instance=ExtResource("4_co25c")]
 position = Vector2(2624, 1472)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("5_8cl0m")

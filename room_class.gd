@@ -15,6 +15,7 @@ class Room:
 	# Neighbooring rooms
 	var Neighboors: Array
 	var Cleared: bool
+	var sprite: Sprite2D
 	
 	static func create(type: String, x: int, y: int) -> Room:
 		var room = Room.new()

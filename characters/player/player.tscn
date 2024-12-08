@@ -48,7 +48,9 @@ swordCollisionShape = NodePath("Slash Damage2/CollisionShape2D")
 sprite = NodePath("Sprite2D")
 
 [node name="Slash Damage2" parent="Sword" instance=ExtResource("10_iab8d")]
-collision_layer = 1
+collision_layer = 32
+collision_mask = 32
+damage = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Slash Damage2"]
 position = Vector2(167, 1)

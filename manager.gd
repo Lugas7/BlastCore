@@ -29,7 +29,190 @@ func _ready() -> void:
 			loadRoom(r, 0)
 		elif r.Type == "special":
 			r.Cleared = true
-	
+	addRoomsToMinimap(currentRoom, Vector2(0, 0), null)
+	position_camera_to_fit_rooms()
+	highlight_sprite(currentRoom.sprite)
+
+var numberOfRoomsInMinimap = 0
+var visited_rooms = {}
+var placed_rooms = []  # Track placed rooms with their positions
+
+func addRoomsToMinimap(room, roomPosition, fromposition):
+	if room and not visited_rooms.has(room):  # Avoid duplicate visits
+		visited_rooms[room] = true
+
+		# Get SubViewport
+		var subViewPort = self.get_node("SubViewport")
+		
+		# Add the room's sprite to the SubViewport
+		room.sprite.name = str(numberOfRoomsInMinimap)
+		room.sprite.position = roomPosition
+		
+		# Resolve collisions before adding the sprite
+		roomPosition = resolve_collision(room.sprite, roomPosition)
+
+		# Add sprite to viewport and track its position
+		subViewPort.add_child(room.sprite)
+		placed_rooms.append({"sprite": room.sprite, "position": roomPosition, "room": room})
+
+		numberOfRoomsInMinimap += 1
+		
+		# Get the sprite's width and height
+		var sprite_width = room.sprite.texture.get_width()
+		var sprite_height = room.sprite.texture.get_height()
+		
+		# Check and connect adjacent rooms
+		connect_neighbors_if_adjacent(room, roomPosition, sprite_width, sprite_height)
+
+		# Iterate through the neighbors
+		for i in range(len(room.Neighboors)):
+			if room.Neighboors[i]:  # Check if a neighbor exists
+				var neighbor = room.Neighboors[i]
+				var new_position = roomPosition
+				
+				# Calculate position based on the direction
+				match i:
+					0:  # Right
+						new_position = Vector2(roomPosition.x + sprite_width, roomPosition.y)
+					1:  # Up
+						new_position = Vector2(roomPosition.x, roomPosition.y - sprite_height)
+					2:  # Left
+						new_position = Vector2(roomPosition.x - sprite_width, roomPosition.y)
+					3:  # Down
+						new_position = Vector2(roomPosition.x, roomPosition.y + sprite_height)
+				
+				# Recursive call for the neighbor
+				addRoomsToMinimap(neighbor, new_position, i)
+
+func position_camera_to_fit_rooms():
+	var camera = $SubViewport/Camera2D
+
+	# Step 1: Initialize extreme values for the room bounds
+	var min_x = INF
+	var max_x = -INF
+	var min_y = INF
+	var max_y = -INF
+
+	# Step 2: Calculate the bounds of all placed rooms
+	for placed in placed_rooms:
+		var sprite_global_position = placed["sprite"].global_position
+		var sprite_size = Vector2(placed["sprite"].texture.get_width(), placed["sprite"].texture.get_height())
+
+		# Update bounds based on global positions
+		min_x = min(min_x, sprite_global_position.x)
+		max_x = max(max_x, sprite_global_position.x + sprite_size.x)
+		min_y = min(min_y, sprite_global_position.y)
+		max_y = max(max_y, sprite_global_position.y + sprite_size.y)
+
+	# Step 3: Set the camera limits
+	camera.set_position(Vector2(max_x, max_y))
+
+
+
+
+func resolve_collision(sprite, position):
+	var sprite_width = sprite.texture.get_width()
+	var sprite_height = sprite.texture.get_height()
+	var adjusted_position = position
+	var max_adjustment = 100  # Limit for position adjustments
+
+	# Iterate over placed rooms to check for collisions
+	for placed in placed_rooms:
+		var placed_sprite = placed["sprite"]
+		var placed_position = placed["position"]
+
+		# Calculate bounding rectangles
+		var rect1 = Rect2(adjusted_position, Vector2(sprite_width, sprite_height))
+		var rect2 = Rect2(placed_position, Vector2(placed_sprite.texture.get_width(), placed_sprite.texture.get_height()))
+
+		# Check for collision
+		if rect1.intersects(rect2):
+			print("Collision detected between:", sprite.name, "and", placed_sprite.name)
+			print("Before adjustment: Position =", adjusted_position)
+
+			# Adjust horizontally
+			if rect1.position.x < rect2.position.x:
+				adjusted_position.x = max(adjusted_position.x, rect2.position.x - sprite_width)
+				if abs(adjusted_position.x - position.x) > max_adjustment:
+					adjusted_position.x = position.x
+			elif rect1.position.x + rect1.size.x > rect2.position.x:
+				adjusted_position.x = min(adjusted_position.x, rect2.position.x + rect2.size.x)
+				if abs(adjusted_position.x - position.x) > max_adjustment:
+					adjusted_position.x = position.x
+
+			# Adjust vertically
+			if rect1.position.y < rect2.position.y:
+				adjusted_position.y = max(adjusted_position.y, rect2.position.y - sprite_height)
+				if abs(adjusted_position.y - position.y) > max_adjustment:
+					adjusted_position.y = position.y
+			elif rect1.position.y + rect1.size.y > rect2.position.y:
+				adjusted_position.y = min(adjusted_position.y, rect2.position.y + rect2.size.y)
+				if abs(adjusted_position.y - position.y) > max_adjustment:
+					adjusted_position.y = position.y
+
+			print("After adjustment: Position =", adjusted_position)
+
+	# Return adjusted position
+	return adjusted_position
+
+
+func connect_neighbors_if_adjacent(current_room, current_position, width, height):
+	for placed in placed_rooms:
+		var placed_room = placed["room"]
+		var placed_position = placed["position"]
+
+		# Check adjacency on all sides
+		if placed_position.x == current_position.x + width and placed_position.y == current_position.y:
+			# Current room's right side aligns with the placed room's left side
+			current_room.Neighboors[0] = placed_room
+			placed_room.Neighboors[2] = current_room
+		elif placed_position.x == current_position.x - width and placed_position.y == current_position.y:
+			# Current room's left side aligns with the placed room's right side
+			current_room.Neighboors[2] = placed_room
+			placed_room.Neighboors[0] = current_room
+		elif placed_position.y == current_position.y - height and placed_position.x == current_position.x:
+			# Current room's top aligns with the placed room's bottom
+			current_room.Neighboors[1] = placed_room
+			placed_room.Neighboors[3] = current_room
+		elif placed_position.y == current_position.y + height and placed_position.x == current_position.x:
+			# Current room's bottom aligns with the placed room's top
+			current_room.Neighboors[3] = placed_room
+			placed_room.Neighboors[1] = current_room
+
+
+			#dir = 0  # Right
+		#"DoorUp":
+			#dir = 1  # Up
+		#"DoorLeft":
+			#dir = 2  # Left
+		#"DoorDown":
+			#dir = 3  # Down
+
+func highlight_sprite(sprite: Sprite2D, shouldBeHighligted = true, scale_factor = 0.9):
+	if shouldBeHighligted:
+
+
+		# Add a highlight border
+		var border = ColorRect.new()
+		border.z_index = -1
+		border.color = Color.YELLOW
+		border.size = sprite.texture.get_size() + Vector2(30, 40)  # Adjust size for border thickness
+		border.position = -border.size / 2  # Center the border
+		border.name = "HighlightBorder"  # Set a name to identify the border later
+		sprite.add_child(border)
+		# Adjust the sprite scale to reduce its size slightly
+		sprite.scale = Vector2(scale_factor, scale_factor)
+	else:
+		# Remove the highlight border if it exists
+		if sprite.has_node("HighlightBorder"):
+			var border = sprite.get_node("HighlightBorder")
+			sprite.remove_child(border)
+			border.queue_free()  # Free the border node to remove it completely
+
+		# Restore the original scale of the sprite
+		sprite.scale = Vector2(1, 1)
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
@@ -88,9 +271,26 @@ func generateLevel(length: int) -> Rooms.Room:
 		var dir = DirAccess.open(path)
 		if dir:
 			var files = dir.get_files()
-			var rIndex = rng.randi_range(0, len(files)-1)
-			var file = files[rIndex]
+			var filteredFiles = []
+			# removing files that don't end with .tscn to remove e.g. .png files
+			for file in files:
+				if file.ends_with(".tscn"):
+					filteredFiles.append(file)
+			var rIndex = rng.randi_range(0, len(filteredFiles)-1)
+			var file = filteredFiles[rIndex]
 			r.RoomFile = path + "/" + file
+			r.sprite = Sprite2D.new()
+			var image = Image.load_from_file(path + "/" + file.replace(".tscn", "") + "_sprite.png")
+			if !image:
+				print("Image failed to load!")
+			else:
+				var texture = ImageTexture.create_from_image(image)
+				if not texture:
+					print("Texture creation failed!")
+				else:
+					r.sprite.texture = texture
+
+
 	
 	return lastRoom
 
@@ -226,13 +426,17 @@ func destroyRooms(room: Rooms.Room):
 
 
 func nextRoom(dir: int):
+	highlight_sprite(currentRoom.sprite, false)
+	print(currentRoom)
+	print(currentRoom.Neighboors[dir])
 	currentRoom = currentRoom.Neighboors[dir]
+	highlight_sprite(currentRoom.sprite, true)
+
 	loadRoom(currentRoom, dir)
 
 
 # Load a room
-func loadRoom(room: Rooms.Room, fromDir: int):
-	
+func loadRoom(room: Rooms.Room, fromDir: int):	
 	# Remove all projectiles from the previous room
 	var playerProjectiles =  get_tree().get_nodes_in_group("Player_projectile")
 	for p in playerProjectiles:

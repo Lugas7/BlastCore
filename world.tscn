@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://ses781sho4c5"]
+[gd_scene load_steps=4 format=3 uid="uid://ses781sho4c5"]
 
 [ext_resource type="Script" path="res://manager.gd" id="1_7rgc7"]
 [ext_resource type="PackedScene" uid="uid://cdsxn8ypvjpq" path="res://characters/player/player.tscn" id="2_hynhf"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_q5t07"]
+viewport_path = NodePath("SubViewport")
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_7rgc7")
@@ -10,3 +13,20 @@ script = ExtResource("1_7rgc7")
 format = 2
 
 [node name="Player" parent="." instance=ExtResource("2_hynhf")]
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(768, 768)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="SubViewport"]
+zoom = Vector2(0.07, 0.07)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="UI"]
+position = Vector2(1216, 656)
+scale = Vector2(0.722917, 0.68125)
+texture = SubResource("ViewportTexture_q5t07")
