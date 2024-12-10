@@ -15,6 +15,8 @@ func _physics_process(delta: float) -> void:
 func _on_health_component_died() -> void:
 	print("Canon enemy has died")
 	emit_signal("enemy_died")
+	for child in get_children():
+		child.queue_free()
 	queue_free()
 
 

@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_7apoq"]
 [ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="3_rtdf0"]
 [ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_4mqec"]
-[ext_resource type="PackedScene" uid="uid://dyy4guo8hgmq1" path="res://SwirlEnemy.tscn" id="4_ub28n"]
 [ext_resource type="PackedScene" uid="uid://bha5era611kv1" path="res://room_corner.tscn" id="5_dpnop"]
 [ext_resource type="Texture2D" uid="uid://cxc46tih24w3j" path="res://rooms/1/boss/boss_room1_sprite.png" id="6_f0cer"]
+[ext_resource type="PackedScene" uid="uid://ddpv24bepg74x" path="res://boss.tscn" id="6_gs40k"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -39,9 +39,6 @@ position = Vector2(3072, 2624)
 [node name="DoorSpawnUp" parent="." instance=ExtResource("4_4mqec")]
 position = Vector2(704, 3072)
 
-[node name="SwirlEnemy" parent="." instance=ExtResource("4_ub28n")]
-position = Vector2(936, 384)
-
 [node name="RoomCorner1" parent="." instance=ExtResource("5_dpnop")]
 position = Vector2(64, 64)
 
@@ -51,3 +48,6 @@ position = Vector2(3264, 3264)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("6_f0cer")
+
+[node name="Boss" parent="." instance=ExtResource("6_gs40k")]
+position = Vector2(791, 1103)
