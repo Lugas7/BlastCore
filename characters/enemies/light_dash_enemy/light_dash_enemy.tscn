@@ -14,12 +14,13 @@ radius = 526.015
 radius = 74.0068
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y5se7"]
-radius = 75.0
+radius = 32.0624
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_diaf0"]
 radius = 75.0267
 
 [node name="light_dash_enemy" type="CharacterBody2D"]
+platform_floor_layers = 4294967040
 script = ExtResource("1_ic5v7")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_guihv")]
@@ -33,11 +34,12 @@ texture = ExtResource("3_mqsql")
 [node name="Detection" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
+visible = false
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_xl36w")
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_i0fqy")]
-collision_layer = 33
+collision_layer = 32
 collision_mask = 32
 health_component = NodePath("../HealthComponent")
 
@@ -56,6 +58,8 @@ offset_right = 32.0
 offset_bottom = 39.0
 
 [node name="DamageArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 64
 script = ExtResource("6_ltsta")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]

@@ -151,4 +151,4 @@ func _on_health_component_died() -> void:
 	queue_free()
 
 func _on_health_component_health_changed(current_health: int) -> void:
-	health_bar.set_value(100 * current_health/ hc.max_health)
+	health_bar.setPercent(100 * current_health/ hc.max_health)

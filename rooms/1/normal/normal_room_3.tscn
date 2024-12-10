@@ -1,63 +1,56 @@
-[gd_scene load_steps=8 format=4 uid="uid://bxblxhvx31bex"]
+[gd_scene load_steps=7 format=4 uid="uid://c78jm6wgyo7hq"]
 
-[ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="2_y2v1o"]
-[ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="3_2b8la"]
-[ext_resource type="PackedScene" uid="uid://dyy4guo8hgmq1" path="res://SwirlEnemy.tscn" id="4_l1tye"]
-[ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="4_sjqcm"]
-[ext_resource type="PackedScene" uid="uid://bha5era611kv1" path="res://room_corner.tscn" id="5_b7myj"]
-[ext_resource type="Texture2D" uid="uid://bqvr4pp0dd2oa" path="res://rooms/1/normal/normal_room1_sprite.png" id="6_ppamk"]
-[ext_resource type="PackedScene" uid="uid://d2i8xel1lj7dv" path="res://cannon_enemy.tscn" id="7_ca22n"]
+[ext_resource type="PackedScene" uid="uid://b84wtosq7g4bt" path="res://wall_tile.tscn" id="1_cti6p"]
+[ext_resource type="PackedScene" uid="uid://b5u4hy52xsauj" path="res://door.tscn" id="2_u4j1a"]
+[ext_resource type="PackedScene" uid="uid://byu1c7v7yrjiy" path="res://door_spawnpoint.tscn" id="3_370mu"]
+[ext_resource type="PackedScene" uid="uid://bha5era611kv1" path="res://room_corner.tscn" id="4_payn8"]
+[ext_resource type="Texture2D" uid="uid://bqvr4pp0dd2oa" path="res://rooms/1/normal/normal_room1_sprite.png" id="5_eilyv"]
+[ext_resource type="PackedScene" uid="uid://mtgbh7jeskum" path="res://characters/enemies/aoe_elite_enemy/aoe_elite_enemy.tscn" id="6_ygfue"]
 
-[node name="Node2D" type="Node2D"]
+[node name="normal_room3" type="Node2D"]
 
-[node name="TileMapLayer" parent="." instance=ExtResource("2_y2v1o")]
+[node name="TileMapLayer" parent="." instance=ExtResource("1_cti6p")]
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA8AAAAAAAAAAAAAABAAAAAAAAAAAAAAABEAAAAAAAAAAAAAABIAAAAAAAAAAAAAABMAAAAAAAAAAAAAABQAAAAAAAAAAAAAABUAAAAAAAAAAAAAABYAAAAAAAAAAAAAABcAAAAAAAAAAAAAABgAAAAAAAAAAAAAABkAAAAAAAAAAAABABkAAAAAAAAAAAACABkAAAAAAAAAAAADABkAAAAAAAAAAAAEABkAAAAAAAAAAAAFABkAAAAAAAAAAAAGABkAAAAAAAAAAAAHABkAAAAAAAAAAAAIABkAAAAAAAAAAAAJABkAAAAAAAAAAAAKABkAAAAAAAAAAAALABkAAAAAAAAAAAAMABkAAAAAAAAAAAANABkAAAAAAAAAAAAOABkAAAAAAAAAAAAPABkAAAAAAAAAAAAQABkAAAAAAAAAAAARABkAAAAAAAAAAAASABkAAAAAAAAAAAATABkAAAAAAAAAAAAUABkAAAAAAAAAAAAVABkAAAAAAAAAAAAWABkAAAAAAAAAAAAXABkAAAAAAAAAAAAYABkAAAAAAAAAAAAZABkAAAAAAAAAAAAZABgAAAAAAAAAAAAZABcAAAAAAAAAAAAZABYAAAAAAAAAAAAZABUAAAAAAAAAAAAZABQAAAAAAAAAAAAZABMAAAAAAAAAAAAZABIAAAAAAAAAAAAZABEAAAAAAAAAAAAZABAAAAAAAAAAAAAZAA8AAAAAAAAAAAAZAA4AAAAAAAAAAAAZAA0AAAAAAAAAAAAZAAwAAAAAAAAAAAAZAAsAAAAAAAAAAAAZAAoAAAAAAAAAAAAZAAkAAAAAAAAAAAAZAAgAAAAAAAAAAAAZAAcAAAAAAAAAAAAZAAYAAAAAAAAAAAAZAAUAAAAAAAAAAAAZAAQAAAAAAAAAAAAZAAMAAAAAAAAAAAAZAAIAAAAAAAAAAAAZAAEAAAAAAAAAAAAZAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAXAAAAAAAAAAAAAAAWAAAAAAAAAAAAAAAVAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAATAAAAAAAAAAAAAAASAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=")
 
-[node name="DoorUp" parent="." instance=ExtResource("3_2b8la")]
+[node name="DoorUp" parent="." instance=ExtResource("2_u4j1a")]
 position = Vector2(2688, 256)
 
-[node name="DoorRight" parent="." instance=ExtResource("3_2b8la")]
+[node name="DoorRight" parent="." instance=ExtResource("2_u4j1a")]
 position = Vector2(3072, 2688)
 rotation = 1.5708
 
-[node name="DoorDown" parent="." instance=ExtResource("3_2b8la")]
+[node name="DoorDown" parent="." instance=ExtResource("2_u4j1a")]
 position = Vector2(640, 3072)
 rotation = 3.14159
 
-[node name="DoorLeft" parent="." instance=ExtResource("3_2b8la")]
+[node name="DoorLeft" parent="." instance=ExtResource("2_u4j1a")]
 position = Vector2(256, 640)
 rotation = 4.71239
 
-[node name="DoorSpawnRight" parent="." instance=ExtResource("4_sjqcm")]
+[node name="DoorSpawnRight" parent="." instance=ExtResource("3_370mu")]
 position = Vector2(256, 704)
 
-[node name="DoorSpawnDown" parent="." instance=ExtResource("4_sjqcm")]
+[node name="DoorSpawnDown" parent="." instance=ExtResource("3_370mu")]
 position = Vector2(2624, 256)
 
-[node name="DoorSpawnLeft" parent="." instance=ExtResource("4_sjqcm")]
+[node name="DoorSpawnLeft" parent="." instance=ExtResource("3_370mu")]
 position = Vector2(3072, 2624)
 
-[node name="DoorSpawnUp" parent="." instance=ExtResource("4_sjqcm")]
+[node name="DoorSpawnUp" parent="." instance=ExtResource("3_370mu")]
 position = Vector2(704, 3072)
 
-[node name="SwirlEnemy" parent="." instance=ExtResource("4_l1tye")]
-position = Vector2(2312, 878)
-
-[node name="RoomCorner1" parent="." instance=ExtResource("5_b7myj")]
+[node name="RoomCorner1" parent="." instance=ExtResource("4_payn8")]
 position = Vector2(64, 64)
 
-[node name="RoomCorner2" parent="." instance=ExtResource("5_b7myj")]
+[node name="RoomCorner2" parent="." instance=ExtResource("4_payn8")]
 position = Vector2(3264, 3264)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
-texture = ExtResource("6_ppamk")
+texture = ExtResource("5_eilyv")
 
-[node name="CannonEnemy" parent="." instance=ExtResource("7_ca22n")]
-position = Vector2(858, 940)
+[node name="aoe_elite_enemy" parent="." instance=ExtResource("6_ygfue")]
+position = Vector2(794, 1634)
 
-[node name="SwirlEnemy2" parent="." instance=ExtResource("4_l1tye")]
-position = Vector2(2254, 2014)
-
-[node name="CannonEnemy2" parent="." instance=ExtResource("7_ca22n")]
-position = Vector2(983, 2143)
+[node name="aoe_elite_enemy2" parent="." instance=ExtResource("6_ygfue")]
+position = Vector2(2511, 973)

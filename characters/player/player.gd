@@ -26,8 +26,8 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if damageTimeoutLeft > 0:
+		print("currently invulnerable")
 		damageTimeoutLeft -= _delta
-		hc.set_invincible(damageTimeoutLeft <= 0)
 	else:
 		hc.set_invincible(false)
 		damageTimeoutLeft = damageTimeout

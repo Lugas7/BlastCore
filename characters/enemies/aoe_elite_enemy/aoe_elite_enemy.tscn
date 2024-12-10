@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c5cdjdajvwv3w" path="res://wepons/shooting_wepons/enemy_gun.tscn" id="7_2sain"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xl36w"]
-radius = 526.015
+radius = 1169.02
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gkesi"]
 radius = 74.0068
@@ -21,6 +21,7 @@ radius = 75.0
 radius = 75.0267
 
 [node name="aoe_elite_enemy" type="CharacterBody2D"]
+platform_floor_layers = 4294967040
 script = ExtResource("1_tgtum")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_ln056")]
@@ -57,6 +58,8 @@ offset_right = 50.0
 offset_bottom = 76.0
 
 [node name="DamageArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 64
 script = ExtResource("6_422jl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]

@@ -19,7 +19,7 @@ func _on_health_component_died() -> void:
 		if child.has_method("_on_health_component_died"):
 			child._on_health_component_died()
 		#child.queue_free()
-	get_parent().queue_free()
+	queue_free()
 
 
 func _on_health_component_health_changed(current_health: int) -> void:

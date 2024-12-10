@@ -28,6 +28,7 @@ var wander_direction = Vector2.ZERO
 var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
+	add_to_group("Enemy")
 	damage_area.monitoring = false
 	sprite.modulate = Color(1, 1, 1)  # Reset color to normal
 	set_new_wander_direction()
@@ -117,7 +118,7 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 		is_wandering = true  # Resume wandering when the player is lost
 
 func _on_health_component_died() -> void:
-	print("Enemy died")
+	emit_signal("enemy_died")
 	queue_free()
 
 func _on_health_component_health_changed(current_health: int) -> void:

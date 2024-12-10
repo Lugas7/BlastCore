@@ -226,7 +226,8 @@ func generateLevel(length: int) -> Rooms.Room:
 			r.sprite = Sprite2D.new()
 			var image = Image.load_from_file(path + "/" + file.replace(".tscn", "") + "_sprite.png")
 			if !image:
-				print("Image failed to load!")
+				OS.alert("Image failed to load with expected path: " + path + "/" 
+				+ file.replace(".tscn", "") + "_sprite.png", "ALERT")
 			else:
 				var texture = ImageTexture.create_from_image(image)
 				if not texture:
