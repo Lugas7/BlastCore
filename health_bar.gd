@@ -9,7 +9,7 @@ const percentTickPerSecond = 20
 const timeOutBeforeBeginTickingDamageBar = 1
 
 func setPercent(newPercent):
-	print("new Percent: " + str(newPercent))
+	#print("new Percent: " + str(newPercent))
 	var changePercent = value - newPercent
 	value = newPercent
 	if changePercent > 0:

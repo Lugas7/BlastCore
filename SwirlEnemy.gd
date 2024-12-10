@@ -16,7 +16,7 @@ func _physics_process(delta: float) -> void:
 signal enemy_died
 func _on_health_component_died() -> void:
 	emit_signal("enemy_died")
-	print("Canon enemy has died")
+	#print("Canon enemy has died")
 	queue_free()
 
 

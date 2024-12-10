@@ -1,4 +1,5 @@
 extends State
+class_name CannonState
 
 @export var gun: Gun
 @export var player: Player

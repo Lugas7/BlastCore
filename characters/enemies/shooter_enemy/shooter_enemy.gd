@@ -55,7 +55,7 @@ func _on_health_component_died() -> void:
 
 func _on_health_component_health_changed(current_health: int) -> void:
 	update_health_bar()
-	print("Enemy health changed: ", current_health)
+	#print("Enemy health changed: ", current_health)
 
 func update_health_bar() -> void:
 	if health_bar:

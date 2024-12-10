@@ -33,6 +33,8 @@ var can_shoot = true
 @onready var sprite = $Sprite2D
 @onready var damage_area = $DamageArea
 
+signal enemy_died
+
 # Gun nodes
 @onready var gun_nodes = [
 	$EnemyGun1, $EnemyGun2, $EnemyGun3,
@@ -43,6 +45,7 @@ var can_shoot = true
 var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
+	add_to_group("Enemy")
 	damage_area.monitoring = false
 	sprite.modulate = Color(1, 1, 1)
 	set_new_wander_direction()
@@ -148,6 +151,7 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 		player = null
 
 func _on_health_component_died() -> void:
+	emit_signal("enemy_died")
 	queue_free()
 
 func _on_health_component_health_changed(current_health: int) -> void:

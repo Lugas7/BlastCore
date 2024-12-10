@@ -20,6 +20,8 @@ var cooldown_time_left = 0
 var wander_time_left = 0
 var wander_direction = Vector2.ZERO
 
+signal enemy_died
+
 @onready var hc = get_node("HealthComponent")
 @onready var health_bar = $HealthBar
 @onready var sprite = $Sprite2D
@@ -123,4 +125,4 @@ func _on_health_component_died() -> void:
 
 func _on_health_component_health_changed(current_health: int) -> void:
 	health_bar.set_value(100 * current_health / hc.max_health)
-	print("Enemy health changed: ", current_health)
+	#print("Enemy health changed: ", current_health)

@@ -1,26 +1,28 @@
 extends Node
 
+class_name UpgradeManager
+
 const upgradeList = preload("res://upgradeList.gd")
 var upgrades: Dictionary
 
-var player
-var msm
-var dashState
-var cannon
-var sword
+@export var player: Player
+@export var canonState: CannonState
+@export var dashState: State
+@export var cannon: Gun
+@export var sword: Sword
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for u in upgradeList.UpgradeList:
 		upgrades[u] = false
 		
-	player = get_parent()
+	#player = get_parent()
 	
-	msm = player.get_node("Movement State machine")
-	dashState = msm.get_node("DashState")
+	#msm = player.get_node("Movement State machine")
+	#dashState = msm.get_node("DashState")
 	
-	cannon = player.get_node("Gun")
-	sword = player.get_node("Sword")
+	#cannon = player.get_node("Gun")
+	#sword = player.get_node("Sword")
 
 
 func activate_upgrade(u: String):
@@ -31,7 +33,7 @@ func activate_upgrade(u: String):
 			cannon.BulletScale = cannon.BulletScale_u
 		
 		upgradeList.u_fast_shot:
-			cannon.ReloadTime = cannon.ReloadTime_u
+			canonState.shootCooldown = 0.1
 			
 		upgradeList.u_bullet_bounce:
 			cannon.BulletBounce = true

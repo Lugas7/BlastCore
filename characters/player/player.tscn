@@ -50,7 +50,7 @@ sprite = NodePath("Sprite2D")
 [node name="Slash Damage2" parent="Sword" instance=ExtResource("10_iab8d")]
 collision_layer = 32
 collision_mask = 32
-damage = 100
+damage = 30
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Slash Damage2"]
 position = Vector2(167, 1)
@@ -85,8 +85,13 @@ rotation = 1.57082
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("11_lkkfv")
 
-[node name="UpgradeManager" type="Node" parent="."]
+[node name="UpgradeManager" type="Node" parent="." node_paths=PackedStringArray("player", "canonState", "dashState", "cannon", "sword")]
 script = ExtResource("15_jaiq0")
+player = NodePath("..")
+canonState = NodePath("../Attack State machine/CannonState")
+dashState = NodePath("../Movement State machine/DashState")
+cannon = NodePath("../Gun")
+sword = NodePath("../Sword")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bge51")
@@ -132,8 +137,6 @@ position_smoothing_enabled = false
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(8, 0)
 shape = SubResource("CircleShape2D_bge51")
-
-[node name="Sword2" parent="." instance=ExtResource("8_ouqw3")]
 
 [node name="HealthBar" parent="." instance=ExtResource("14_h74gl")]
 offset_left = -120.0

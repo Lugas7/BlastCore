@@ -22,7 +22,7 @@ func _ready() -> void:
 	camera = player.get_node("Camera")
 	
 	var lastRoom = generateLevel(roomCount)
-	
+
 	var rooms = lastRoom.allRooms()
 	for r in rooms:
 		if r.Type == "start":
@@ -167,6 +167,10 @@ func _on_enemy_died():
 	print("enemy died, enemies left: ", enemies_left)
 	if !currentRoom.Cleared:
 		if(enemies_left) == 0:
+			if currentRoom.Type == "boss":
+				await get_tree().create_timer(1).timeout # timer to allow player to see the boss defeated
+				OS.alert("You beat the game, click ok to restart, upgrades will remain", "Success!")
+				restartGameWhileRetainingUpgrades()
 			currentRoom.Cleared = true
 			unlockDoors()
 
@@ -383,6 +387,15 @@ func nextRoom(dir: int):
 	loadRoom(currentRoom, dir)
 
 
+func restartGameWhileRetainingUpgrades():
+	var new_scene = preload("res://world.tscn").instantiate()
+	for upgradeKeyString in playerUpgradeManager.upgrades.keys():
+		if playerUpgradeManager.upgrades[upgradeKeyString]:
+			print("persistent upgrade kept: " + upgradeKeyString)
+			new_scene.get_node("Player").get_node("UpgradeManager").activate_upgrade(upgradeKeyString)
+	get_tree().root.add_child(new_scene)  # Add the new scene
+	queue_free()  # Free the current scene
+
 # Load a room
 func loadRoom(room: Rooms.Room, fromDir: int):	
 	# Remove all projectiles from the previous room
@@ -429,6 +442,7 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 		for enemy in enemies:
 			enemy.queue_free()
 		unlockDoors()
+
 	
 	# Prepare the camera
 	var corner1 = roomInstance.get_node("RoomCorner1").position
