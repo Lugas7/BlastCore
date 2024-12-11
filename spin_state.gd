@@ -15,8 +15,8 @@ var slashSpeed = 2
 
 
 func enter(last_state: State = null) -> void:
-	print(slashArea.get_parent().collision_layer)
-	print(slashArea.get_parent().collision_mask)
+	#print(slashArea.get_parent().collision_layer)
+	#print(slashArea.get_parent().collision_mask)
 	#slashArea.disabled = false
 	swordSprite.visible = true
 
