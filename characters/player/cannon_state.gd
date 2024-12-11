@@ -16,6 +16,7 @@ func enter(last_state: State = null) -> void:
 func exit() -> void:
 	gun.visible = false
 
+# aims gun at mouse direction and shoots on the action attack and transitions to sword state on action swap weapon
 func update(delta: float) -> void:
 	shootCooldownLeft -= delta
 	gun.look_at(player.get_global_mouse_position())

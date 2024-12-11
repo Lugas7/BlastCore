@@ -27,6 +27,7 @@ func _ready() -> void:
 
 var bulletScene = preload("res://wepons/projectils/simple_damage_projectil/bullet.tscn")
 
+# shoots a bullet at angle of gun
 func shoot():
 	# Instance the bullet
 	var bullet = bulletScene.instantiate()
@@ -43,6 +44,7 @@ func shoot():
 	
 	return bullet
 
+# shoots bullet but sets the layer to 7 which is where the players hurtbox is
 func shootPlayer():
 	var bullet = await shoot()
 	bullet.get_node("SimpleDamageArea").collision_layer = pow(2, 6) # setting layer 7

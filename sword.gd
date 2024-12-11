@@ -24,6 +24,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	slashCDLeft -= delta
 
+# activates slash by transitioning to the SlashState 
 func slash():
 	#print(swordCollisionShape.get_parent().collision_layer)
 	#print(swordCollisionShape.get_parent().collision_mask)

@@ -27,6 +27,7 @@ func enter(last_state: State = null) -> void:
 func exit() -> void:
 	pass
 
+# transitions back to walkstate after dash time has passed
 func update(delta: float) -> void:
 	if dashTimeLeft > 0:
 		dashTimeLeft -= delta

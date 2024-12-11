@@ -28,6 +28,7 @@ radius = 64.0
 radius = 64.4981
 
 [node name="Player 2D" type="CharacterBody2D" groups=["Player"]]
+collision_layer = 5
 collision_priority = 5.0
 motion_mode = 1
 script = ExtResource("1_v2mqh")

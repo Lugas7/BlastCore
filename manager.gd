@@ -31,7 +31,7 @@ func _ready() -> void:
 			loadRoom(r, 0)
 		elif r.Type == "special":
 			r.Cleared = true
-	addRoomsToMinimap(currentRoom, Vector2(0, 0), null)
+	addRoomsToMinimap(currentRoom, Vector2(0, 0))
 	position_camera_to_fit_rooms()
 	highlight_sprite(currentRoom.sprite)
 
@@ -39,8 +39,8 @@ var numberOfRoomsInMinimap = 0
 var visited_rooms = {}
 var placed_rooms = []  # Track placed rooms with their positions
 @onready var subViewPort = self.get_node("SubViewport")
-
-func addRoomsToMinimap(room, roomPosition, fromposition):
+# adds rooms to minimap recursively from the room provided
+func addRoomsToMinimap(room, roomPosition = Vector2(0, 0)):
 	if room and not visited_rooms.has(room):  # Avoid duplicate visits
 		visited_rooms[room] = true
 
@@ -50,7 +50,7 @@ func addRoomsToMinimap(room, roomPosition, fromposition):
 		room.sprite.name = str(numberOfRoomsInMinimap)
 		room.sprite.position = roomPosition
 
-		# make all rooms have the same largest dimension by scalinb based on the largest dimension
+		# make all rooms have the same largest dimension by scaling based on the largest dimension
 		if room.sprite.texture.get_size().x > room.sprite.texture.get_size().y:
 			var scaleFactor = roomMinimapSize/room.sprite.texture.get_size().x # x is largest length
 			room.sprite.scale = Vector2(scaleFactor, scaleFactor) 
@@ -85,7 +85,7 @@ func addRoomsToMinimap(room, roomPosition, fromposition):
 						new_position = Vector2(roomPosition.x, roomPosition.y + roomMinimapSize)
 				
 				# Recursive call for the neighbor
-				addRoomsToMinimap(neighbor, new_position, i)
+				addRoomsToMinimap(neighbor, new_position)
 
 func position_camera_to_fit_rooms():
 	var camera = $SubViewport/Camera2D
@@ -110,7 +110,7 @@ func position_camera_to_fit_rooms():
 	# Step 3: Set the camera limits
 	camera.set_position(Vector2(max_x, max_y))
 
-
+# function connects neighboring rooms by updating their Neighbor array, is based on the proximity of the room sprites in the minimap
 func connect_neighbors_if_adjacent(current_room, current_position):
 	for placed in placed_rooms:
 		var placed_room = placed["room"]
@@ -144,6 +144,7 @@ func connect_neighbors_if_adjacent(current_room, current_position):
 			#dir = 3  # Down
 
 
+# highlights sprite of room by darkening it, if shouldBeHighlighted is false it removes the darkening
 func highlight_sprite(sprite: Sprite2D, shouldBeHighlighted: bool = true) -> void:
 	# Define the tint colors
 	var highlight_tint = Color(0.8, 0.8, 0.8, 1) # Slightly darker tint
@@ -161,7 +162,7 @@ func highlight_sprite(sprite: Sprite2D, shouldBeHighlighted: bool = true) -> voi
 func _process(delta: float) -> void:
 	pass
 
-
+# called on enemy died, unlocks doors if all enemies died, and for boss room clears the game
 func _on_enemy_died():
 	enemies_left -= 1
 	#print("enemy died, enemies left: ", enemies_left)
@@ -187,7 +188,7 @@ func unlockDoors():
 			var doorSprite = d.get_node("Sprite2D")
 			doorSprite.texture = load("res://assets/door.png")
 
-
+# generates level and gives each room a sprite based on the _sprite.png ending file with same name as *.tscn
 func generateLevel(length: int) -> Rooms.Room:
 	var lastRoom = generateLayout(length)
 	var rng = RandomNumberGenerator.new()
@@ -228,8 +229,9 @@ func generateLevel(length: int) -> Rooms.Room:
 			var file = filteredFiles[rIndex]
 			r.RoomFile = path + "/" + file
 			r.sprite = Sprite2D.new()
+			# loads image with path for room: sampleRoom.tscn -> sampleRoom_sprite.png
 			var image = Image.load_from_file(path + "/" + file.replace(".tscn", "") + "_sprite.png")
-			if !image:
+			if !image: # sprite image path is most likely not the standard
 				OS.alert("Image failed to load with expected path: " + path + "/" 
 				+ file.replace(".tscn", "") + "_sprite.png", "ALERT")
 			else:
@@ -386,7 +388,8 @@ func nextRoom(dir: int):
 
 	loadRoom(currentRoom, dir)
 
-
+# loads another scene of world (the root node of the game) and sets the upgrades equal to current scenes upgrades
+# then replaces the root scene with the newly generated world, then que frees current node.
 func restartGameWhileRetainingUpgrades():
 	var new_scene = preload("res://world.tscn").instantiate()
 	for upgradeKeyString in playerUpgradeManager.upgrades.keys():

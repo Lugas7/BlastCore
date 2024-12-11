@@ -13,6 +13,7 @@ func exit() -> void:
 func update(delta: float) -> void:
 	pass
 
+# handles updating player moving direction and speed as well as the transition to dash state
 func physics_update(delta: float) -> void:
 	player.updateDirection()
 	player.velocity.x = SPEED * player.xdir
