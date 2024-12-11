@@ -164,7 +164,7 @@ func _process(delta: float) -> void:
 
 func _on_enemy_died():
 	enemies_left -= 1
-	print("enemy died, enemies left: ", enemies_left)
+	#print("enemy died, enemies left: ", enemies_left)
 	if !currentRoom.Cleared:
 		if(enemies_left) == 0:
 			if currentRoom.Type == "boss":
@@ -196,9 +196,9 @@ func generateLevel(length: int) -> Rooms.Room:
 	var allRooms = lastRoom.allRooms()
 	
 	var availableUpgrades = preload("res://upgradeList.gd").UpgradeList.duplicate()
-	print(availableUpgrades)
+	#print(availableUpgrades)
 	availableUpgrades.shuffle()
-	print(availableUpgrades)
+	#print(availableUpgrades)
 	
 	# Assign a file for each room
 	for r in allRooms:
