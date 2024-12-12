@@ -17,8 +17,11 @@ func setPercent(newPercent):
 		# delayed tickingPercent addition, setPercent can still be called while the sleeps in different thread
 		visible = true
 		damage_bar.visible = true
-		await get_tree().create_timer(timeOutBeforeBeginTickingDamageBar).timeout
-		tickingPercentLeft += changePercent 
+		var tree = get_tree()
+		
+		if tree:
+			await get_tree().create_timer(timeOutBeforeBeginTickingDamageBar).timeout
+			tickingPercentLeft += changePercent 
 	else:
 		damage_bar.value = damage_bar.value # healing so damage should be same place as health
 

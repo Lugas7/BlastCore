@@ -59,7 +59,7 @@ func updateDirection():
 
 # runs after the health components health reaches 0
 func _on_health_component_died() -> void:
-	queue_free()
+	get_tree().change_scene_to_file("res://menu.tscn")
 
 # runs after health components health is modified, usually by reduction
 func _on_health_component_health_changed(current_health: int) -> void:
