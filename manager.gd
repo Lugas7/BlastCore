@@ -15,6 +15,8 @@ var roomInstance
 
 var enemies_left = 0
 
+var availableUpgrades = preload("res://upgradeList.gd").UpgradeList.duplicate()
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = self.get_node("Player")
@@ -195,13 +197,16 @@ func generateLevel(length: int) -> Rooms.Room:
 	
 	var allRooms = lastRoom.allRooms()
 	
-	var availableUpgrades = preload("res://upgradeList.gd").UpgradeList.duplicate()
-	#print(availableUpgrades)
+	
 	availableUpgrades.shuffle()
-	#print(availableUpgrades)
 	
 	# Assign a file for each room
 	for r in allRooms:
+		# If the room is special but there are no more upgrades to get,
+		# turn it into a normal room
+		if r.Type == "special" && len(availableUpgrades) == 0:
+			r.Type = "normal"
+		
 		# Assign an upgrade if the room is special
 		if r.Type == "special":
 			var upgrade = availableUpgrades[0]
@@ -391,6 +396,7 @@ func nextRoom(dir: int):
 # then replaces the root scene with the newly generated world, then que frees current node.
 func restartGameWhileRetainingUpgrades():
 	var new_scene = preload("res://world.tscn").instantiate()
+	new_scene.availableUpgrades = availableUpgrades
 	for upgradeKeyString in playerUpgradeManager.upgrades.keys():
 		if playerUpgradeManager.upgrades[upgradeKeyString]:
 			print("persistent upgrade kept: " + upgradeKeyString)
