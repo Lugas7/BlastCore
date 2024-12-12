@@ -143,7 +143,6 @@ func connect_neighbors_if_adjacent(current_room, current_position):
 		#"DoorDown":
 			#dir = 3  # Down
 
-
 # highlights sprite of room by darkening it, if shouldBeHighlighted is false it removes the darkening
 func highlight_sprite(sprite: Sprite2D, shouldBeHighlighted: bool = true) -> void:
 	# Define the tint colors
@@ -425,7 +424,7 @@ func loadRoom(room: Rooms.Room, fromDir: int):
 			upgrade.upgrade = room.Upgrade
 			upgrade.price = room.UpgradePrice
 			var label = upgrade.get_node("Label")
-			label.text = upgrade.upgrade + "\n " + str(upgrade.price)
+			label.text = upgrade.upgrade;
 		
 	
 	var enemies = get_tree().get_nodes_in_group("Enemy")

@@ -44,7 +44,7 @@ visible = false
 position = Vector2(1344, 1280)
 
 [node name="Upgrade" parent="." instance=ExtResource("4_5oy81")]
-visible = false
+visible = true
 position = Vector2(1344, 776)
 
 [node name="RoomCorner1" parent="." instance=ExtResource("5_ogba3")]
