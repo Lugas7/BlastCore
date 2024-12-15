@@ -29,6 +29,8 @@ I am largely happy with the implementation of the sword scene and gun scene as t
 
 Another mistake in my code was to connect change in health component to health bar through the character, when this could have been done directly to both save resources and reduce complexity.
 
+I am also unhappy with the placement of our files, they should have been followed using a group agreed structure for the different assets. There are far too many files in the root directory. This is ok since the god handles an architecture through the node/scene hierarchy within the different scenes. So you most of the time don't have to find the file by their location in the file structure, but when you do have to find them you need to search for them, which godot supports. Though this is a weakness the workflow in godot lessens the impact.
+
 ### Good code:
 
 I am happy with my implementation of sword scene, I made it easily reusable for different characters for both enemy and player (with an exception of the slash state mentioned previously). I am happy with my implementation of it in such a way that when you import the scene as a child of a character who will use the sword you can assign your own sprite and collision shape to it so that you can decide the size, look, damage based on the sprite and collision shape you set in the @export value of the sword.
