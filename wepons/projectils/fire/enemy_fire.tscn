@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdo24ul78bnt0"]
+
+[ext_resource type="Script" path="res://wepons/projectils/fire/fire.gd" id="1_3te20"]
+[ext_resource type="Texture2D" uid="uid://dggl55k60evxt" path="res://assets/Bullet/Bullet.png" id="2_yjnj6"]
+[ext_resource type="PackedScene" uid="uid://kvhhtwrqygp5" path="res://wepons/base_components/simple_damage_area.tscn" id="3_gnnkv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lvbgf"]
+radius = 24.0
+
+[node name="EnemyFire" type="CharacterBody2D" groups=["Player_projectile"]]
+position = Vector2(64, 312)
+collision_layer = 4
+script = ExtResource("1_3te20")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.37, 0.37)
+texture = ExtResource("2_yjnj6")
+
+[node name="SimpleDamageArea" parent="." instance=ExtResource("3_gnnkv")]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SimpleDamageArea"]
+shape = SubResource("CircleShape2D_lvbgf")
+
+[connection signal="damage_dealt" from="SimpleDamageArea" to="." method="_on_simple_damage_area_damage_dealt"]
