@@ -15,7 +15,7 @@ var can_shoot = true  # Shooting cooldown control
 @onready var gun = $EnemyGun  # Reference to the Gun node
 
 func _ready() -> void:
-	update_health_bar()
+	add_to_group("Enemy")
 	# Connect signals from HealthComponent
 	hc.health_changed.connect(_on_health_component_health_changed)
 	hc.died.connect(_on_health_component_died)
@@ -54,13 +54,8 @@ func _on_health_component_died() -> void:
 	queue_free()
 
 func _on_health_component_health_changed(current_health: int) -> void:
-	update_health_bar()
-	#print("Enemy health changed: ", current_health)
-
-func update_health_bar() -> void:
-	if health_bar:
-		health_bar.set_value(100 * hc.current_health / hc.max_health)
-		
+	health_bar.setPercent(100 * current_health / hc.max_health)
+	
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player = body
