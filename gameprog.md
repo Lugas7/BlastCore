@@ -7,6 +7,7 @@ Fredrik Grøttås (fredgrot on github)
 Lucas Martin Thomaz
 Thomas R. (Elthel1 on github)
 Kristian Sjåberg Hartvigsen (KristianHar on github) (10037)
+Jens Erling Bråten (jenserling github) (10033)
 
 The public github repo can be found:
 https://github.com/Lugas7/BlastCore/tree/main
