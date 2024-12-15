@@ -1,4 +1,4 @@
-This is the file for Lucas Martin Thomaz with candidate ID (10008)
+This is the file for Lucas Martin Thomaz with candidate ID (10008) and username lugas7 (also appear as foobar123asdf due to configuring email in git to be my@email.com)
 the code overview video can be found in the url below
 https://www.dropbox.com/scl/fi/9bdt7zbvgdec7m6ujtdxr/lugas7-code-overview-video.mkv?rlkey=yv8ncm21t5yxj0oj2ws1jphe3&st=5v5ghnqg&dl=0
 

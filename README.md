@@ -2,6 +2,12 @@
 
 (the individual parts can be found in inspera in the first submission part, some individual repports are also found in the repository with username.md in addition to in inspera.)
 
+
+## gameplay footage
+
+<a href="https://github.com/Lugas7/BlastCore/blob/main/Gameplay%20Footage.mkv" title="group discussion">simple gameplay footage recorded by Lucas</a>
+
+
 ## Controls
 To control the character move with wasd, aim the gun/sword with the mouse and dash using space and switch between gun weapon and sword with the alt key to shoot or slash use left click.
 
