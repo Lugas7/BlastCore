@@ -2,11 +2,18 @@ Our github repo link:
 https://github.com/Lugas7/BlastCore
 
 ## Team Members
-Lucas Martin Thomaz (lugas7 on github, sometimes appear as foobar123asdf since configured email to be my@email.com) (CandidateID: 10008)
+Lucas Martin Thomaz (CandidateID: 10008) (lugas7 on github, sometimes appear as foobar123asdf since configured email to be my@email.com)
+
+
 Fredrik Grøttås (fredgrot on github)
-Lucas Martin Thomaz
+
+
 Thomas R. (Elthel1 on github)
+
+
 Kristian Sjåberg Hartvigsen (KristianHar on github) (10037)
+
+
 Jens Erling Bråten (jenserling github) (10033)
 
 The public github repo can be found:
