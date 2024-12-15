@@ -1,5 +1,5 @@
 This is the file for Lucas Martin Thomaz with candidate ID (10008)
-the code overview video can be found in the url below, in adition to being in zip file
+the code overview video can be found in the url below
 https://www.dropbox.com/scl/fi/9bdt7zbvgdec7m6ujtdxr/lugas7-code-overview-video.mkv?rlkey=yv8ncm21t5yxj0oj2ws1jphe3&st=5v5ghnqg&dl=0
 
 ## Workload:
@@ -29,9 +29,16 @@ I am largely happy with the implementation of the sword scene and gun scene as t
 
 Another mistake in my code was to connect change in health component to health bar through the character, when this could have been done directly to both save resources and reduce complexity.
 
+### Good code:
+
+I am happy with my implementation of sword scene, I made it easily reusable for different characters for both enemy and player (with an exception of the slash state mentioned previously). I am happy with my implementation of it in such a way that when you import the scene as a child of a character who will use the sword you can assign your own sprite and collision shape to it so that you can decide the size, look, damage based on the sprite and collision shape you set in the @export value of the sword.
+
+I am also happy with my implementation of the health bar both in regard to how it looks being configured within Godot editor instead of clunkily with different sprites. I am also happy with the code of the health bar that allows for easy use. Though as mentioned previously it might be better for the health bar to depend on the health component rather than the parent character.
+
+I also think my development of the Player is good and that I made good use of state machines to handle both walking, dashing, shooting vs slashing. I believe handling this functionality with state machines was a good choice. This is also true for the sword scene which also uses state machines to change between doing nothing, slashing or spinning.
 
 ## Learning outcome
-I learned a great deal of a programming workflow I was unfamiliar with through programing in this godot game engine. I learned asynchronous logic and frame based function logic that was very interesting and new to the traditional sequential programs I am familiar with from earlier courses and projects. One instance of this is when I tried to implement a slash attack for my player that would move a sword 90 degrees in a circle. What I was used to earlier for solving such problems would be something like finding a function that holds the thread for the time until the slash is completed. However in godot I you must implement logic that is updated each frame for such problems. What I did was find a value for how many radians to rotate per second, then rotate the sword by my rotations per second value multiplied by the amount of seconds passed since last frame, this is done using the delta value. This is better than a function that holds the attention of the sequence with say a time.sleep between each rotation as it is more modular by having a function that activates each frame. This way the game engine can calculate as many frames per second as possible allowing for more dynamic slashes depending on the resources available. I also implemented similar logic for other implementations such as the health bar.
+I learned a great deal of a programming workflow I was unfamiliar with through programming in this Godot game engine. I learned asynchronous logic and frame based function logic that was very interesting and new to the traditional sequential programs I am familiar with from earlier courses and projects. One instance of this is when I tried to implement a slash attack for my player that would move a sword 90 degrees in a circle. What I was used to earlier for solving such problems would be something like finding a function that holds the thread for the time until the slash is completed. However in Godot I you must implement logic that is updated each frame for such problems. What I did was find a value for how many radians to rotate per second, then rotate the sword by my rotations per second value multiplied by the amount of seconds passed since last frame, this is done using the delta value. This is better than a function that holds the attention of the sequence with say a time.sleep between each rotation as it is more modular by having a function that activates each frame. This way the game engine can calculate as many frames per second as possible allowing for more dynamic slashes depending on the resources available. I also implemented similar logic for other implementations such as the health bar.
 
 Another portion that I learned was signal handling and activating functionality for different components of the game asynchronously e.g. collisions.
 
