@@ -1775,7 +1775,7 @@ position = Vector2(2500, 2429)
 position = Vector2(722, 947)
 
 [node name="RoomCorner1" parent="." instance=ExtResource("7_msjih")]
-position = Vector2(370, 308)
+position = Vector2(73, 72)
 
 [node name="RoomCorner2" parent="." instance=ExtResource("7_msjih")]
-position = Vector2(367, 308)
+position = Vector2(3259, 3258)
