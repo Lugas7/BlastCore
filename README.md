@@ -1,2 +1,1 @@
-Attribution:
-<a href="https://www.flaticon.com/free-icons/bone" title="bone icons">Bone icons created by Freepik - Flaticon</a>
+<a href="https://github.com/Lugas7/BlastCore/blob/main/gameprog.md" title="group discussion">Group discussion on the development process</a>
