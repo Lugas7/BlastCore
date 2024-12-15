@@ -9,6 +9,8 @@ extends CharacterBody2D
 var player = null
 var can_shoot = true  # Shooting cooldown control
 
+signal enemy_died
+
 @onready var hc = $HealthComponent  # Reference to the HealthComponent node
 @onready var health_bar = $HealthBar  # Reference to the Health Bar
 @onready var sprite = $Sprite2D  # Reference to the Sprite2D node
@@ -51,6 +53,7 @@ func shoot() -> void:
 
 func _on_health_component_died() -> void:
 	print("Enemy died")
+	emit_signal("enemy_died")
 	queue_free()
 
 func _on_health_component_health_changed(current_health: int) -> void:
