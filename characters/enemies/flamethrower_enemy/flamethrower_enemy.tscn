@@ -1,0 +1,61 @@
+[gd_scene load_steps=10 format=3 uid="uid://bvffggr16buuk"]
+
+[ext_resource type="Script" path="res://characters/enemies/flamethrower_enemy/flamethrower_enemy.gd" id="1_lyhtl"]
+[ext_resource type="PackedScene" uid="uid://3wc8io6rgt70" path="res://characters/base_components/HealthComponent.tscn" id="2_s8g7l"]
+[ext_resource type="Texture2D" uid="uid://tg1jhqmjoiwi" path="res://assets/fire/demon.png" id="3_yde8u"]
+[ext_resource type="PackedScene" uid="uid://c5cdjdajvwv3w" path="res://wepons/shooting_wepons/enemy_gun.tscn" id="4_e6f6r"]
+[ext_resource type="PackedScene" uid="uid://b2bfiyicgwo1f" path="res://health_bar.tscn" id="5_gwk63"]
+[ext_resource type="PackedScene" uid="uid://7swef8ik41ff" path="res://characters/base_components/HurtboxComponent.tscn" id="6_sxaqm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wr0a5"]
+radius = 634.001
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mb7mf"]
+radius = 22.0227
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_11tw0"]
+radius = 21.0238
+
+[node name="flamethrower_enemy" type="CharacterBody2D"]
+script = ExtResource("1_lyhtl")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_s8g7l")]
+position = Vector2(4.54747e-13, 0)
+max_health = 30
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(3.8147e-06, 0)
+rotation = 1.5708
+scale = Vector2(3, 2.935)
+texture = ExtResource("3_yde8u")
+
+[node name="EnemyGun" parent="." instance=ExtResource("4_e6f6r")]
+position = Vector2(1, 0)
+scale = Vector2(0.3, 0.3)
+
+[node name="detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection"]
+shape = SubResource("CircleShape2D_wr0a5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -1)
+shape = SubResource("CircleShape2D_mb7mf")
+
+[node name="HealthBar" parent="." instance=ExtResource("5_gwk63")]
+offset_left = -26.0
+offset_top = 39.0
+offset_right = 35.0
+offset_bottom = 43.0
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_sxaqm")]
+collision_layer = 33
+collision_mask = 32
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(3, -2)
+shape = SubResource("CircleShape2D_11tw0")
+
+[connection signal="body_entered" from="detection" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="detection" to="." method="_on_area_2d_body_exited"]
